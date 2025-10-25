@@ -22,10 +22,12 @@
     width: 100%;
     justify-content: space-around;
     margin: 0.5em;
+    flex-wrap: wrap;
+    gap: 1em;
 }
 
 .clearBtn {
-    background-color: rgb(112, 0, 0);
+    background-color: rgb(2, 36, 131);
     color: rgb(255, 255, 255);
 }
 
@@ -35,7 +37,8 @@
 }
 
 .rejectBtn {
-    background-color: rgb(2, 36, 131);
+    
+    background-color: rgb(112, 0, 0);
     color: rgb(255, 255, 255);
 }
 
@@ -43,6 +46,8 @@ button {
     padding: 0.5em;
     letter-spacing: 2px;
     border-radius: 0.5em;
+    font-family:Arial, Helvetica, sans-serif;
+    border: none;
 }
 
 .preview {
