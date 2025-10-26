@@ -1,16 +1,26 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import style from './canvas.module.css'; // ще добавим малко стилове
 import { uploadImg } from "../Config/SupaBase_Config";
 import { deleteImg } from "../Config/SupaBase_Config";
 //import { base64ToFile } from "../Config/helpers";
 import { base64ToFile } from "../Helpers/BaseToFile64";
+import { updateTaxData, getTaxData, registeredApartmets } from "../Helpers/FirebaseFunctions";
+import DataContext from "../Context/DataContext";
+import { pictureName } from "../Helpers/GetPictureName";
+
 
 const SignaturePad = () => {
     const sigCanvas = useRef(null);
     const [isSigned, setIsSigned] = useState(false);
     const [imageURL, setImageURL] = useState(null);
     const [fileName, setFileName] = useState('')
+
+
+    //console.log(getTaxData());
+  
+  
+  
 
     // когато потребителят рисува
     const handleEnd = () => {
@@ -33,12 +43,9 @@ const SignaturePad = () => {
 
         const dataURL = sigCanvas.current.getCanvas().toDataURL("image/png");
 
-        // Генерирай име
-        const apartment = 1;
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, "0");
-        const fileName = `${year}_ap${apartment}_month${month}.png`;
+        // Генерира име като подаваме аргумент с номера на апартамента
+        const fileName = pictureName(1)
+
         setFileName(fileName)
 
         // Превърни Base64 → File
@@ -46,6 +53,7 @@ const SignaturePad = () => {
 
         console.log("Файл:", file); // <--- вече имаш реален файл с име!
 
+        //връща името на снимката
         const success = await uploadImg(file, fileName)
 
         setImageURL(success);

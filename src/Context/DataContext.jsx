@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { getTaxData } from "../Helpers/FirebaseFunctions";
 
 
 const DataContext = createContext({});
@@ -6,7 +7,6 @@ const DataContext = createContext({});
 export const DataProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [user, setUser] = useState(null)
-    const [isCashier, setIsCashier] = useState(false)
 
     useEffect(() => {
         const isLogin = sessionStorage.getItem('loginData')
@@ -14,12 +14,12 @@ export const DataProvider = ({ children }) => {
             setLogin(true)
             setUser(JSON.parse(isLogin))
         }
+
     }, [])
 
     return (
         <DataContext.Provider value={{
-            login, setLogin, user, setUser,
-            isCashier, setIsCashier
+            login, setLogin, user, setUser
         }}>
             {children}
         </DataContext.Provider>
@@ -27,21 +27,3 @@ export const DataProvider = ({ children }) => {
 };
 
 export default DataContext;
-
-
-
-
-
-
-/*
-                       Използване на провайдъра
-    import { useContext } from "react";
-    import DataContext from '../../context/DataContext';
-    const {cart} = useContext(DataContext)
-
-  
-                              
-
-
-
-*/

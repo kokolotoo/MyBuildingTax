@@ -2,7 +2,7 @@ const lowTax = 5
 const hightTax = 15
 const euro = 1.95583
 
-const monthTax = (apartment, peoples) => {
+export const monthTax = (apartment, peoples) => {
     const taxPerPeople = apartment <= 9 ? lowTax : hightTax
     const totalTax = taxPerPeople * peoples
     return totalTax
@@ -15,8 +15,6 @@ const apartments = [
         owner: undefined,
         people: 0,
         year: [],
-        tax: monthTax(1, 0),
-        inEuro: Number(monthTax(1, 0) / euro).toFixed(2),
         free: true
     },
     {
@@ -25,8 +23,6 @@ const apartments = [
         owner: 'Павлина',
         people: 1,
         year: [],
-        tax: monthTax(2, 1),
-        inEuro: parseFloat((monthTax(2, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -35,8 +31,6 @@ const apartments = [
         owner: 'Анчо Цонве',
         people: 2,
         year: [],
-        tax: monthTax(3, 2),
-        inEuro: parseFloat((monthTax(3, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -45,8 +39,6 @@ const apartments = [
         owner: 'Наталия Бончева',
         people: 1,
         year: [],
-        tax: monthTax(4, 1),
-        inEuro: parseFloat((monthTax(4, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -55,8 +47,6 @@ const apartments = [
         owner: 'Наталия Иванова',
         people: 1,
         year: [],
-        tax: monthTax(5, 1),
-        inEuro: parseFloat((monthTax(5, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -65,8 +55,6 @@ const apartments = [
         owner: 'Иван Чакалов',
         people: 2,
         year: [],
-        tax: monthTax(6, 2),
-        inEuro: parseFloat((monthTax(6, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -75,8 +63,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(7, 1),
-        inEuro: parseFloat((monthTax(7, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -85,8 +71,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(8, 1),
-        inEuro: parseFloat((monthTax(8, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -95,8 +79,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(9, 1),
-        inEuro: parseFloat((monthTax(9, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -105,8 +87,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(10, 1),
-        inEuro: parseFloat((monthTax(10, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -115,8 +95,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(11, 1),
-        inEuro: parseFloat((monthTax(11, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -125,8 +103,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(12, 1),
-        inEuro: parseFloat((monthTax(12, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -135,8 +111,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(13, 1),
-        inEuro: parseFloat((monthTax(13, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -145,8 +119,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(14, 1),
-        inEuro: parseFloat((monthTax(14, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -155,8 +127,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(15, 1),
-        inEuro: parseFloat((monthTax(15, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -165,8 +135,6 @@ const apartments = [
         owner: 'Николай Митков',
         people: 1,
         year: [],
-        tax: monthTax(16, 1),
-        inEuro: parseFloat((monthTax(16, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -175,8 +143,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(17, 1),
-        inEuro: parseFloat((monthTax(17, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -185,8 +151,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(18, 1),
-        inEuro: parseFloat((monthTax(18, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -195,8 +159,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(19, 1),
-        inEuro: parseFloat((monthTax(19, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -205,8 +167,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(20, 1),
-        inEuro: parseFloat((monthTax(20, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -215,8 +175,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(21, 1),
-        inEuro: parseFloat((monthTax(21, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -225,8 +183,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(22, 1),
-        inEuro: parseFloat((monthTax(22, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -235,8 +191,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(23, 1),
-        inEuro: parseFloat((monthTax(23, 1) / euro).toFixed(2)),
         free: false
     },
     {
@@ -245,8 +199,6 @@ const apartments = [
         owner: 'undefined',
         people: 0,
         year: [],
-        tax: monthTax(24, 1),
-        inEuro: parseFloat((monthTax(24, 1) / euro).toFixed(2)),
         free: false
     },
 ]

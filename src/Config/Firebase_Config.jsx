@@ -1,21 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore'
+import { getDatabase } from "firebase/database";
 
-/*
-const firebaseConfig = {
-    apiKey: "AIzaSyD3yXhH5ThvbFtpYnUABA-_2sLm9HmpMyM",
-    authDomain: "cashier319-8e6a3.firebaseapp.com",
-    projectId: "cashier319-8e6a3",
-    storageBucket: "cashier319-8e6a3.firebasestorage.app",
-    messagingSenderId: "880975783525",
-    appId: "1:880975783525:web:ac55b369a905232731c88c",
-    measurementId: "G-W612YSWSB9"
-};
-
-*/ 
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -35,3 +23,4 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider(); // за логване чрез гугъл
 export const db = getFirestore(app) //за данни
+export const realtimeDB = getDatabase(app);
