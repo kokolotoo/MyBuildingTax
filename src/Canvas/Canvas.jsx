@@ -8,6 +8,7 @@ import { base64ToFile } from "../Helpers/BaseToFile64";
 import { updateTaxData, getTaxData, registeredApartmets } from "../Helpers/FirebaseFunctions";
 import DataContext from "../Context/DataContext";
 import { pictureName } from "../Helpers/GetPictureName";
+import { getData } from "../Helpers/Apartmets";
 
 
 const SignaturePad = () => {
@@ -18,6 +19,7 @@ const SignaturePad = () => {
 
 
     //console.log(getTaxData());
+    
   
   
   
