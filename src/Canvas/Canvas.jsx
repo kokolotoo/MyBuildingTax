@@ -4,11 +4,10 @@ import style from './canvas.module.css'; // ще добавим малко ст�
 import { uploadImg } from "../Config/SupaBase_Config";
 import { deleteImg } from "../Config/SupaBase_Config";
 //import { base64ToFile } from "../Config/helpers";
-import { base64ToFile } from "../Helpers/BaseToFile64";
-import { updateTaxData, getTaxData, registeredApartmets } from "../Helpers/FirebaseFunctions";
+import { base64ToFile } from "../Functions/BaseToFile64";
 import DataContext from "../Context/DataContext";
-import { pictureName } from "../Helpers/GetPictureName";
-import { getData } from "../Helpers/Apartmets";
+import { pictureName } from "../Functions/GetPictureName";
+
 
 
 const SignaturePad = () => {
@@ -16,13 +15,6 @@ const SignaturePad = () => {
     const [isSigned, setIsSigned] = useState(false);
     const [imageURL, setImageURL] = useState(null);
     const [fileName, setFileName] = useState('')
-
-
-    //console.log(getTaxData());
-    
-  
-  
-  
 
     // когато потребителят рисува
     const handleEnd = () => {

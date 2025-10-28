@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getTaxData } from "../Helpers/FirebaseFunctions";
+import { getTaxData } from "../Functions/FirebaseFunctions";
 
 
 const DataContext = createContext({});

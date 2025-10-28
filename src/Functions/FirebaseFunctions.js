@@ -65,7 +65,8 @@ export const updateTaxData = async (data) => {
             lowTax: 5,
             hightTax: 15,
             euro: 1.95583,
-            cashier: 16
+            cashier: 16,
+            money:100
         }
     
      */
@@ -114,3 +115,39 @@ export const registeredApartmets = async (number) => {
 
     handleClick();
 */
+
+
+
+//Взема данни на апартамент
+export const getApartmentData = async (apart) => {
+
+    try {
+        const productRef = doc(db, "Apartments", apart);
+
+        const data = (await getDoc(productRef)).data();
+
+        console.log(data);
+        return data
+
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+
+//Актуализира данни на апартамент
+export const updateApartData = async (data , apartment) => {
+  
+    try {
+        const productRef = doc(db, "Apartments", apartment);
+
+        await setDoc(productRef, data);
+
+        console.log('Успешно актуалиризани данни');
+        
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+
