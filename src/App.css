@@ -6,13 +6,13 @@
 }
 
 body {
-  background-color: rgb(27, 26, 26);
+  background-color: rgb(31, 28, 28);
   color: rgb(223, 225, 226);
 }
 
 html {
   font-size: clamp(12px, 2.5vw, 18px);
-  font-family: 'Roboto', sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
   line-height: 1.5;
 }
 
