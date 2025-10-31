@@ -44,7 +44,6 @@
 
 .home_button,
 .reg_button {
-    background-color: #189907;
     color: rgb(252, 231, 231);
     border: none;
     padding: 12px 30px;
@@ -52,6 +51,10 @@
     border-radius: 6px;
     cursor: pointer;
     transition: 0.5s;
+}
+
+.home_button {
+    background-color: #189907;
 }
 
 .reg_button {
@@ -68,7 +71,8 @@
 .reg_button:hover {
     background-color: #1164ad;
 }
-.home_button:hover{
+
+.home_button:hover {
     background-color: #41c430;
 }
 
@@ -80,6 +84,6 @@
     bottom: 2em;
 }
 
-a{
+a {
     text-decoration: none;
 }
