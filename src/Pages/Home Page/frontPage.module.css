@@ -45,7 +45,7 @@
 .home_button,
 .reg_button {
     background-color: #189907;
-    color: white;
+    color: rgb(252, 231, 231);
     border: none;
     padding: 12px 30px;
     font-size: 1rem;

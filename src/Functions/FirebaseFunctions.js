@@ -122,7 +122,7 @@ export const registeredApartmets = async (number) => {
 export const getApartmentData = async (apart) => {
 
     try {
-        const productRef = doc(db, "Apartments", apart);
+        const productRef = doc(db, "Apartments", `apart${apart}`);
 
         const data = (await getDoc(productRef)).data();
 
@@ -133,7 +133,7 @@ export const getApartmentData = async (apart) => {
         console.error(err);
     }
 };
-
+ getApartmentData(8)
 
 //Актуализира данни на апартамент
 export const updateApartData = async (data , apartment) => {
