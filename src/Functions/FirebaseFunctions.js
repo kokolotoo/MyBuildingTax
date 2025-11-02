@@ -133,7 +133,7 @@ export const getApartmentData = async (apart) => {
         console.error(err);
     }
 };
- getApartmentData(8)
+
 
 //Актуализира данни на апартамент
 export const updateApartData = async (data , apartment) => {

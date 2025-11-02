@@ -44,7 +44,7 @@
 
 .home_button,
 .reg_button {
-    color: rgb(252, 231, 231);
+    color: rgb(236, 234, 234);
     border: none;
     padding: 12px 30px;
     font-size: 1rem;
@@ -73,7 +73,7 @@
 }
 
 .home_button:hover {
-    background-color: #41c430;
+    background-color: #27801b;
 }
 
 .home_footer {

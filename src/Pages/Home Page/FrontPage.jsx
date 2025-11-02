@@ -16,9 +16,9 @@ const FrontPage = () => {
         </p>
 
         <div className={styles.buttons}>
-          <button className={styles.home_button}>
-            <Link to={'/Login'}>Вход</Link>
-          </button>
+          
+            <Link to={'/Login'} className={styles.home_button}>Вход</Link>
+          
           <button className={styles.reg_button}>
             Регистрация
           </button>
