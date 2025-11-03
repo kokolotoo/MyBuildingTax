@@ -43,7 +43,8 @@
 }
 
 .home_button,
-.reg_button {
+.reg_button,
+.abouth_button {
     color: rgb(236, 234, 234);
     border: none;
     padding: 12px 30px;
@@ -61,9 +62,17 @@
     background-color: rgb(15, 46, 104);
 }
 
+.abouth_button{
+    background-color: rgb(88, 20, 79);
+}
+
+.abouth_button:hover{
+    background-color: rgb(124, 24, 111);
+}
+
 .buttons {
     display: flex;
-    gap: 1em;
+    gap: 1.5em;
     justify-content: center;
     flex-wrap: wrap;
 }

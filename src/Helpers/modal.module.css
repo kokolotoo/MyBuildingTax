@@ -1,0 +1,11 @@
+.modal_message{
+    letter-spacing: 0.2em;
+    white-space: pre-line;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.2em;
+    background-color: rgb(194, 199, 189);
+    padding: 1em;
+    border-radius: 0.4em;
+    margin: 0.5em;
+    color: rgb(43, 15, 15);
+}
