@@ -11,11 +11,13 @@ const FrontPage = lazy(() => import('./Pages/Home Page/FrontPage'))
 const HomeWithLogin = lazy(() => import('./Pages/Home Page/HomeWithLogin'))
 const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
 
+
 function App() {
 
   return (
 
     <DataProvider>
+
 
       <Routes>
         <Route path='/' element={<FrontPage />} />
