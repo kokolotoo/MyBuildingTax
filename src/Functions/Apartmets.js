@@ -19,6 +19,8 @@ export const getData = async (apartment) => {
 
         if (snapshot.exists()) {
             console.log(`✅ Данни за apart${apartment}:`, snapshot.data());
+           
+            
             return snapshot.data()
 
         } else {

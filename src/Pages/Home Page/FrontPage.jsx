@@ -27,16 +27,16 @@ const FrontPage = () => {
 
           <Link to={'/Login'} className={styles.home_button}>Вход</Link>
 
-          <button className={styles.reg_button}>
-            Регистрация
-          </button>
+
+          <Link to={'/registration'} className={styles.reg_button}>Регистрация</Link>
+
 
           <button className={styles.abouth_button}
             onClick={showModal}
           >Относно</button>
         </div>
 
-   
+
 
         <AboutModal
           setIsModalOpen={setIsModalOpen}

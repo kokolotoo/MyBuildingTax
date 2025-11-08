@@ -1,0 +1,16 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.submitBtn {
+    background-color: blue;
+    color: aliceblue;
+    padding: 1em;
+    width: 100%;
+    max-width: 220px;
+}

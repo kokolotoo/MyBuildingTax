@@ -10,6 +10,7 @@ import { DataProvider } from './Context/DataContext'
 const FrontPage = lazy(() => import('./Pages/Home Page/FrontPage'))
 const HomeWithLogin = lazy(() => import('./Pages/Home Page/HomeWithLogin'))
 const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
+const Registration = lazy(() => import('./Pages/Registracion/Registration'))
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path='/' element={<FrontPage />} />
         <Route path='/Login' element={<LoginPage />} />
         <Route path='/welcome' element={<HomeWithLogin />} />
+        <Route path='/registration' element={<Registration />} />
 
       </Routes>
 

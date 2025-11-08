@@ -1,8 +1,7 @@
 import { ref, get, set } from "firebase/database";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
-
 
 
 
@@ -37,6 +36,66 @@ export const signIn = async (e) => {
 
 
 
+
+
+//Регистрация
+const registerUser = async (email, password) => {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        return user.uid
+
+    } catch (error) {
+        if (error.code === "auth/email-already-in-use") {
+            alert('Вече съществува регистрация с този имейл.')
+            return false
+        }
+
+        return {
+            success: false,
+            message: "Грешка при регистрация.",
+        };
+    }
+};
+
+
+
+export const sumbmit = async (formdata) => {
+
+
+    // Проверка за валиден имейл
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(formdata.mail)) {
+        alert("❌ Моля, въведи валиден имейл адрес!");
+        return;
+    }
+
+    if (formdata.password !== formdata.confirmPassword) {
+        alert("⚠️ Паролите не съвпадат!");
+        return;
+    }
+
+    const isApartmentRegister = await checkApartment(formdata.apartment)
+
+    if (isApartmentRegister) { return }
+
+    const resultId = await registerUser(formdata.mail, formdata.password, formdata.apartment);
+
+    await saveApartment(formdata.apartment, resultId)
+
+    const cashierAparment = await getTaxData()
+
+    const isCashier = cashierAparment.cashier == formdata.apartment ? true : false
+
+    return {
+        user: formdata.apartment,
+        cashier: isCashier
+    }
+
+};
+
+
 //взема стойността на таксата
 export const getTaxData = async () => {
     try {
@@ -44,11 +103,12 @@ export const getTaxData = async () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
+
             console.log("Данни: ➡", docSnap.data());
             return docSnap.data();
         } else {
             console.log("❌ Документът не съществува!");
-            return null;
+            return false;
         }
     } catch (err) {
         console.error("Грешка при четене:", err);
@@ -85,36 +145,27 @@ export const updateTaxData = async (data) => {
 
 
 //запазва номер на регистриран апартамент
-export const registeredApartmets = async (number) => {
-
+ const saveApartment = async (number, userID) => {
     const numberRef = ref(realtimeDB, `numbers/${number}`);
-
     try {
-        const snapshot = await get(numberRef);
-
-        if (snapshot.exists()) {
-            // console.log(`Апартамент : ${number}, вече има регистрация`);
-            return false; // вече има такова число
-        }
-
-        await set(numberRef, { value: number });
-        //console.log('Успешна регистрация');
-        return true;
-
+        await set(numberRef, { value: userID });
+        console.log('Успешна регистрация')
     } catch (error) {
         console.error("Грешка при запис:", error);
         return false;
     }
 };
 
-//изпозлване
-/*
-    const handleClick = async () => {
-        await registeredApartmets(16);
-    };
 
-    handleClick();
-*/
+//проверява дали има регистриран апартамент
+const checkApartment = async (number) => {
+    const snapshot = await get(ref(realtimeDB, `numbers/${number}`));
+    if (snapshot.exists()) {
+        console.log(`Апартамент : ${number}, вече има регистрация`);
+    }
+    return snapshot.exists();
+};
+
 
 
 
@@ -136,15 +187,15 @@ export const getApartmentData = async (apart) => {
 
 
 //Актуализира данни на апартамент
-export const updateApartData = async (data , apartment) => {
-  
+export const updateApartData = async (data, apartment) => {
+
     try {
         const productRef = doc(db, "Apartments", apartment);
 
         await setDoc(productRef, data);
 
         console.log('Успешно актуалиризани данни');
-        
+
     } catch (err) {
         console.error(err);
     }
