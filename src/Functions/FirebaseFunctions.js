@@ -1,6 +1,6 @@
 import { ref, get, set } from "firebase/database";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
 
 
@@ -35,39 +35,52 @@ export const signIn = async (e) => {
 
 
 
-
+export const exit = async ()=>{
+    await signOut(auth);
+    sessionStorage.removeItem('loginData')
+}
 
 
 //Регистрация
 const registerUser = async (email, password) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        return user.uid
-
+        return userCredential.user.uid;
     } catch (error) {
+
+        // Грешка: имейлът вече съществува
         if (error.code === "auth/email-already-in-use") {
-            alert('Вече съществува регистрация с този имейл.')
-            return false
+            alert("❌ Вече съществува регистрация с този имейл!");
+            return false;
         }
 
-        return {
-            success: false,
-            message: "Грешка при регистрация.",
-        };
+        // Други възможни грешки
+        if (error.code === "auth/invalid-email") {
+            alert("⚠️ Имейл адресът не е валиден!");
+            return false;
+        }
+
+        console.error("❌ Грешка при регистрация:", error.message);
+        return false;
     }
 };
 
 
 
+
 export const sumbmit = async (formdata) => {
-
-
-    // Проверка за валиден имейл
+    const validEmailDomains = ["gmail.com", "abv.bg", "yahoo.com", "outlook.com", "icloud.com", "mail.bg"];
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!regex.test(formdata.mail)) {
         alert("❌ Моля, въведи валиден имейл адрес!");
+        return;
+    }
+
+    // Проверка за реален домейн
+    const domain = formdata.mail.split("@")[1]?.toLowerCase();
+    if (!validEmailDomains.includes(domain)) {
+        alert("⚠️ Моля, въведи имейл от реален доставчик (gmail, abv, mail.bg, и т.н.)!");
         return;
     }
 
@@ -76,23 +89,21 @@ export const sumbmit = async (formdata) => {
         return;
     }
 
-    const isApartmentRegister = await checkApartment(formdata.apartment)
-
-    if (isApartmentRegister) { return }
+    const isApartmentRegister = await checkApartment(formdata.apartment);
+    if (isApartmentRegister) return;
 
     const resultId = await registerUser(formdata.mail, formdata.password, formdata.apartment);
+    if (!resultId) return;
 
-    await saveApartment(formdata.apartment, resultId)
+    await saveApartment(formdata.apartment, resultId);
 
-    const cashierAparment = await getTaxData()
-
-    const isCashier = cashierAparment.cashier == formdata.apartment ? true : false
+    const cashierAparment = await getTaxData();
+    const isCashier = cashierAparment.cashier == formdata.apartment;
 
     return {
         user: formdata.apartment,
-        cashier: isCashier
-    }
-
+        cashier: isCashier,
+    };
 };
 
 
@@ -145,7 +156,7 @@ export const updateTaxData = async (data) => {
 
 
 //запазва номер на регистриран апартамент
- const saveApartment = async (number, userID) => {
+const saveApartment = async (number, userID) => {
     const numberRef = ref(realtimeDB, `numbers/${number}`);
     try {
         await set(numberRef, { value: userID });
@@ -161,7 +172,7 @@ export const updateTaxData = async (data) => {
 const checkApartment = async (number) => {
     const snapshot = await get(ref(realtimeDB, `numbers/${number}`));
     if (snapshot.exists()) {
-        console.log(`Апартамент : ${number}, вече има регистрация`);
+        alert(`Апартамент : ${number}, вече има регистрация`)
     }
     return snapshot.exists();
 };

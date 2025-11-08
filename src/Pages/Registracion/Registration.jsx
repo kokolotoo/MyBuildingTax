@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 //import useRegistration from '../../hooks/useRegistration';
 import styles from './reg.module.css'
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import DataContext from '../../Context/DataContext';
 const Registration = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const { setUser, setLogin } = useContext(DataContext)
+    const navigate = useNavigate()
     const [formdata, setFormdata] = useState(
         {
             mail: '',
@@ -34,7 +35,7 @@ const Registration = () => {
         })
         setLogin(true)
         console.log(newUser);
-        
+        if (newUser) { navigate('/') }
     }
 
 
