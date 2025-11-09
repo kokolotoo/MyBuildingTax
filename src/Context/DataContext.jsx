@@ -9,10 +9,11 @@ export const DataProvider = ({ children }) => {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        const isLogin = sessionStorage.getItem('loginData')
+        const isLogin = sessionStorage.getItem('loginUser')
         if (isLogin) {
             setLogin(true)
             setUser(JSON.parse(isLogin))
+            setLogin(true)
         }
 
     }, [])

@@ -43,7 +43,7 @@ export const signIn = async (email, password) => {
 
 export const exit = async () => {
     await signOut(auth);
-    sessionStorage.removeItem('loginData')
+    sessionStorage.removeItem('loginUser')
 }
 
 
