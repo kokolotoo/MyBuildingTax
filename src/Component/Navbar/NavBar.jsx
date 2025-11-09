@@ -1,16 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../Styles/navBar.css';
 import DataContext from '../../Context/DataContext';
+import { exit } from '../../Functions/FirebaseFunctions';
 
 
-export default function Navbar({ logOuth }) {
+export default function Navbar({ }) {
     const navigate = useNavigate()
-    const { login, user } = useContext(DataContext)
+    const { login, setLogin, setUser, user } = useContext(DataContext)
     const [menuOpen, setMenuOpen] = useState(false);
-
-
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -20,8 +18,12 @@ export default function Navbar({ logOuth }) {
         setMenuOpen(false);
     }
 
-
-
+    const logOuth = async () => {
+        await exit()
+        setLogin(false)
+        setUser(null)
+        navigate('/')
+    }
 
     useEffect(() => {
         if (menuOpen) {
@@ -37,7 +39,7 @@ export default function Navbar({ logOuth }) {
 
             <ul className={`header__menu ${menuOpen ? 'header__menu-open' : ''}`}>
 
-                <Link to='/'  onClick={closeMenu}>
+                <Link to='/' onClick={closeMenu}>
                     Начало
                 </Link>
 
@@ -50,7 +52,9 @@ export default function Navbar({ logOuth }) {
             <button className="header__burger" onClick={toggleMenu}>
                 ☰
             </button>
-            <p>{user.cashier ? 'Касиер' : `Апартамент: ${user.user}`}</p>
+            {login &&
+                <p>{user.cashier ? 'Касиер' : `Апартамент: ${user.user}`}</p>
+            }
         </nav>
     );
 }

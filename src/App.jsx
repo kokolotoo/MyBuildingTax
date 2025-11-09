@@ -8,6 +8,7 @@ const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
 const Registration = lazy(() => import('./Pages/Registracion/Registration'))
 const ForgotPassPage = lazy(() => import('./Pages/Forgot-page/ForgotPage'))
 const HomePage = lazy(() => import('./Pages/Home Page/HomePage'))
+const Menagers = lazy(() => import('./Component/Menagers/MenagersPage'))
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/Login' element={<LoginPage />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='/forgot-pass' element={<ForgotPassPage />} />
+        <Route path='/menagers' element={<Menagers />} />
 
       </Routes>
 

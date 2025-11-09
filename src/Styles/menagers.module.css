@@ -1,0 +1,7 @@
+.container{
+    background: linear-gradient(135deg, #0c240c, #140942c2);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+

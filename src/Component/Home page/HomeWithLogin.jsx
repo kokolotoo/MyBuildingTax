@@ -1,38 +1,55 @@
 import { useState, useContext } from 'react'
 import styles from '../../Styles/homeWithLogin.module.css'
-import { useNavigate } from 'react-router-dom';
-import { exit } from '../../Functions/FirebaseFunctions';
+import { Link, useNavigate } from 'react-router-dom';
 import DataContext from '../../Context/DataContext'
 import Navbar from '../Navbar/NavBar';
+import { useSuccessModal } from '../../Hooks/ModalHook';
+import { dataMenagers } from '../../Functions/FirebaseFunctions';
 
 const HomeWithLogin = () => {
   const navigate = useNavigate()
-  const { setUser, setLogin } = useContext(DataContext)
-  const [name, setName] = useState('slider')
+  const { user, setUser, setLogin } = useContext(DataContext)
 
-  const change = () => {
-    setName((prev) => (prev === 'slider' ? 'slider1' : 'slider'));
-  }
+  const { infoModal, contextHolder } = useSuccessModal();
 
-  const logOuth = async () => {
-    await exit()
-    setLogin(false)
-    setUser(null)
-    navigate | ('/')
+  const shownMenagers = async () => {
+    const menagers = await dataMenagers()
+
+    const cashier = menagers["Cashier"];
+    const houseMenager = menagers["House Menager"];
+
+    const message = `
+Домоуправител: ${houseMenager.name}
+телефон:       ${houseMenager.pfone}
+апартамент:    ${houseMenager.apartment}
+    
+Касиер:        ${cashier.name}
+телефон:       ${cashier.pfone}
+апартамент:    ${cashier.apartment}
+    `
+
+    infoModal(message)
+  };
+
+  const goToMenagers = () => {
+    navigate('/menagers')
   }
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
+      {contextHolder}
+      <Navbar />
 
-      <Navbar logOuth={logOuth} />
+      <section className={styles.list_section}>
+        <ul>
+          <li>Списък апартаменти</li>
+          <li>Месечно отчитане</li>
+          <li>Моят апартамент</li>
+          <li onClick={user.cashier ? goToMenagers : shownMenagers}>Управление</li>
+        </ul>
+      </section>
 
-
-
-     
-
-
-
-    </div>
+    </main>
   )
 }
 

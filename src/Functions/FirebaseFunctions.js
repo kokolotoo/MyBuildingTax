@@ -7,7 +7,7 @@ import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Co
 
 //логване
 export const signIn = async (email, password) => {
- 
+
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const numberOfApartment = await getApartmentByUserId(userCredential.user.uid)
@@ -17,7 +17,7 @@ export const signIn = async (email, password) => {
         }
 
         const oldCashier = await getTaxData()
-        
+
         const newUser = {
             user: numberOfApartment,
             cashier: compareIsCashier(numberOfApartment, oldCashier.cashier)
@@ -138,8 +138,8 @@ export const getTaxData = async () => {
 
 //проверява дали логнатия потребител е касиер
 const compareIsCashier = (loginUser, cashier) => {
-    
-    
+
+
     if (parseFloat(loginUser) === parseFloat(cashier)) {
         return true
     } else {
@@ -147,7 +147,7 @@ const compareIsCashier = (loginUser, cashier) => {
     }
 }
 
-//промяна на цените на таксите 
+//промяна на данните за цени или управители
 export const updateTaxData = async (data) => {
     /*
         const data = {
@@ -254,5 +254,26 @@ export const updateApartData = async (data, apartment) => {
         console.error(err);
     }
 };
+
+
+
+//Взема касиер и домоуправител
+export const dataMenagers = async () => {
+
+    try {
+        const productRef = doc(db, "DataTax", "menagers");
+
+        const snapShot = await getDoc(productRef);
+        if (snapShot.exists()) {
+            console.log(snapShot.data());
+            
+            return snapShot.data()
+        }
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+
 
 
