@@ -1,18 +1,18 @@
-form>button,
-form input {
-    font-size: 1.3em;
-    padding: 0.4rem;
-    width: 36ch;
-    max-width: 100%;
+.loginForm>button {
+  background-color: green;
+  color: azure;
+  padding: 1em;
+  width: 100%;
+  max-width: 200px;
 }
 
 .login-container {
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     gap: 1.5em;
-    margin: 1em auto;
     justify-content: center;
+    background: linear-gradient(135deg, #351036, #231863);
 }
 
 .loginForm {
@@ -23,30 +23,6 @@ form input {
     width: 100%;
 }
 
-
-.p {
-    color: rgb(250, 52, 52);
-}
-
-.checkbox_div {
-    display: flex;
-    gap: 1em;
-}
-
-input[type="checkbox"] {
-    width: 1.2em;
-}
-
-.shown_pass {
-    display: flex;
-    gap: 1em;
-    margin-top: 1em;
-}
-
-.message {
-    color: rgb(218, 55, 55);
-    margin-bottom: 2em;
-}
 
 .footer {
     display: flex;

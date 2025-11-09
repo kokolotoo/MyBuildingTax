@@ -77,9 +77,6 @@
     flex-wrap: wrap;
 }
 
-.reg_button:hover {
-    background-color: #1164ad;
-}
 
 .home_button:hover {
     background-color: #27801b;
@@ -95,4 +92,10 @@
 
 a {
     text-decoration: none;
+    color: aliceblue;
+    letter-spacing: 1px;
+    border: 1px solid gray;
+    padding: 0.3em ;
+    border-radius: 0.3em;
+    align-self: center;
 }

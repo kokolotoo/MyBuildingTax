@@ -11,6 +11,7 @@ const FrontPage = lazy(() => import('./Pages/Home Page/FrontPage'))
 const HomeWithLogin = lazy(() => import('./Pages/Home Page/HomeWithLogin'))
 const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
 const Registration = lazy(() => import('./Pages/Registracion/Registration'))
+const ForgotPassPage = lazy(() => import('./Pages/Forgot-page/ForgotPage'))
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/Login' element={<LoginPage />} />
         <Route path='/welcome' element={<HomeWithLogin />} />
         <Route path='/registration' element={<Registration />} />
+        <Route path='/forgot-pass' element={<ForgotPassPage />} />
 
       </Routes>
 

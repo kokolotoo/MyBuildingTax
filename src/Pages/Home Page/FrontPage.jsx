@@ -36,23 +36,16 @@ const FrontPage = () => {
           >Относно</button>
         </div>
 
-
-
         <AboutModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           message={`Тестова страница за отчитане, месечните такси на живущите в
-             блок 319 вх.Д.
+             блок 319 /вх.Д /гр.Ловеч
             Моля подминете  ако не сте жител на този вход !`}
         />
       </main>
 
-      <footer className={styles.home_footer}>
-        <p>© {new Date().getFullYear()} MyBuildingTax — Всички права запазени.</p>
-      </footer>
     </section>
-
-
 
   )
 }

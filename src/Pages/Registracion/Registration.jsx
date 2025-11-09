@@ -3,15 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 //import useRegistration from '../../hooks/useRegistration';
 import styles from './reg.module.css'
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
-import { Input, Space } from 'antd';
+import { Input, Space, Modal } from 'antd';
 import { sumbmit } from '../../Functions/FirebaseFunctions';
 import DataContext from '../../Context/DataContext';
+
 
 
 const Registration = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const { setUser, setLogin } = useContext(DataContext)
     const navigate = useNavigate()
+    const [modal, contextHolder] = Modal.useModal(); 
     const [formdata, setFormdata] = useState(
         {
             mail: '',
@@ -25,23 +27,35 @@ const Registration = () => {
     const registration = async (e) => {
         e.preventDefault()
         const newUser = await sumbmit(formdata)
-        setUser(newUser)
-        setFormdata({
-            mail: '',
-            password: '',
-            confirmPassword: '',
-            apartment: null
-
-        })
-        setLogin(true)
         console.log(newUser);
-        if (newUser) { navigate('/') }
+        if (newUser) { 
+            setLogin(true)
+            setUser(newUser)
+            setFormdata({
+                mail: '',
+                password: '',
+                confirmPassword: '',
+                apartment: null
+
+            })
+            successLogin(newUser.user)
+        }
     }
+
+    const successLogin = (number) => {
+        modal.success({
+            title: 'My Building Tax',
+            content: `Добре дошли апартамент: ${number}`,
+            onOk() {
+                navigate('/')
+            },
+        });
+    };
 
 
     return (
         <form className={styles.container} onSubmit={registration}>
-
+            {contextHolder}
             <Space direction="vertical"  >
                 <label htmlFor="Email">Имейл</label>
                 <Input

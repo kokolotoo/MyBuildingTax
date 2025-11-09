@@ -2,23 +2,29 @@ import { ref, get, set } from "firebase/database";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
-
+import { message } from 'antd';
 
 
 //логване
-export const signIn = async (e) => {
-    e.preventDefault();
+export const signIn = async (email, password) => {
+    
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const numberOfApartment = await getApartmentByUserId(userCredential.user.uid)
+        if (!numberOfApartment) {
+            alert('няма намерен номер на апартамент')
+            return
+        }
 
+        const oldCashier = await getTaxData()
+        
         const newUser = {
-            name: userCredential.user.displayName || "No Name",
-            email: userCredential.user.email,
-            id: userCredential.user.uid
+            user: numberOfApartment,
+            cashier: compareIsCashier(numberOfApartment, oldCashier.cashier)
         };
 
         sessionStorage.setItem('loginUser', JSON.stringify(newUser));
-
+        return newUser;
     } catch (err) {
         console.log(err.message);
         const errorCode = err.code;
@@ -28,14 +34,14 @@ export const signIn = async (e) => {
             "auth/wrong-password": "Incorrect password. Try again!",
             "auth/too-many-requests": "Too many failed attempts. Please try again later.",
         };
-
-        return messages[errorCode] || "An error occurred. Try again!";
+        const result = messages[errorCode]
+        alert(result)
     }
 };
 
 
 
-export const exit = async ()=>{
+export const exit = async () => {
     await signOut(auth);
     sessionStorage.removeItem('loginData')
 }
@@ -46,21 +52,25 @@ const registerUser = async (email, password) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         return userCredential.user.uid;
-    } catch (error) {
 
-        // Грешка: имейлът вече съществува
+    } catch (error) {
         if (error.code === "auth/email-already-in-use") {
             alert("❌ Вече съществува регистрация с този имейл!");
             return false;
         }
 
-        // Други възможни грешки
         if (error.code === "auth/invalid-email") {
             alert("⚠️ Имейл адресът не е валиден!");
             return false;
         }
 
+        if (error.code === "auth/weak-password") {
+            alert("⚠️ Паролата трябва да е поне 6 символа!");
+            return false;
+        }
+
         console.error("❌ Грешка при регистрация:", error.message);
+        alert("⚠️ Възникна неочаквана грешка при регистрация!");
         return false;
     }
 };
@@ -114,8 +124,6 @@ export const getTaxData = async () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-
-            console.log("Данни: ➡", docSnap.data());
             return docSnap.data();
         } else {
             console.log("❌ Документът не съществува!");
@@ -127,7 +135,16 @@ export const getTaxData = async () => {
 };
 
 
-
+//проверява дали логнатия потребител е касиер
+const compareIsCashier = (loginUser, cashier) => {
+    
+    
+    if (parseFloat(loginUser) === parseFloat(cashier)) {
+        return true
+    } else {
+        return false
+    }
+}
 
 //промяна на цените на таксите 
 export const updateTaxData = async (data) => {
@@ -177,6 +194,31 @@ const checkApartment = async (number) => {
     return snapshot.exists();
 };
 
+
+
+//взема номера на апартамент по ИД на логина
+const getApartmentByUserId = async (userId) => {
+    try {
+        const numbersRef = ref(realtimeDB, "numbers");
+        const snapshot = await get(numbersRef);
+
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+
+            // Обхождаме всички апартаменти
+            for (const [apartment, info] of Object.entries(data)) {
+                if (info.value === userId) {
+                    return apartment;
+                }
+            }
+            return null;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        return null;
+    }
+};
 
 
 
