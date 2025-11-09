@@ -6,14 +6,13 @@ import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icon
 import { Input, Space, Modal } from 'antd';
 import { sumbmit } from '../../Functions/FirebaseFunctions';
 import DataContext from '../../Context/DataContext';
-
+import { useSuccessModal } from '../../Hooks/ModalHook';
 
 
 const Registration = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const { setUser, setLogin } = useContext(DataContext)
-    const navigate = useNavigate()
-    const [modal, contextHolder] = Modal.useModal(); 
+    const { successLogin, contextHolder } = useSuccessModal();
     const [formdata, setFormdata] = useState(
         {
             mail: '',
@@ -42,15 +41,7 @@ const Registration = () => {
         }
     }
 
-    const successLogin = (number) => {
-        modal.success({
-            title: 'My Building Tax',
-            content: `Добре дошли апартамент: ${number}`,
-            onOk() {
-                navigate('/')
-            },
-        });
-    };
+    
 
 
     return (

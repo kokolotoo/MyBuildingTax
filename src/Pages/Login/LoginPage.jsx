@@ -1,16 +1,15 @@
 import './login.css'
 import { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { signIn } from '../../Functions/FirebaseFunctions';
 import DataContext from '../../Context/DataContext';
-import { Modal } from 'antd';
+import { useSuccessModal } from '../../Hooks/ModalHook';
 
 const loginPage = () => {
     const { setUser, setLogin } = useContext(DataContext)
-    const navigate = useNavigate()
-    const [modal, contextHolder] = Modal.useModal(); 
+    const { successLogin, contextHolder } = useSuccessModal();
     const [loginData, setLoginData] = useState({
         loginEmail: '',
         loginPass: ''
@@ -21,23 +20,15 @@ const loginPage = () => {
         const newUser = await signIn(loginData.loginEmail, loginData.loginPass)
         setUser(newUser)
         setLogin(true)
+        setLoginData({
+            loginEmail: '',
+            loginPass: ''
+        })
         successLogin(newUser.user)
        
     }
 
-    const successLogin = (number) => {
-        modal.success({
-            title: 'My Building Tax',
-            content: `Добре дошли апартамент: ${number}`,
-            onOk() {
-                setLoginData({
-                    loginEmail: '',
-                    loginPass: ''
-                })
-                navigate('/')
-            },
-        });
-    };
+    
 
     return (
 

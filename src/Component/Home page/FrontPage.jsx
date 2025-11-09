@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from "./frontPage.module.css"
 import { Link } from 'react-router-dom'
 import AboutModal from '../../Helpers/Modal'
-import Test from '../../Component/test/Test';
+
 
 const FrontPage = () => {
 

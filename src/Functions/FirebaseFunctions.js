@@ -2,12 +2,12 @@ import { ref, get, set } from "firebase/database";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
-import { message } from 'antd';
+
 
 
 //логване
 export const signIn = async (email, password) => {
-    
+ 
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const numberOfApartment = await getApartmentByUserId(userCredential.user.uid)
@@ -49,6 +49,7 @@ export const exit = async () => {
 
 //Регистрация
 const registerUser = async (email, password) => {
+
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         return userCredential.user.uid;
