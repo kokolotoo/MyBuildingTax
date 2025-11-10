@@ -5,6 +5,7 @@ import DataContext from '../../Context/DataContext'
 import Navbar from '../Navbar/NavBar';
 import { useSuccessModal } from '../../Hooks/ModalHook';
 import { dataMenagers } from '../../Functions/FirebaseFunctions';
+import Message from './Message/Message'
 
 const HomeWithLogin = () => {
   const navigate = useNavigate()
@@ -18,15 +19,7 @@ const HomeWithLogin = () => {
     const cashier = menagers["Cashier"];
     const houseMenager = menagers["House Menager"];
 
-    const message = `
-Домоуправител: ${houseMenager.name}
-телефон:       ${houseMenager.pfone}
-апартамент:    ${houseMenager.apartment}
-    
-Касиер:        ${cashier.name}
-телефон:       ${cashier.pfone}
-апартамент:    ${cashier.apartment}
-    `
+    const message =  <Message cashier={cashier} houseMenager={houseMenager}/>
 
     infoModal(message)
   };

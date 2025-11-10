@@ -30,9 +30,9 @@ export const useSuccessModal = () => {
     const infoModal = (message) => {
         modal.info({
             title: 'My Building Tax',
-            content: <pre style={{color:'red'}}>{message}</pre>,
+            content: message,
         });
-    };
+    }
 
     return { successLogin, contextHolder, alertMessage, infoModal };
 };

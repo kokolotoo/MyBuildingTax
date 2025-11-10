@@ -265,8 +265,7 @@ export const dataMenagers = async () => {
 
         const snapShot = await getDoc(productRef);
         if (snapShot.exists()) {
-            console.log(snapShot.data());
-            
+           
             return snapShot.data()
         }
     } catch (err) {
