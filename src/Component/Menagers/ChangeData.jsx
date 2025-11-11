@@ -11,6 +11,10 @@ const ChangeData = ({ menager, person }) => {
         setChangeMenager(false)
     }
 
+    useEffect(() => {
+        setCurrPerson(menager);
+    }, [menager]);
+
     return (
         <div>
             <table>
@@ -27,9 +31,10 @@ const ChangeData = ({ menager, person }) => {
                         {changeMenager ?
                             <Input
                                 type="text"
-                                name="email"
+                                name="name"
                                 placeholder="Email"
                                 value={currPerson.name}
+                                onChange={(e) => setCurrPerson({ ...currPerson, name: e.target.value })}
                             /> :
                             currPerson.name}
                     </td>
@@ -37,9 +42,10 @@ const ChangeData = ({ menager, person }) => {
                         {changeMenager ?
                             <Input
                                 type="text"
-                                name="email"
+                                name="phone"
                                 placeholder="Email"
                                 value={currPerson.pfone}
+                                onChange={(e) => setCurrPerson({ ...currPerson, pfone: e.target.value })}
                             /> :
                             currPerson.pfone}
                     </td>
@@ -47,9 +53,10 @@ const ChangeData = ({ menager, person }) => {
                         {changeMenager ?
                             <Input
                                 type="text"
-                                name="email"
+                                name="apartment"
                                 placeholder="Email"
                                 value={currPerson.apartment}
+                                onChange={(e) => setCurrPerson({ ...currPerson, apartment: e.target.value })}
                             /> :
                             currPerson.apartment}
                     </td>
@@ -57,14 +64,16 @@ const ChangeData = ({ menager, person }) => {
             </table>
             <div className={styles.buttons}>
                 <button
+                    type='button'
                     className={changeMenager ? styles.save_change_menager_but : styles.change_menager_but}
                     onClick={() => setChangeMenager(prev => !prev)}
-                >{changeMenager ? 'Запази промените' : 'Промени Данните'}
+                >{changeMenager ? '💾 Запази промените' : '✏️ Промени Данните'}
                 </button>
                 {changeMenager && <button
+                    type='button'
                     className={styles.reject_but}
                     onClick={abort}
-                >Откажи</button>}
+                >❌ Откажи</button>}
             </div>
         </div>
     )
