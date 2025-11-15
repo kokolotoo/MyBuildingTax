@@ -2,7 +2,6 @@ import { ref, get, set } from "firebase/database";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
-import {  } from 'firebase/auth';
 
 
 //логване
@@ -230,41 +229,5 @@ const getApartmentByUserId = async (userId) => {
         }
     } catch (error) {
         return null;
-    }
-};
-
-
-
-
-//Взема данни на апартамент
-export const getApartmentData = async (apart) => {
-
-    try {
-        const productRef = doc(db, "Apartments", `apart${apart}`);
-
-        const data = (await getDoc(productRef)).data();
-
-        console.log(data);
-        return data
-
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-
-
-//Актуализира данни на апартамент
-export const updateApartData = async (data, apartment) => {
-
-    try {
-        const productRef = doc(db, "Apartments", apartment);
-
-        await setDoc(productRef, data);
-
-        console.log('Успешно актуалиризани данни');
-
-    } catch (err) {
-        console.error(err);
     }
 };

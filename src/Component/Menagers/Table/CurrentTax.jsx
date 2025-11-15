@@ -59,10 +59,10 @@ const CurrentTax = ({ dataSettings }) => {
                             onChange={(e) =>
                                 setNewData({ ...newData, lowTax: e.target.value })
                             }
-                            style={{ width: 50, margin: 5 }}
+                            style={{ width: 70, margin: 5 }}
                         />
                     ) : (
-                        formatNumber(newData.lowTax)
+                            <span className={styles.price}>{formatNumber(newData.lowTax)}</span> 
                     )}
                 </p>
             </div>
@@ -77,17 +77,17 @@ const CurrentTax = ({ dataSettings }) => {
                             onChange={(e) =>
                                 setNewData({ ...newData, hightTax: e.target.value })
                             }
-                            style={{width: 50, margin:5}}
+                            style={{width: 70, margin:5}}
                         />
                     ) : (
-                        formatNumber(newData.hightTax)
+                            <span className={styles.price}>{formatNumber(newData.hightTax)}</span> 
                     )}
                 </p>
 
                 <div className={styles.buttons}>
                     <button
                         onClick={handleUpdateData}
-                        className={styles.save_change_menager_but}
+                        className={changeTax ? styles.save_change_menager_but : styles.change_menager_but}
                     >
                         {changeTax ? '💾 Запази промените' : '✏️ Промени Таксата'}
                     </button>

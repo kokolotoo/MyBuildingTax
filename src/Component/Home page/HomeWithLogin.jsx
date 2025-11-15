@@ -20,10 +20,14 @@ const HomeWithLogin = () => {
     const cashier = menagers.cashier;
     const houseMenager = menagers.houseMenager;
 
-    const message =  <Message cashier={cashier} houseMenager={houseMenager}/>
+    const message = <Message cashier={cashier} houseMenager={houseMenager} />
 
     infoModal(message)
   };
+
+  const goToApartments = () => {
+    navigate('/apartments')
+  }
 
   const goToMenagers = () => {
     navigate('/menagers')
@@ -36,7 +40,7 @@ const HomeWithLogin = () => {
 
       <section className={styles.list_section}>
         <ul>
-          <li>Списък апартаменти</li>
+          <li onClick={goToApartments}>Списък апартаменти</li>
           <li>Месечно отчитане</li>
           <li>Моят апартамент</li>
           <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}>

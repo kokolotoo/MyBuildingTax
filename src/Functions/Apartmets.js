@@ -1,10 +1,10 @@
-import { doc, setDoc, getDoc } from "firebase/firestore"
+import { doc, setDoc, getDocs,getDoc, collection } from "firebase/firestore"
 import { db } from "../Config/Firebase_Config"
 
 export const monthTax = (apartment, peoples) => {
     const lowTax = 5
     const hightTax = 15
-    
+
     const taxPerPeople = apartment <= 9 ? lowTax : hightTax
     const totalTax = taxPerPeople * peoples
     return totalTax
@@ -12,15 +12,15 @@ export const monthTax = (apartment, peoples) => {
 
 
 //взема конкретен апартамент подаден като аргумент
-export const getData = async (apartment) => {
+export const getSingleApartment = async (apartment) => {
     try {
         const productRef = doc(db, "Apartments", `apart${apartment}`);
         const snapshot = await getDoc(productRef);
 
         if (snapshot.exists()) {
             console.log(`✅ Данни за apart${apartment}:`, snapshot.data());
-           
-            
+
+
             return snapshot.data()
 
         } else {
@@ -36,14 +36,22 @@ export const getData = async (apartment) => {
 
 //взема всички апартаменти
 export const getAllApartments = async () => {
-    const querySnapshot = await getDocs(collection(db, "Apartments"));
-    const apartments = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }));
+    try {
+        const querySnapshot = await getDocs(collection(db, "Apartments"));
 
-    console.log(apartments);
-    return apartments
+        const apartments = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Сортиране по apartment (нарастващо)
+        apartments.sort((a, b) => a.apartment - b.apartment);
+        return apartments;
+
+    } catch (err) {
+        console.error("Грешка при четене на Apartments:", err);
+        return [];
+    }
 };
 
 
@@ -52,16 +60,21 @@ export const getAllApartments = async () => {
 //Ъпдейтва инфото за конкретен апартамент
 export const editApartment = async (apartmentId, updatedFields) => {
     try {
-        // 1️⃣ Вземаме документа
         const apartmentRef = doc(db, "Apartments", apartmentId);
+
         const snapshot = await getDoc(apartmentRef);
 
         if (!snapshot.exists()) {
+            console.log("❌ Апартаментът не съществува!");
             return;
         }
+
         const currentData = snapshot.data();
         const newData = { ...currentData, ...updatedFields };
-        await setDoc(apartmentRef, newData);
+
+        await setDoc(apartmentRef, newData, { merge: true });
+
+        console.log("✔ Успешно обновен апартамент:", apartmentId);
 
     } catch (err) {
         console.error("❌ Грешка при обновяване:", err);
