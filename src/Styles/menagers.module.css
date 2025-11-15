@@ -58,3 +58,29 @@ td {
     border: none;
     margin-left: 2em;
 }
+
+.taxInfo {
+    margin-top: 2em;
+    border: 1px solid lightcoral;
+    padding: 1em;
+    border-radius: 0.5em;
+}
+
+.taxInfo>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+footer{
+    text-align: center;
+    margin: 3em;
+}
+
+footer h3{
+    color: rgb(255, 0, 0);
+    font-family:'Times New Roman', Times, serif;
+    letter-spacing: 2px;
+    font-size: 1.3rem;
+}

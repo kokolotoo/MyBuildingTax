@@ -26,7 +26,9 @@ const Registration = () => {
     const registration = async (e) => {
         e.preventDefault()
         const newUser = await sumbmit(formdata)
-        console.log(newUser);
+
+        //console.log(newUser);
+
         if (newUser) { 
             setLogin(true)
             setUser(newUser)

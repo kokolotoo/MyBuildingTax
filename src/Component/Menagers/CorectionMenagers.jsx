@@ -4,25 +4,47 @@ import styles from '../../Styles/menagers.module.css'
 
 import ChangeData from './ChangeData';
 
-const CorectionMenagers = ({ menagers }) => {
+const CorectionMenagers = ({ menagers, dataSettings }) => {
     const { login, setLogin, setUser, user } = useContext(DataContext)
-    const [changeMenager, setChangeMenager] = useState(false)
-    const [changeCashier, setChangeCashier] = useState(false)
-
-
 
     return (
         <section>
 
             <ChangeData
                 menager={menagers.houseMenager}
-                person={'House Menager'}
+                dataSettings={dataSettings}
+                person={'houseMenager'}
+
             />
 
             <ChangeData
                 menager={menagers.cashier}
-                person={'Cashier'}
+                dataSettings={dataSettings}
+                person={'cashier'}
+
             />
+            <main className={styles.taxInfo}>
+                <div>
+                    <p>Такса на човек живущ на 1 или 2 етаж :
+                        € {dataSettings.lowTax.toFixed(2)}.
+                    </p>
+                    <button>Промени</button>
+                </div>
+                <div>
+                    <p>Такса на човек живущ от 2 етаж нагоре :
+                        € <b>{dataSettings.hightTax.toFixed(2)}</b>.
+                    </p>
+                    <button>Промени</button>
+                </div>
+
+            </main>
+
+            
+            <footer>
+                <h3><b>!!!</b> Внимание <b>!!!</b></h3>
+                <p>За деца под 10г. не се начислява такса</p>
+            </footer>
+           
 
         </section>
     )

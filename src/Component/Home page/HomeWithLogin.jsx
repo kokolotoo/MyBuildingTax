@@ -4,8 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import DataContext from '../../Context/DataContext'
 import Navbar from '../Navbar/NavBar';
 import { useSuccessModal } from '../../Hooks/ModalHook';
-import { dataMenagers } from '../../Functions/FirebaseFunctions';
+import { getTaxData } from '../../Functions/FirebaseFunctions';
 import Message from './Message/Message'
+
 
 const HomeWithLogin = () => {
   const navigate = useNavigate()
@@ -14,10 +15,10 @@ const HomeWithLogin = () => {
   const { infoModal, contextHolder } = useSuccessModal();
 
   const shownMenagers = async () => {
-    const menagers = await dataMenagers()
+    const menagers = await getTaxData()
 
-    const cashier = menagers["Cashier"];
-    const houseMenager = menagers["House Menager"];
+    const cashier = menagers.cashier;
+    const houseMenager = menagers.houseMenager;
 
     const message =  <Message cashier={cashier} houseMenager={houseMenager}/>
 
@@ -38,7 +39,9 @@ const HomeWithLogin = () => {
           <li>Списък апартаменти</li>
           <li>Месечно отчитане</li>
           <li>Моят апартамент</li>
-          <li onClick={user.cashier ? goToMenagers : shownMenagers}>Управление</li>
+          <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}>
+            Управление
+          </li>
         </ul>
       </section>
 

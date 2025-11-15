@@ -9,18 +9,23 @@ import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Co
 export const signIn = async (email, password) => {
 
     try {
+
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const numberOfApartment = await getApartmentByUserId(userCredential.user.uid)
+
         if (!numberOfApartment) {
             alert('няма намерен номер на апартамент')
             return
         }
 
-        const oldCashier = await getTaxData()
+        const data = await getTaxData()
+        const cashier = data.cashier.apartment;
+        const houseMenager = data.houseMenager.apartment;
 
         const newUser = {
             user: numberOfApartment,
-            cashier: compareIsCashier(numberOfApartment, oldCashier.cashier)
+            cashier: compareIsCashier(numberOfApartment, cashier),
+            housMenager: compareIsCashier(numberOfApartment, houseMenager)
         };
 
         sessionStorage.setItem('loginUser', JSON.stringify(newUser));
@@ -47,7 +52,9 @@ export const exit = async () => {
 }
 
 
-//Регистрация
+
+
+//Регистрация2
 const registerUser = async (email, password) => {
 
     try {
@@ -78,7 +85,7 @@ const registerUser = async (email, password) => {
 
 
 
-
+//Регистрация1
 export const sumbmit = async (formdata) => {
     const validEmailDomains = ["gmail.com", "abv.bg", "yahoo.com", "outlook.com", "icloud.com", "mail.bg"];
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -99,22 +106,36 @@ export const sumbmit = async (formdata) => {
         alert("⚠️ Паролите не съвпадат!");
         return;
     }
+    try {
+        const isApartmentRegister = await checkApartment(formdata.apartment);
+        if (isApartmentRegister) return;
 
-    const isApartmentRegister = await checkApartment(formdata.apartment);
-    if (isApartmentRegister) return;
+        const data = await getTaxData()
+        const isCashier = data.cashier.apartment == formdata.apartment;
+        const isHouseMenager = data.houseMenager.apartment == formdata.apartment;
 
-    const resultId = await registerUser(formdata.mail, formdata.password, formdata.apartment);
-    if (!resultId) return;
 
-    await saveApartment(formdata.apartment, resultId);
+        const resultId = await registerUser(formdata.mail, formdata.password);
 
-    const cashierAparment = await getTaxData();
-    const isCashier = cashierAparment.cashier == formdata.apartment;
+        if (!resultId) {
+            alert('нещо се обърка')
+        }
 
-    return {
-        user: formdata.apartment,
-        cashier: isCashier,
-    };
+
+        if (!resultId) return;
+        await saveApartment(formdata.apartment, resultId);
+
+        return {
+            user: formdata.apartment,
+            cashier: isCashier,
+            housMenager: isHouseMenager
+        };
+
+    } catch (error) {
+        console.log(error.message);
+
+    }
+
 };
 
 
@@ -136,41 +157,30 @@ export const getTaxData = async () => {
 };
 
 
+
+
 //проверява дали логнатия потребител е касиер
 const compareIsCashier = (loginUser, cashier) => {
-
-
-    if (parseFloat(loginUser) === parseFloat(cashier)) {
+    if (Number(loginUser) == Number(cashier)) {
         return true
     } else {
         return false
     }
 }
 
+
+
 //промяна на данните за цени или управители
-export const updateTaxData = async (data) => {
-    /*
-        const data = {
-            lowTax: 5,
-            hightTax: 15,
-            euro: 1.95583,
-            cashier: 16,
-            money:100
-        }
-    
-     */
-
+export const updateData = async (data) => {
     try {
-        const productRef = doc(db, "DataTax", "settings");
-
+        const productRef = doc(db, "DataTax", 'settings');
         await setDoc(productRef, data);
-
-        console.log(`Всички продукти са добавени успешно`);
-
     } catch (err) {
         console.error(err);
     }
 };
+
+
 
 
 //запазва номер на регистриран апартамент
@@ -186,6 +196,8 @@ const saveApartment = async (number, userID) => {
 };
 
 
+
+
 //проверява дали има регистриран апартамент
 const checkApartment = async (number) => {
     const snapshot = await get(ref(realtimeDB, `numbers/${number}`));
@@ -194,6 +206,8 @@ const checkApartment = async (number) => {
     }
     return snapshot.exists();
 };
+
+
 
 
 
@@ -223,6 +237,8 @@ const getApartmentByUserId = async (userId) => {
 
 
 
+
+
 //Взема данни на апартамент
 export const getApartmentData = async (apart) => {
 
@@ -240,6 +256,8 @@ export const getApartmentData = async (apart) => {
 };
 
 
+
+
 //Актуализира данни на апартамент
 export const updateApartData = async (data, apartment) => {
 
@@ -254,25 +272,4 @@ export const updateApartData = async (data, apartment) => {
         console.error(err);
     }
 };
-
-
-
-//Взема касиер и домоуправител
-export const dataMenagers = async () => {
-
-    try {
-        const productRef = doc(db, "DataTax", "menagers");
-
-        const snapShot = await getDoc(productRef);
-        if (snapShot.exists()) {
-           
-            return snapShot.data()
-        }
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-
-
 

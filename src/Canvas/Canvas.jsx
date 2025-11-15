@@ -7,7 +7,7 @@ import { deleteImg } from "../Config/SupaBase_Config";
 import { base64ToFile } from "../Functions/BaseToFile64";
 import DataContext from "../Context/DataContext";
 import { pictureName } from "../Functions/GetPictureName";
-
+import DataContext from "../Context/DataContext";
 
 
 const SignaturePad = () => {
@@ -15,6 +15,7 @@ const SignaturePad = () => {
     const [isSigned, setIsSigned] = useState(false);
     const [imageURL, setImageURL] = useState(null);
     const [fileName, setFileName] = useState('')
+    const { user } = useContext(DataContext)
 
     // когато потребителят рисува
     const handleEnd = () => {
@@ -38,7 +39,7 @@ const SignaturePad = () => {
         const dataURL = sigCanvas.current.getCanvas().toDataURL("image/png");
 
         // Генерира име като подаваме аргумент с номера на апартамента
-        const fileName = pictureName(1)
+        const fileName = pictureName(user.apartment)
 
         setFileName(fileName)
 

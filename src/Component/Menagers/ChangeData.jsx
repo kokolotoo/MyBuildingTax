@@ -1,10 +1,14 @@
 import { useState, useContext, useEffect } from 'react'
 import styles from '../../Styles/menagers.module.css'
 import { Input } from 'antd';
+import { updateData } from '../../Functions/FirebaseFunctions';
+import DataTable from './Table/DataTable';
+import { useSuccessModal } from '../../Hooks/ModalHook';
 
-const ChangeData = ({ menager, person }) => {
+const ChangeData = ({ menager, person, dataSettings }) => {
     const [changeMenager, setChangeMenager] = useState(false)
     const [currPerson, setCurrPerson] = useState(menager)
+    const { successMessage, contextHolder, confirmModal } = useSuccessModal()
 
     const abort = () => {
         setCurrPerson(menager)
@@ -15,58 +19,52 @@ const ChangeData = ({ menager, person }) => {
         setCurrPerson(menager);
     }, [menager]);
 
+    const saveChange = async () => {
+        if (!changeMenager) {
+            setChangeMenager(true);
+            return;
+        }
+
+        const confirm = await confirmModal("Потвърдете промените");
+
+        if (confirm) {
+            const newData = {
+                ...dataSettings,
+                [person]: currPerson
+            };
+            await updateData(newData);
+            successMessage("Успешно променени данни!");
+        } else {
+            setCurrPerson(menager);
+        }
+
+        setChangeMenager(false);
+    };
+
     return (
         <div>
+            {contextHolder}
             <table>
                 <thead>
                     <tr>
-                        <th>{person == 'Cashier' ? 'Касиер' : 'Домоуправител'}</th>
+                        <th>{person == 'cashier' ? 'Касиер' : 'Домоуправител'}</th>
                         <th>Телефон</th>
                         <th>Апартамент</th>
                     </tr>
                 </thead>
 
-                <tr>
-                    <td>
-                        {changeMenager ?
-                            <Input
-                                type="text"
-                                name="name"
-                                placeholder="Email"
-                                value={currPerson.name}
-                                onChange={(e) => setCurrPerson({ ...currPerson, name: e.target.value })}
-                            /> :
-                            currPerson.name}
-                    </td>
-                    <td>
-                        {changeMenager ?
-                            <Input
-                                type="text"
-                                name="phone"
-                                placeholder="Email"
-                                value={currPerson.pfone}
-                                onChange={(e) => setCurrPerson({ ...currPerson, pfone: e.target.value })}
-                            /> :
-                            currPerson.pfone}
-                    </td>
-                    <td>
-                        {changeMenager ?
-                            <Input
-                                type="text"
-                                name="apartment"
-                                placeholder="Email"
-                                value={currPerson.apartment}
-                                onChange={(e) => setCurrPerson({ ...currPerson, apartment: e.target.value })}
-                            /> :
-                            currPerson.apartment}
-                    </td>
-                </tr>
+                <DataTable
+                    currPerson={currPerson}
+                    setCurrPerson={setCurrPerson}
+                    changeMenager={changeMenager}
+                />
+
             </table>
             <div className={styles.buttons}>
                 <button
                     type='button'
                     className={changeMenager ? styles.save_change_menager_but : styles.change_menager_but}
-                    onClick={() => setChangeMenager(prev => !prev)}
+                    onClick={saveChange}
                 >{changeMenager ? '💾 Запази промените' : '✏️ Промени Данните'}
                 </button>
                 {changeMenager && <button
@@ -75,6 +73,7 @@ const ChangeData = ({ menager, person }) => {
                     onClick={abort}
                 >❌ Откажи</button>}
             </div>
+
         </div>
     )
 }

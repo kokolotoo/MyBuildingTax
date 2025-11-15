@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Navbar from '../Navbar/NavBar'
 import styles from '../../Styles/menagers.module.css'
-import { dataMenagers } from '../../Functions/FirebaseFunctions'
+import { getTaxData } from '../../Functions/FirebaseFunctions'
 import Spinner from '../../Helpers/Spinner'
 import CorectionMenagers from './CorectionMenagers'
 
@@ -9,9 +9,11 @@ import CorectionMenagers from './CorectionMenagers'
 const MenagersPage = () => {
 
     const [currentMenagers, setCurrentMenagers] = useState(null)
+    const [dataSettings, setDataSettings] = useState(null)
 
     const data = async () => {
-        const menagers = await dataMenagers()
+        const menagers = await getTaxData()
+        setDataSettings(menagers)
         return menagers
     }
 
@@ -21,8 +23,8 @@ const MenagersPage = () => {
             if (!menagersResult) return
 
             setCurrentMenagers({
-                houseMenager: menagersResult["House Menager"],
-                cashier: menagersResult["Cashier"],
+                houseMenager: menagersResult.houseMenager,
+                cashier: menagersResult.cashier,
             })
         }
 
@@ -35,7 +37,10 @@ const MenagersPage = () => {
             <Navbar />
 
             {currentMenagers ?
-                <CorectionMenagers menagers={currentMenagers} />
+                <CorectionMenagers
+                    menagers={currentMenagers}
+                    dataSettings={dataSettings}
+                />
                 :
                 <Spinner />}
 

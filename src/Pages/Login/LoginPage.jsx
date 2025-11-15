@@ -1,9 +1,9 @@
 import './login.css'
 import { useState, useContext } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { signIn } from '../../Functions/FirebaseFunctions';
+import { signIn, getTaxData } from '../../Functions/FirebaseFunctions';
 import DataContext from '../../Context/DataContext';
 import { useSuccessModal } from '../../Hooks/ModalHook';
 
@@ -16,19 +16,23 @@ const loginPage = () => {
     });
 
     const login = async (e) => {
-        e.preventDefault()
-        const newUser = await signIn(loginData.loginEmail, loginData.loginPass)
-        setUser(newUser)
-        setLogin(true)
+        e.preventDefault();
+        
+         const newUser = await signIn(loginData.loginEmail, loginData.loginPass);
+        if (!newUser) return;
+        setUser(newUser);
+        setLogin(true);
+
         setLoginData({
             loginEmail: '',
             loginPass: ''
-        })
-        successLogin(newUser.user)
-       
-    }
+        });
 
-    
+        successLogin(newUser.user);
+    };
+
+
+
 
     return (
 

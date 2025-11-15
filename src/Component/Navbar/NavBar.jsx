@@ -33,6 +33,19 @@ export default function Navbar({ }) {
         }
     }, [menuOpen]);
 
+    const nawText = () => {
+        if (user.cashier) {
+            return "Касиер"
+        } else if (user.housMenager) {
+            return 'Домоуправител'
+        } else {
+            return `Апартамент: ${user.user}`
+        }
+    }
+
+   
+    
+
     return (
 
         <nav className='header__nav'>
@@ -53,7 +66,7 @@ export default function Navbar({ }) {
                 ☰
             </button>
             {login &&
-                <p>{user.cashier ? 'Касиер' : `Апартамент: ${user.user}`}</p>
+                <p>{nawText()}</p>
             }
         </nav>
     );

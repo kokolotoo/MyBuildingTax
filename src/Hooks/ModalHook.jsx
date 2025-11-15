@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -34,5 +34,26 @@ export const useSuccessModal = () => {
         });
     }
 
-    return { successLogin, contextHolder, alertMessage, infoModal };
+    const successMessage = (message) => {
+        modal.success({
+            title: 'My Building Tax',
+            content: message,
+        });
+    };
+
+    const confirmModal = (message) => {
+        return new Promise((resolve) => {
+            modal.confirm({
+                content: message,
+                okText: "Потвърди",
+                cancelText: "Откажи",
+
+                onOk: () => resolve(true),
+                onCancel: () => resolve(false),
+            });
+        });
+    };
+
+
+    return { confirmModal,successLogin, contextHolder, alertMessage, infoModal, successMessage  };
 };
