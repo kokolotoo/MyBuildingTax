@@ -60,7 +60,7 @@ const ChangeData = ({ menager, person, dataSettings }) => {
                 />
 
             </table>
-            <div className={styles.buttons}>
+            <div>
                 <button
                     type='button'
                     className={changeMenager ? styles.save_change_menager_but : styles.change_menager_but}

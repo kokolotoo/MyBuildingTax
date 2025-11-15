@@ -1,24 +1,23 @@
 import { ref, get, set } from "firebase/database";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
-
+import {  } from 'firebase/auth';
 
 
 //логване
 export const signIn = async (email, password) => {
-
     try {
-
+      
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const numberOfApartment = await getApartmentByUserId(userCredential.user.uid)
+        const numberOfApartment = await getApartmentByUserId(userCredential.user.uid);
 
         if (!numberOfApartment) {
-            alert('няма намерен номер на апартамент')
-            return
+            alert('няма намерен номер на апартамент');
+            return;
         }
 
-        const data = await getTaxData()
+        const data = await getTaxData();
         const cashier = data.cashier.apartment;
         const houseMenager = data.houseMenager.apartment;
 
@@ -29,9 +28,11 @@ export const signIn = async (email, password) => {
         };
 
         sessionStorage.setItem('loginUser', JSON.stringify(newUser));
+
         return newUser;
+
     } catch (err) {
-        console.log(err.message);
+        console.log("Грешка при логин:", err.message);
         const errorCode = err.code;
         const messages = {
             "auth/invalid-credential": "Invalid email or password",
@@ -39,18 +40,16 @@ export const signIn = async (email, password) => {
             "auth/wrong-password": "Incorrect password. Try again!",
             "auth/too-many-requests": "Too many failed attempts. Please try again later.",
         };
-        const result = messages[errorCode]
-        alert(result)
+        const result = messages[errorCode];
+        if (result) alert(result);
     }
 };
-
 
 
 export const exit = async () => {
     await signOut(auth);
     sessionStorage.removeItem('loginUser')
 }
-
 
 
 
@@ -107,23 +106,26 @@ export const sumbmit = async (formdata) => {
         return;
     }
     try {
+        const resultId = await registerUser(formdata.mail, formdata.password);
+
+        await new Promise(resolve => {
+            const unsub = onAuthStateChanged(auth, user => {
+                if (user) {
+                    unsub();
+                    resolve();
+                }
+            });
+        });
+
         const isApartmentRegister = await checkApartment(formdata.apartment);
         if (isApartmentRegister) return;
+
+        if (!resultId) return;
+        await saveApartment(formdata.apartment, resultId);
 
         const data = await getTaxData()
         const isCashier = data.cashier.apartment == formdata.apartment;
         const isHouseMenager = data.houseMenager.apartment == formdata.apartment;
-
-
-        const resultId = await registerUser(formdata.mail, formdata.password);
-
-        if (!resultId) {
-            alert('нещо се обърка')
-        }
-
-
-        if (!resultId) return;
-        await saveApartment(formdata.apartment, resultId);
 
         return {
             user: formdata.apartment,
@@ -158,7 +160,6 @@ export const getTaxData = async () => {
 
 
 
-
 //проверява дали логнатия потребител е касиер
 const compareIsCashier = (loginUser, cashier) => {
     if (Number(loginUser) == Number(cashier)) {
@@ -182,7 +183,6 @@ export const updateData = async (data) => {
 
 
 
-
 //запазва номер на регистриран апартамент
 const saveApartment = async (number, userID) => {
     const numberRef = ref(realtimeDB, `numbers/${number}`);
@@ -197,7 +197,6 @@ const saveApartment = async (number, userID) => {
 
 
 
-
 //проверява дали има регистриран апартамент
 const checkApartment = async (number) => {
     const snapshot = await get(ref(realtimeDB, `numbers/${number}`));
@@ -206,7 +205,6 @@ const checkApartment = async (number) => {
     }
     return snapshot.exists();
 };
-
 
 
 
@@ -238,7 +236,6 @@ const getApartmentByUserId = async (userId) => {
 
 
 
-
 //Взема данни на апартамент
 export const getApartmentData = async (apart) => {
 
@@ -257,7 +254,6 @@ export const getApartmentData = async (apart) => {
 
 
 
-
 //Актуализира данни на апартамент
 export const updateApartData = async (data, apartment) => {
 
@@ -272,4 +268,3 @@ export const updateApartData = async (data, apartment) => {
         console.error(err);
     }
 };
-

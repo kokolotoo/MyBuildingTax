@@ -64,14 +64,10 @@ td {
     border: 1px solid lightcoral;
     padding: 1em;
     border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
 }
 
-.taxInfo>div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
 
 footer{
     text-align: center;
@@ -83,4 +79,8 @@ footer h3{
     font-family:'Times New Roman', Times, serif;
     letter-spacing: 2px;
     font-size: 1.3rem;
+}
+
+.buttons{
+    margin-top: 1em;
 }
