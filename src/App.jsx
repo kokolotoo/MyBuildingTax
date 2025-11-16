@@ -10,6 +10,7 @@ const ForgotPassPage = lazy(() => import('./Pages/Forgot-page/ForgotPage'))
 const HomePage = lazy(() => import('./Pages/Home Page/HomePage'))
 const Menagers = lazy(() => import('./Component/Menagers/MenagersPage'))
 const Apartments = lazy(() => import('./Pages/Apartments/Apartments'))
+const MyApartment = lazy(() => import('./Pages/My apartment/MyApartment'))
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/forgot-pass' element={<ForgotPassPage />} />
         <Route path='/menagers' element={<Menagers />} />
         <Route path='/apartments' element={<Apartments />} />
+        <Route path='/my-apartment' element={<MyApartment />} />
 
       </Routes>
 

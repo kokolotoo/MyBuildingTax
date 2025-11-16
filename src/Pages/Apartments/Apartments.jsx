@@ -1,28 +1,29 @@
 import { useState, useEffect, useContext } from "react";
 import DataContext from "../../Context/DataContext";
-import styles from './apartment.module.css';
+import styles from "./apartment.module.css";
 import Navbar from "../../Component/Navbar/NavBar";
 import { getAllApartments, editApartment } from "../../Functions/Apartmets";
 import Spinner from "../../Helpers/Spinner";
 import { useSuccessModal } from "../../Hooks/ModalHook";
+import Input from "antd/es/input/Input";
 
 const Apartments = () => {
     const [dataApartments, setDataApartments] = useState(null);
     const [editing, setEditing] = useState(null);
-    const { confirmModal, successMessage, contextHolder } = useSuccessModal()
     const [ownerValue, setOwnerValue] = useState("");
     const [peopleValue, setPeopleValue] = useState(0);
 
+    const { confirmModal, successMessage, contextHolder } = useSuccessModal();
     const { user } = useContext(DataContext);
 
     const canEdit = user?.cashier || user?.housMenager;
 
     useEffect(() => {
-        const getData = async () => {
+        const load = async () => {
             const data = await getAllApartments();
             data && setDataApartments(data);
         };
-        getData();
+        load();
     }, []);
 
     const startEdit = (apt) => {
@@ -35,27 +36,25 @@ const Apartments = () => {
 
     const saveEdit = async () => {
         if (!canEdit) return;
-        const confirm = await confirmModal("Потвърдете промените");
-        if(confirm){
-            await editApartment(editing, {
-                owner: ownerValue,
-                people: Number(peopleValue)
-            });
 
-            setDataApartments(prev =>
-                prev.map(a =>
-                    a.id === editing
-                        ? { ...a, owner: ownerValue, people: Number(peopleValue) }
-                        : a
-                )
-            );
-            successMessage("Успешно променени данни!"); 
-        }
-      
-        setEditing(null);
-        setOwnerValue("");
-        setPeopleValue(0);
+        const ok = await confirmModal("Потвърдете промените");
+        if (!ok) return cancelEdit();
 
+        await editApartment(editing, {
+            owner: ownerValue,
+            people: Number(peopleValue),
+        });
+
+        setDataApartments((prev) =>
+            prev.map((a) =>
+                a.id === editing
+                    ? { ...a, owner: ownerValue, people: Number(peopleValue) }
+                    : a
+            )
+        );
+
+        successMessage("Успешно променени данни!");
+        cancelEdit();
     };
 
     const cancelEdit = () => {
@@ -65,80 +64,92 @@ const Apartments = () => {
     };
 
     return (
-        <section className={styles.container}>
+        <section className={styles.page}>
             {contextHolder}
             <Navbar />
+
             <main className={styles.main_container}>
-                <h2>Списък на апартаментите</h2>
+        
+                {!dataApartments ? (
+                    <Spinner />
+                ) : (
+                    <div className={styles.cards_wrapper}>
+                        {dataApartments.map((apt) => (
+                            <div
+                                key={apt.id}
+                                className={`${styles.card} ${apt.people === 0 ? styles.free : ""
+                                    }`}
+                            >
+                                {/* Apartment Number */}
+                                <div className={styles.numberBox}>№ {apt.apartment}</div>
 
-                {dataApartments ? (
-                    <table className={styles.table_apartments}>
-                        <thead className={styles.tHead_table}>
-                            <tr>
-                                <th>№</th>
-                                <th>Титуляр</th>
-                                <th>Таксувани</th>
-                                {canEdit && <th>Действия</th>}
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {dataApartments.map(apartment => (
-                                <tr key={apartment.id}
-                                    className={apartment.people === 0 ? styles.free_apartment : ''}
-                                >
-                                    <td>{apartment.apartment}</td>
-
-                                    {/* -------- OWNER -------- */}
-                                    <td>
-                                        {editing === apartment.id ? (
-                                            <input
+                                {/* Info */}
+                                <div className={styles.info}>
+                                    <p>
+                                        <strong>Титуляр:</strong>{" "}
+                                        {editing === apt.id ? (
+                                            <Input
                                                 value={ownerValue}
-                                                onChange={(e) => setOwnerValue(e.target.value)}
+                                                onChange={(e) =>
+                                                    setOwnerValue(e.target.value)
+                                                }
                                             />
                                         ) : (
-                                            apartment.owner
+                                            apt.owner
                                         )}
-                                    </td>
+                                    </p>
 
-                                    {/* -------- PEOPLE -------- */}
-                                    <td>
-                                        {editing === apartment.id ? (
-                                            <input
+                                    <p>
+                                        <strong>Таксувани:</strong>{" "}
+                                        {editing === apt.id ? (
+                                            <Input
                                                 type="number"
                                                 min="0"
                                                 value={peopleValue}
-                                                onChange={(e) => setPeopleValue(e.target.value)}
-                                                style={{ width: "60px" }}
+                                                onChange={(e) =>
+                                                    setPeopleValue(e.target.value)
+                                                }
+                                                style={{ width: "70px" }}
                                             />
+                                        ) : apt.people === 0 ? (
+                                            "Свободен"
                                         ) : (
-                                            apartment.people === 0
-                                                ? "Свободен"
-                                                : apartment.people
+                                            apt.people
                                         )}
-                                    </td>
+                                    </p>
+                                </div>
 
-                                    {/* -------- ACTIONS -------- */}
-                                    {canEdit && (
-                                        <td>
-                                            {editing === apartment.id ? (
-                                                <>
-                                                    <button onClick={saveEdit}>💾</button>
-                                                    <button onClick={cancelEdit}>❌</button>
-                                                </>
-                                            ) : (
-                                                <button onClick={() => startEdit(apartment)}>
-                                                    ✏️ 
+                                {/* Buttons */}
+                                {canEdit && (
+                                    <div className={styles.actions}>
+                                        {editing === apt.id ? (
+                                            <>
+                                                <button
+                                                    className={styles.saveBtn}
+                                                    onClick={saveEdit}
+                                                >
+                                                    💾 Запази
                                                 </button>
-                                            )}
-                                        </td>
-                                    )}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    <Spinner />
+                                                <button
+                                                    className={styles.cancelBtn}
+                                                    onClick={cancelEdit}
+                                                >
+                                                    ❌
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <button
+                                                className={styles.editBtn}
+                                                onClick={() => startEdit(apt)}
+                                            >
+                                                ✏️ Редактирай
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 )}
             </main>
         </section>
@@ -146,4 +157,5 @@ const Apartments = () => {
 };
 
 export default Apartments;
+
 

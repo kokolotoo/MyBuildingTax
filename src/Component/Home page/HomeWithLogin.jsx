@@ -33,6 +33,10 @@ const HomeWithLogin = () => {
     navigate('/menagers')
   }
 
+  const myApartment = () => {
+    navigate('/my-apartment')
+  }
+
   return (
     <main className={styles.container}>
       {contextHolder}
@@ -42,7 +46,7 @@ const HomeWithLogin = () => {
         <ul>
           <li onClick={goToApartments}>Списък апартаменти</li>
           <li>Месечно отчитане</li>
-          <li>Моят апартамент</li>
+          <li onClick={myApartment}>Моят апартамент</li>
           <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}>
             Управление
           </li>
