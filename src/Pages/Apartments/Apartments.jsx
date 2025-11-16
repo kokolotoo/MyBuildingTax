@@ -134,7 +134,7 @@ const Apartments = () => {
                                                     className={styles.cancelBtn}
                                                     onClick={cancelEdit}
                                                 >
-                                                    ❌
+                                                    ❌Откажи
                                                 </button>
                                             </>
                                         ) : (

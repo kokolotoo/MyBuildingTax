@@ -8,6 +8,7 @@ import { base64ToFile } from "../Functions/BaseToFile64";
 import DataContext from "../Context/DataContext";
 import { pictureName } from "../Functions/GetPictureName";
 import DataContext from "../Context/DataContext";
+import { getSingleApartment, editApartment } from "../Functions/Apartmets";
 
 
 const SignaturePad = () => {

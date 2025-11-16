@@ -91,12 +91,13 @@
 }
 
 .cancelBtn {
-    background: #d93333;
-    color: white;
+    background: #f12727;
+   color: rgb(246, 246, 247);
 }
 
 .cancelBtn:hover {
-    background: #b02a2a;
+    background: #420505;
+    color:blanchedalmond;
 }
 
 @media (max-width: 31.25rem) { /* 500px */
