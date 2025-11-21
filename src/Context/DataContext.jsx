@@ -7,6 +7,7 @@ const DataContext = createContext({});
 export const DataProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [user, setUser] = useState(null)
+    const [dataSettings, setDataSettings] = useState(null)
 
     useEffect(() => {
         const isLogin = sessionStorage.getItem('loginUser')
@@ -16,11 +17,19 @@ export const DataProvider = ({ children }) => {
             setLogin(true)
         }
 
+        const getData = async () => {
+            const data = await getTaxData()
+            if (data) {
+                setDataSettings(data)
+            }
+        }
+        getData()
+
     }, [])
 
     return (
         <DataContext.Provider value={{
-            login, setLogin, user, setUser
+            login, setLogin, user, setUser, dataSettings
         }}>
             {children}
         </DataContext.Provider>

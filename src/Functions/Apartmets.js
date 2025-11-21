@@ -1,14 +1,6 @@
-import { doc, setDoc, getDocs,getDoc, collection } from "firebase/firestore"
+import { doc, setDoc, getDocs, getDoc, collection } from "firebase/firestore"
 import { db } from "../Config/Firebase_Config"
 
-export const monthTax = (apartment, peoples) => {
-    const lowTax = 5
-    const hightTax = 15
-
-    const taxPerPeople = apartment <= 9 ? lowTax : hightTax
-    const totalTax = taxPerPeople * peoples
-    return totalTax
-}
 
 
 //взема конкретен апартамент подаден като аргумент
@@ -18,9 +10,7 @@ export const getSingleApartment = async (apartment) => {
         const snapshot = await getDoc(productRef);
 
         if (snapshot.exists()) {
-            console.log(`✅ Данни за apart${apartment}:`, snapshot.data());
-
-
+    
             return snapshot.data()
 
         } else {

@@ -1,23 +1,27 @@
-import React from 'react'
 import styles from './myApartment.module.css'
 import Navbar from '../../Component/Navbar/NavBar'
 import { useState, useContext, useEffect } from 'react'
 import DataContext from '../../Context/DataContext'
 import { getSingleApartment } from '../../Functions/Apartmets'
 import Spinner from '../../Helpers/Spinner'
+import { useCalculateMonthTax } from '../../Hooks/CalculateMothTax'
 
 
 const MyApartment = () => {
   const { user } = useContext(DataContext)
   const [dataApartment, setDataApartment] = useState(null)
+  const [taxPerMonth, setTaxPerMonth] = useState(null)
+  const { monthTax } = useCalculateMonthTax()
 
   useEffect(() => {
     const getData = async () => {
       const data = await getSingleApartment(user.user)
+      const totalTax =  monthTax(data.apartment, data.people)
       setDataApartment(data)
-      console.log(data);
+      setTaxPerMonth(totalTax)
     }
     getData()
+
   }, [user])
 
 
@@ -33,6 +37,7 @@ const MyApartment = () => {
             <h2>Данни за апартамент: {dataApartment.apartment}</h2>
             <p>Титуляр : <span>{dataApartment.owner}</span></p>
             <p>Таксувани жители: <span>{dataApartment.people}</span></p>
+            <p>Месечна такса: <span> € {taxPerMonth}</span></p>
 
 
             <p>{
