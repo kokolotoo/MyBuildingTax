@@ -14,11 +14,12 @@ const loginPage = () => {
         loginEmail: '',
         loginPass: ''
     });
+    const [checkBox, setCheckBox] = useState(false)
 
     const login = async (e) => {
         e.preventDefault();
-        
-         const newUser = await signIn(loginData.loginEmail, loginData.loginPass);
+
+        const newUser = await signIn(loginData.loginEmail, loginData.loginPass, checkBox);
         if (!newUser) return;
         setUser(newUser);
         setLogin(true);
@@ -62,9 +63,19 @@ const loginPage = () => {
                     />
 
                 </div>
+                <div className='checkBox'>
+                    <input
+                        type="checkbox"
+                        checked={checkBox}
+                        onChange={() => setCheckBox(prev => !prev)}
+
+                    />
+                    Запомни ме
+                </div>
+
+
 
                 <button type="submit">Вход</button>
-
 
                 <footer className='footer'>
                     <Link to='/registration' >Нямам регистрация</Link>

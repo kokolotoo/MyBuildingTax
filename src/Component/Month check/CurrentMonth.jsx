@@ -7,6 +7,7 @@ const CurrentMonth = ({
 }) => {
 
 
+
     return (
         <>
             {selectedMonth && !signatureFor && (
@@ -56,7 +57,8 @@ const CurrentMonth = ({
                                                         setSignatureFor({
                                                             month: selectedMonth,
                                                             apartment: apt.apartment,
-                                                            id: apt.id
+                                                            id: apt.id,
+                                                            money:Number(tax)
                                                         })
                                                     }
                                                 >

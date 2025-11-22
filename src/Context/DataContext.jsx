@@ -8,28 +8,36 @@ export const DataProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [user, setUser] = useState(null)
     const [dataSettings, setDataSettings] = useState(null)
+    
+    useEffect(() => {
+        const sessionUser = sessionStorage.getItem('loginUser');
+        const localUser = localStorage.getItem('loginUser');
+
+        const storedUser = sessionUser || localUser;
+        if (storedUser) {
+            setLogin(true);
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
 
     useEffect(() => {
-        const isLogin = sessionStorage.getItem('loginUser')
-        if (isLogin) {
-            setLogin(true)
-            setUser(JSON.parse(isLogin))
-            setLogin(true)
-        }
+        if (!user) return; // излизаме, ако user още не е наличен
 
         const getData = async () => {
-            const data = await getTaxData()
-            if (data) {
-                setDataSettings(data)
+            try {
+                const data = await getTaxData();
+                if (data) setDataSettings(data);
+            } catch (err) {
+                console.error("Грешка при четене на данни:", err);
             }
         }
-        getData()
 
-    }, [])
+        getData();
+    }, [user]);
 
     return (
         <DataContext.Provider value={{
-            login, setLogin, user, setUser, dataSettings
+            login, setLogin, user, setUser, dataSettings, setDataSettings
         }}>
             {children}
         </DataContext.Provider>

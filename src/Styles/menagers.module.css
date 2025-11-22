@@ -92,3 +92,16 @@ footer h3 {
     margin-left: 0.3em;
     color: rgb(255, 249, 196);
 }
+
+.info_money{
+    text-align: center;
+    margin: 1em;
+    font-size: 1.2em;
+    border: 1px solid green;
+    border-radius: 0.2em;
+    padding: 0.5em;
+}
+
+.info_money b{
+    color: rgb(137, 247, 133);
+}

@@ -4,22 +4,19 @@ import style from './canvas.module.css';
 import { uploadImg } from "../Config/SupaBase_Config";
 import { deleteImg } from "../Config/SupaBase_Config";
 import { base64ToFile } from "../Functions/BaseToFile64";
-
+import { updateData } from "../Functions/FirebaseFunctions";
 import { addApartmentPicUrl } from "../Functions/Apartmets";
 
 
 const SignaturePad = ({
-    apartNumber,
-    monthName,
-    year,
-    onClose,
-    apartmentId,
+    apartNumber, monthName, year,
+    onClose, apartmentId, money,
+    dataSettings, setDataSettings,
     onSuccess      // ← НОВО: функция за "refresh" след плащане
 }) => {
-
+    
     const sigCanvas = useRef(null);
     const [isSigned, setIsSigned] = useState(false);
-    const [imageURL, setImageURL] = useState(null);
     const [fileName, setFileName] = useState('');
 
     // когато потребителят рисува
@@ -31,7 +28,6 @@ const SignaturePad = ({
     const clear = () => {
         sigCanvas.current.clear();
         setIsSigned(false);
-        setImageURL(null);
     };
 
     // запазване
@@ -50,28 +46,25 @@ const SignaturePad = ({
 
         const uploadedUrl = await uploadImg(file, fileName);
 
-        setImageURL(uploadedUrl);
-
         // Добавяне в масива year на апартамента
         await addApartmentPicUrl(apartmentId, uploadedUrl);
+        const newData = {
+            ...dataSettings, money: Number(dataSettings.money) + Number(money)
+        }
+        setDataSettings(newData)
+        await updateData(newData)
 
         // 🔥 НОВО: извикване на MontTax за да се презареди UI
         if (onSuccess) onSuccess();
-       
+
         // скриване на канваса
         onClose();
     };
 
-    const remove = async () => {
-        await deleteImg(fileName);
-        setIsSigned(false);
-        setImageURL(null);
-        clear();
-    };
 
     return (
         <div className={style.signature_container}>
-           
+
             <SignatureCanvas
                 ref={sigCanvas}
                 penColor="red"
@@ -86,14 +79,6 @@ const SignaturePad = ({
                 <button className={style.rejectBtn} onClick={onClose}>Отказ</button>
                 <button onClick={save} className={style.payBtn}>Плати</button>
             </div>
-
-            {imageURL && (
-                <div className={style.preview}>
-                    <p>Записан подпис:</p>
-                    <a href={imageURL} target="Blank">Signature Link</a>
-                    <button className={style.deleteBtn} onClick={remove}>Delete img</button>
-                </div>
-            )}
         </div>
     );
 };

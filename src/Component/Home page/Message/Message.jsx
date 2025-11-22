@@ -1,6 +1,6 @@
 
 
-const Message = ({houseMenager, cashier}) => {
+const Message = ({houseMenager, cashier, cash}) => {
   
   return (
     <div>
@@ -20,6 +20,8 @@ const Message = ({houseMenager, cashier}) => {
                   <p>апартамент: <b style={{ color: 'red' }}>{cashier.apartment}</b></p>
               </section>
           </fieldset>
+
+      <h4>Налични пари:  € <b></b>{cash}</h4>
     </div>
   )
 }

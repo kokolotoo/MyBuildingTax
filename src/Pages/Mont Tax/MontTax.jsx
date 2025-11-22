@@ -19,10 +19,15 @@ const MontTax = () => {
     const [apartments, setApartments] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(null);  // ← кликнат месец
     const [signatureFor, setSignatureFor] = useState(null);     // ← апартамент за подпис
-    const { user } = useContext(DataContext)
+    const { user, dataSettings, setDataSettings } = useContext(DataContext)
     const currentYear = new Date().getFullYear();
     const { monthTax } = useCalculateMonthTax()
     const { successMessage, contextHolder } = useSuccessModal()
+
+    const successPay = () => {
+        getAllApartments().then(setApartments);
+        successMessage(`Успешно плащане ап. ${signatureFor.apartment}!`)
+    }
 
     useEffect(() => {
         const load = async () => {
@@ -50,7 +55,7 @@ const MontTax = () => {
         <div className={styles.container}>
             {contextHolder}
             <Navbar />
-            <h2 className={styles.title}>Месечни плащания – {currentYear}</h2>
+            <h2 className={styles.title}>Таксуване – {currentYear}</h2>
 
             {/* -----------  КАЛЕНДАР 12 МЕСЕЦА -----------*/}
             <Calendar
@@ -85,11 +90,10 @@ const MontTax = () => {
                             year={currentYear}                   // текущата година
                             apartmentId={signatureFor.id}        // ID на апартамента в Supabase
                             onClose={() => setSignatureFor(null)} // функция за скриване
-                            onSuccess={() => {
-                                // 🚀 Презарежда апартаментите след плащане!
-                                getAllApartments().then(setApartments);
-                                successMessage(`Успешно плащане ап. ${signatureFor.apartment}!`)
-                            }}
+                            onSuccess={successPay}
+                            money = {signatureFor.money}
+                            dataSettings={dataSettings}
+                            setDataSettings={setDataSettings}
                         />
 
                     </div>

@@ -10,15 +10,15 @@ import Message from './Message/Message'
 
 const HomeWithLogin = () => {
   const navigate = useNavigate()
-  const { user, setUser, setLogin, dataSettings } = useContext(DataContext)
+  const { user, dataSettings } = useContext(DataContext)
 
   const { infoModal, contextHolder } = useSuccessModal();
 
   const shownMenagers = () => {
-    
+
     const cashier = dataSettings.cashier;
     const houseMenager = dataSettings.houseMenager;
-    const message = <Message cashier={cashier} houseMenager={houseMenager} />
+    const message = <Message cashier={cashier} houseMenager={houseMenager} cash={dataSettings.money} />
 
     infoModal(message)
   };

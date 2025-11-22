@@ -12,7 +12,7 @@ const MONTHS = [
 ];
 
 const MyApartment = () => {
-  const { user } = useContext(DataContext)
+  const { user, dataSettings } = useContext(DataContext)
   const [dataApartment, setDataApartment] = useState(null)
   const [taxPerMonth, setTaxPerMonth] = useState(null)
   const { monthTax } = useCalculateMonthTax()

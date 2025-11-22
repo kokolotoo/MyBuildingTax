@@ -5,9 +5,9 @@ import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Co
 
 
 //логване
-export const signIn = async (email, password) => {
+export const signIn = async (email, password, checkBox) => {
     try {
-      
+
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const numberOfApartment = await getApartmentByUserId(userCredential.user.uid);
 
@@ -26,7 +26,11 @@ export const signIn = async (email, password) => {
             housMenager: compareIsCashier(numberOfApartment, houseMenager)
         };
 
-        sessionStorage.setItem('loginUser', JSON.stringify(newUser));
+        if (checkBox) {
+            localStorage.setItem('loginUser', JSON.stringify(newUser));
+        } else {
+            sessionStorage.setItem('loginUser', JSON.stringify(newUser));
+        }
 
         return newUser;
 
@@ -48,6 +52,7 @@ export const signIn = async (email, password) => {
 export const exit = async () => {
     await signOut(auth);
     sessionStorage.removeItem('loginUser')
+    localStorage.removeItem('loginUser')
 }
 
 
