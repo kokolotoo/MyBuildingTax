@@ -1,4 +1,4 @@
-import { doc, setDoc, getDocs, getDoc, collection } from "firebase/firestore"
+import { doc, setDoc, getDocs, getDoc, collection, updateDoc } from "firebase/firestore"
 import { db } from "../Config/Firebase_Config"
 
 
@@ -10,7 +10,7 @@ export const getSingleApartment = async (apartment) => {
         const snapshot = await getDoc(productRef);
 
         if (snapshot.exists()) {
-    
+
             return snapshot.data()
 
         } else {
@@ -80,3 +80,32 @@ export const editApartment = async (apartmentId, updatedFields) => {
     });
 
  */
+
+
+
+export const addApartmentPicUrl = async (apartmentId, picUrl) => {
+    try {
+        const apartmentRef = doc(db, "Apartments", apartmentId);
+
+        const snapshot = await getDoc(apartmentRef);
+
+        if (!snapshot.exists()) {
+            console.log("❌ Апартаментът не съществува!");
+            return;
+        }
+
+        const currentData = snapshot.data();
+        const currentYearArray = currentData.year || []; // ← ако няма масив, ползваме празен
+
+        const updatedYearArray = [...currentYearArray, picUrl];
+
+        await updateDoc(apartmentRef, {
+            year: updatedYearArray
+        });
+
+        console.log("✔ Успешно добавен подпис към апартамент:", apartmentId);
+
+    } catch (err) {
+        console.error("❌ Грешка при обновяване:", err);
+    }
+};

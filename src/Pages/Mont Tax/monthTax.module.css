@@ -1,0 +1,145 @@
+.page {
+
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: .5rem;
+
+}
+
+.calendar {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+}
+
+.monthBox {
+    background: white;
+    border-radius: 10px;
+    padding: .5rem;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.2s ease;
+    margin: auto;
+    margin-bottom: 0.5em;
+    width: 95%;
+    color: #3a8dff;
+}
+
+.monthBox:hover {
+    transform: scale(1.05);
+    background: #fafafa;
+}
+
+.monthBox h4 {
+    margin-bottom: .5rem;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.backBtn {
+    margin:0.2em 2em;
+}
+
+
+.selectedMonth {
+    text-align: center;
+    color: rgb(199, 240, 124);
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 1px;
+}
+
+.unpaidList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.unpaidList span {
+    background: #ffe4e4;
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+.allPaid {
+    text-align: center;
+    color: green;
+    font-weight: bold;
+}
+
+.details {
+    margin-top: 2rem;
+    background: white;
+    padding: 1.5rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.details ul {
+    margin-top: 1rem;
+}
+
+.details li {
+    margin-bottom: .8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payBtn {
+    padding: .4rem;
+    margin: .1em;
+    background: #3a8dff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.closeBtn {
+    margin-top: 1rem;
+    padding: .5rem 1rem;
+    border: none;
+    background: #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em auto;
+}
+
+td,
+th {
+    border: 1px solid #8a8a8a;
+    padding: 0.2em;
+    text-align: center;
+}
+
+th {
+    color: rgb(185, 201, 170);
+    padding: 0.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+
+td {
+    height: 12vh;
+}
