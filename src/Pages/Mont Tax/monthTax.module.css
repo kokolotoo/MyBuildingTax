@@ -1,3 +1,4 @@
+
 .page {
 
     min-height: 100vh;
@@ -37,8 +38,9 @@
 }
 
 .monthBox:hover {
-    transform: scale(1.05);
-    background: #fafafa;
+    transform: scale(1.01);
+    background: #d3cfcf;
+   
 }
 
 .monthBox h4 {
@@ -154,4 +156,5 @@ td {
 .choiceYear >button{
     background-color: #00409b;
     color: azure;
+    padding: 0.4em;
 }

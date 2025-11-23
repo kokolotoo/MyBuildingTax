@@ -2,6 +2,7 @@ import { lazy } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
 import { DataProvider } from './Context/DataContext'
+import { FloatButton } from 'antd';
 
 const FrontPage = lazy(() => import('./Component/Home page/FrontPage'))
 const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
@@ -33,7 +34,7 @@ function App() {
         <Route path='/expenses' element={<Expenses />} />
 
       </Routes>
-
+      <FloatButton.BackTop visibilityHeight={150} />
     </DataProvider>
 
   )

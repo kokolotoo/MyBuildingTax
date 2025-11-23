@@ -7,6 +7,7 @@ import Spinner from "../../Helpers/Spinner";
 import { useSuccessModal } from "../../Hooks/ModalHook";
 import Input from "antd/es/input/Input";
 
+
 const Apartments = () => {
     const [dataApartments, setDataApartments] = useState(null);
     const [editing, setEditing] = useState(null);
@@ -152,6 +153,7 @@ const Apartments = () => {
                     </div>
                 )}
             </main>
+            
         </section>
     );
 };

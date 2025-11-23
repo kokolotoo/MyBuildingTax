@@ -11,6 +11,7 @@ import Calendar from "../../Component/Month check/Calendar";
 import CurrentMonth from "../../Component/Month check/CurrentMonth";
 import SelectYear from "../../Component/Month check/SelectYear";
 
+
 const MONTHS_BG = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -52,7 +53,7 @@ const MontTax = () => {
         );
     };
 
-    if (!apartments) return <Spinner />;
+    if (!apartments || !user || !dataSettings) return <Spinner />;
 
     return (
         <div className={styles.container}>
@@ -108,6 +109,7 @@ const MontTax = () => {
                     </div>
                 </div>
             )}
+            
         </div>
     );
 };

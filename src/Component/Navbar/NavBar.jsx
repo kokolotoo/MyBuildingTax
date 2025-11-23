@@ -20,9 +20,10 @@ export default function Navbar({ }) {
 
     const logOuth = async () => {
         await exit()
+        navigate('/')
         setLogin(false)
         setUser(null)
-        navigate('/')
+       
     }
 
     useEffect(() => {

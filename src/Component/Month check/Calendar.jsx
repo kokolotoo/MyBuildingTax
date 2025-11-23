@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '../../Pages/Mont Tax/monthTax.module.css'
 
+
 const Calendar = ({
     selectedMonth, MONTHS_BG, setSelectedMonth,
     hasPayment, apartments, user,
@@ -37,6 +38,7 @@ const Calendar = ({
                                         </p>
                                     </div>
                                 )}
+                              
                             </div>
                         );
                     })}
