@@ -6,7 +6,6 @@ import Spinner from "../../Helpers/Spinner"
 import { updateData, addNewExpense, getAllExpenses } from "../../Functions/FirebaseFunctions"
 import { useSuccessModal } from "../../Hooks/ModalHook"
 import ExpenseForm from "../../Component/Expenses/ExpenseForm"
-import { data } from "react-router-dom"
 
 const Expenses = () => {
     const date = new Date().toLocaleString()
@@ -71,7 +70,7 @@ const Expenses = () => {
 
                     {allExpenses.length ? (
                         <div className={styles.expensesContainer}>
-                            { allExpenses.map(item =>
+                            {allExpenses.map(item =>
                                 <div key={item.id} className={styles.singleExpense}>
                                     <i>Направен на: {item.id}</i>
                                     <i>Направен за: {item.expenseName}</i>
@@ -80,7 +79,8 @@ const Expenses = () => {
                             )}
                         </div>)
                         :
-                        <p className={styles.noExpensesTitle}>Няма направени разходи !</p>}
+                        <p className={styles.noExpensesTitle}>Няма направени разходи !</p>
+                    }
                 </main>
                 :
                 <Spinner />}

@@ -5,6 +5,7 @@ import DataContext from '../../Context/DataContext'
 import { getSingleApartment } from '../../Functions/Apartmets'
 import Spinner from '../../Helpers/Spinner'
 import { useCalculateMonthTax } from '../../Hooks/CalculateMothTax'
+import SelectYear from '../../Component/Month check/SelectYear'
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -17,6 +18,7 @@ const MyApartment = () => {
   const [taxPerMonth, setTaxPerMonth] = useState(null)
   const { monthTax } = useCalculateMonthTax()
   const currentYear = new Date().getFullYear()
+  const [choiceYear, setChoiceYear] = useState(currentYear)
 
   useEffect(() => {
     const getData = async () => {
@@ -32,7 +34,7 @@ const MyApartment = () => {
 
   const renderMonthPayment = (month) => {
     const paymentUrl = dataApartment.year?.find(url =>
-      url.includes(`${currentYear}_${month}_${dataApartment.apartment}`)
+      url.includes(`${choiceYear}_${month}_${dataApartment.apartment}`)
     )
     if (paymentUrl) {
       return <a href={paymentUrl} target="_blank" rel="noreferrer" className={styles.paid}>✔ Платено</a>
@@ -53,9 +55,11 @@ const MyApartment = () => {
           <p>Месечна такса: <span> € {taxPerMonth}</span></p>
         </div>
       </section>
-
-      <h3>Плащания за {currentYear}</h3>
       
+      <SelectYear setChoisentYear={setChoiceYear} currentYear={currentYear} />
+
+      <h3>Плащания за {choiceYear}</h3>
+
       <div className={styles.monthList}>
         {MONTHS.map(month => (
           <div key={month} className={styles.monthRow}>
