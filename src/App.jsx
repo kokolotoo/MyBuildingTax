@@ -12,6 +12,7 @@ const Menagers = lazy(() => import('./Component/Menagers/MenagersPage'))
 const Apartments = lazy(() => import('./Pages/Apartments/Apartments'))
 const MyApartment = lazy(() => import('./Pages/My apartment/MyApartment'))
 const MontTax = lazy(() => import('./Pages/Mont Tax/MontTax'))
+const Expenses = lazy(() => import('./Pages/Expenses/Expenses'))
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path='/apartments' element={<Apartments />} />
         <Route path='/my-apartment' element={<MyApartment />} />
         <Route path='/month-tax' element={<MontTax />} />
+        <Route path='/expenses' element={<Expenses />} />
 
       </Routes>
 

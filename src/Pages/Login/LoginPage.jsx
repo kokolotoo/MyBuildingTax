@@ -1,7 +1,7 @@
 import './login.css'
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Input } from 'antd';
+import { Input, Checkbox } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { signIn, getTaxData } from '../../Functions/FirebaseFunctions';
 import DataContext from '../../Context/DataContext';
@@ -63,16 +63,13 @@ const loginPage = () => {
                     />
 
                 </div>
-                <div className='checkBox'>
-                    <input
-                        type="checkbox"
-                        checked={checkBox}
-                        onChange={() => setCheckBox(prev => !prev)}
 
-                    />
-                    Запомни ме
-                </div>
-
+                <Checkbox
+                    checked={checkBox}
+                    onChange={() => setCheckBox(prev => !prev)}
+                >
+                    <i className='i'>Запомни ме</i>
+                </Checkbox>
 
 
                 <button type="submit">Вход</button>

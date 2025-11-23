@@ -143,3 +143,15 @@ th {
 td {
     height: 12vh;
 }
+
+.choiceYear{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin: 1em;
+}
+
+.choiceYear >button{
+    background-color: #00409b;
+    color: azure;
+}

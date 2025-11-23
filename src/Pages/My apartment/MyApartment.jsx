@@ -20,8 +20,8 @@ const MyApartment = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getSingleApartment(user.user)
-      const totalTax = monthTax(data.apartment, data.people)
+      const data = await getSingleApartment(user?.user)
+      const totalTax = monthTax(data?.apartment, data?.people)
       setDataApartment(data)
       setTaxPerMonth(totalTax)
     }

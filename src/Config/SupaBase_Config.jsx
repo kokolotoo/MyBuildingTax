@@ -64,6 +64,3 @@ export const listFiles = async () => {
     console.log('Файлове:', allNames);
     return allNames;
 };
-
-
-

@@ -9,6 +9,7 @@ import { useCalculateMonthTax } from "../../Hooks/CalculateMothTax";
 import { useSuccessModal } from "../../Hooks/ModalHook";
 import Calendar from "../../Component/Month check/Calendar";
 import CurrentMonth from "../../Component/Month check/CurrentMonth";
+import SelectYear from "../../Component/Month check/SelectYear";
 
 const MONTHS_BG = [
     "January", "February", "March", "April", "May", "June",
@@ -16,13 +17,15 @@ const MONTHS_BG = [
 ];
 
 const MontTax = () => {
+
     const [apartments, setApartments] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(null);  // ← кликнат месец
     const [signatureFor, setSignatureFor] = useState(null);     // ← апартамент за подпис
     const { user, dataSettings, setDataSettings } = useContext(DataContext)
-    const currentYear = new Date().getFullYear();
     const { monthTax } = useCalculateMonthTax()
     const { successMessage, contextHolder } = useSuccessModal()
+    const currentYear = new Date().getFullYear();
+    const [choisentYear, setChoisentYear] = useState(currentYear)
 
     const successPay = () => {
         getAllApartments().then(setApartments);
@@ -45,7 +48,7 @@ const MontTax = () => {
 
         return apt.year.some(url =>
             typeof url === "string" &&
-            url.includes(`${currentYear}_${monthName}_${apt.apartment}`)
+            url.includes(`${choisentYear}_${monthName}_${apt.apartment}`)
         );
     };
 
@@ -55,7 +58,13 @@ const MontTax = () => {
         <div className={styles.container}>
             {contextHolder}
             <Navbar />
-            <h2 className={styles.title}>Таксуване – {currentYear}</h2>
+            
+            <SelectYear
+                setChoisentYear={setChoisentYear}
+                currentYear={currentYear}
+            />
+
+            <h2 className={styles.title}>Таксуване – {choisentYear}</h2>
 
             {/* -----------  КАЛЕНДАР 12 МЕСЕЦА -----------*/}
             <Calendar
@@ -87,11 +96,11 @@ const MontTax = () => {
                         <SignaturePad
                             apartNumber={signatureFor.apartment} // номер на апартамента
                             monthName={signatureFor.month}       // името на месеца
-                            year={currentYear}                   // текущата година
+                            year={choisentYear}                   // текущата година
                             apartmentId={signatureFor.id}        // ID на апартамента в Supabase
                             onClose={() => setSignatureFor(null)} // функция за скриване
                             onSuccess={successPay}
-                            money = {signatureFor.money}
+                            money={signatureFor.money}
                             dataSettings={dataSettings}
                             setDataSettings={setDataSettings}
                         />

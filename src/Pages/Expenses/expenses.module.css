@@ -1,0 +1,78 @@
+.expense_Page {
+    min-height: 100vh;
+    background-image: url("../../assets/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(217, 245, 206);
+}
+
+.container>h2 {
+    text-align: center;
+    margin-bottom: 1em;
+    color: rgb(152, 233, 206);
+}
+
+.current {
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.current>b {
+    font-size: 1.2em;
+    color: rgb(247, 211, 247);
+}
+
+.expensForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 90%;
+    max-width: 400px;
+    margin: 2em auto;
+    border: 1.5px solid blanchedalmond;
+    padding: 1em;
+    border-radius: 0.4em;
+    box-shadow: inset 1px 1px 9px 1px rgb(124, 122, 122);
+}
+
+.expensForm>button {
+    padding: 0.5em;
+    background-color: blue;
+    color: azure;
+    letter-spacing: 1px;
+    font-style: italic;
+}
+
+.noExpensesTitle {
+    text-align: center;
+    margin-top: 5em;
+    color: rgb(245, 189, 189);
+    font-size: 1.3em;
+    letter-spacing: 1px;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+.expensesContainer {
+    width: 90%;
+    max-width: 400px;
+    border: 1.5px solid blanchedalmond;
+    padding: 1em;
+    border-radius: 0.4em;
+    box-shadow: inset 1px 1px 9px 1px rgb(124, 122, 122);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    color: rgb(39, 10, 10);
+}
+
+.singleExpense{
+    background-color: rgba(255, 255, 255, 0.616);
+    display: flex;
+    flex-direction: column;
+    padding: 0.2em;
+    border-radius: 0.3em;
+}

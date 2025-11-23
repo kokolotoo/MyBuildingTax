@@ -1,5 +1,5 @@
 import { ref, get, set } from "firebase/database";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, addDoc ,collection, getDocs} from "firebase/firestore";
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
 
@@ -185,6 +185,38 @@ export const updateData = async (data) => {
     }
 };
 
+
+
+//Добавя нов разход
+export const addNewExpense = async (data) => {
+    try {
+        const expensesRef = collection(db, "Expenses"); // <-- колекция
+        await addDoc(expensesRef, data); // <-- нов документ в колекцията
+        console.log("Добавено успешно");
+    } catch (err) {
+        console.error("Грешка:", err);
+    }
+};
+
+
+
+//Взема всички разходи
+export const getAllExpenses = async () => {
+    try {
+        const expensesRef = collection(db, "Expenses");
+        const snapshot = await getDocs(expensesRef);
+
+        const expenses = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        return expenses;
+    } catch (err) {
+        console.error("Грешка при взимане на разходи:", err);
+        return [];
+    }
+};
 
 
 //запазва номер на регистриран апартамент
