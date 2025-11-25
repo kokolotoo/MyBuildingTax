@@ -12,6 +12,7 @@ const Apartments = () => {
     const [dataApartments, setDataApartments] = useState(null);
     const [editing, setEditing] = useState(null);
     const [ownerValue, setOwnerValue] = useState("");
+    const [ownerPhone, setOwnerPhone] = useState("");
     const [peopleValue, setPeopleValue] = useState(0);
 
     const { confirmModal, successMessage, contextHolder } = useSuccessModal();
@@ -33,6 +34,7 @@ const Apartments = () => {
         setEditing(apt.id);
         setOwnerValue(apt.owner);
         setPeopleValue(apt.people);
+        setOwnerPhone(apt.phone ? apt.phone : ownerPhone)
     };
 
     const saveEdit = async () => {
@@ -44,6 +46,7 @@ const Apartments = () => {
         await editApartment(editing, {
             owner: ownerValue,
             people: Number(peopleValue),
+            phone: ownerPhone
         });
 
         setDataApartments((prev) =>
@@ -70,7 +73,7 @@ const Apartments = () => {
             <Navbar />
 
             <main className={styles.main_container}>
-        
+
                 {!dataApartments ? (
                     <Spinner />
                 ) : (
@@ -118,6 +121,20 @@ const Apartments = () => {
                                             apt.people
                                         )}
                                     </p>
+
+                                    <p>
+                                        <strong>Телефон:</strong>{" "}
+                                        {editing === apt.id ? (
+                                            <Input
+                                                value={ownerPhone}
+                                                onChange={(e) =>
+                                                    setOwnerPhone(e.target.value)
+                                                }
+                                            />
+                                        ) : (
+                                            apt.phone ? apt.phone : "няма номер"
+                                        )}
+                                    </p>
                                 </div>
 
                                 {/* Buttons */}
@@ -153,7 +170,7 @@ const Apartments = () => {
                     </div>
                 )}
             </main>
-            
+
         </section>
     );
 };

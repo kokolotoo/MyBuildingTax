@@ -51,6 +51,7 @@ const MyApartment = () => {
         <div>
           <h2>Данни за апартамент: {dataApartment.apartment}</h2>
           <p>Титуляр : <span>{dataApartment.owner}</span></p>
+          <p>Телефон : <span>{dataApartment.phone? dataApartment.phone : 'Няма  номер'}</span></p>
           <p>Таксувани жители: <span>{dataApartment.people}</span></p>
           <p>Месечна такса: <span> € {taxPerMonth}</span></p>
         </div>
