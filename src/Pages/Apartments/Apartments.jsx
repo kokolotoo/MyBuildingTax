@@ -65,6 +65,7 @@ const Apartments = () => {
         setEditing(null);
         setOwnerValue("");
         setPeopleValue(0);
+        setOwnerPhone('')
     };
 
     return (
