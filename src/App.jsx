@@ -34,7 +34,7 @@ function App() {
         <Route path='/expenses' element={<Expenses />} />
 
       </Routes>
-      <FloatButton.BackTop visibilityHeight={180} />
+      <FloatButton.BackTop visibilityHeight={180}/>
     </DataProvider>
 
   )

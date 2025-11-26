@@ -1,36 +1,82 @@
-.loginForm>button {
-  background-color: green;
-  color: azure;
-  padding: 1em;
-  width: 100%;
-  max-width: 200px;
-}
-
 .login-container {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    gap: 1.5em;
     justify-content: center;
-    background: linear-gradient(135deg, #351036, #231863);
+    align-items: center;
+    background: linear-gradient(135deg, #2a0f4d, #0f1a3d);
+    padding: 1rem;
+    font-family: "Inter", sans-serif;
 }
 
 .loginForm {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 380px;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    row-gap: 3em;
-    width: 100%;
+    gap: 1.8rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
 }
 
+.loginForm h2 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.loginForm input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.loginForm button {
+    padding: 0.9rem;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00c176, #00995c);
+    color: white;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.3s ease;
+}
+
+.loginForm button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #00d184, #00a86a);
+}
 
 .footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
     display: flex;
-    flex-direction: column;
-    gap: 2em;
+    gap: 1em;
+    justify-content: center;
+flex-direction: column;
 }
 
+.footer a {
+    color: #d1e7f1;
+    text-decoration: none;
+    border-radius: 0.3em;
+    padding: 0.5em;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
 
 .i{
-    color: aliceblue;
+    color: #ffffff;
 }

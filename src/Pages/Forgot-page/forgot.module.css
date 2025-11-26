@@ -5,13 +5,14 @@
     justify-content: center;
     align-items: center;
     overflow: auto;
-    padding-top: 3em;
+    padding-top: 1em;
     background: linear-gradient(135deg, #303513, #10492a);
 }
 
 .links {
     margin-top: 2em;
     display: flex;
+    flex-direction: column;
     gap: 2em;
     align-items: center;
 }
@@ -20,8 +21,8 @@
 .input {
     font-size: 1.3em;
     padding: 0.4rem;
-    width: 36ch;
-    max-width: 100%;
+    width: 70%;
+    max-width: 500px;
 }
 
 form {

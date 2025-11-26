@@ -9,10 +9,10 @@ import { db } from "../Config/Firebase_Config"
 
 
 
-// Изтриване на файлове от преди 3 години
+// Изтриване на файлове от преди 2 години
 export const deleteOldFiles = async () => {
     const currentYear = new Date().getFullYear();
-    const oldYear = currentYear - 3;
+    const oldYear = currentYear - 2;
 
     try {
         const { data: files, error } = await supabase
@@ -53,7 +53,7 @@ export const deleteOldFiles = async () => {
 
 export const deleteOldUrlsFromFirestore = async () => {
     try {
-        const oldYear = new Date().getFullYear() - 3; // преди 3 години
+        const oldYear = new Date().getFullYear() - 2; // преди 2 години
         const apartmentsRef = collection(db, "Apartments");
         const snapshot = await getDocs(apartmentsRef);
 
@@ -79,3 +79,44 @@ export const deleteOldUrlsFromFirestore = async () => {
     }
 };
 
+
+
+
+export const deleteOldExpenses = async () => {
+    try {
+        const expensesRef = collection(db, "Expenses");
+        const snapshot = await getDocs(expensesRef);
+
+        if (snapshot.empty) {
+            console.log("Няма записи.");
+            return;
+        }
+
+        const currentYear = new Date().getFullYear();
+        const targetYear = currentYear - 2; // трием 2 години назад (ако е 2025 → трием 2023)
+
+        let deletedCount = 0;
+
+        for (const docSnap of snapshot.docs) {
+            const data = docSnap.data();
+            const idDate = data.id;  // "26.11.2025 г., 19:22:01 ч."
+
+            if (!idDate) continue;
+
+            // 🎯 Извличане на годината от стринга
+            const yearMatch = idDate.match(/(\d{4})/);
+            if (!yearMatch) continue;
+
+            const year = parseInt(yearMatch[1]);
+
+            if (year <= targetYear) {
+                await deleteDoc(doc(db, "Expenses", docSnap.id));
+                deletedCount++;
+            }
+        }
+
+        console.log(`Изтрити стари разходи: ${deletedCount}`);
+    } catch (err) {
+        console.error("Грешка при триене:", err);
+    }
+};

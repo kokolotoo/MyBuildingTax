@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getTaxData } from "../Functions/FirebaseFunctions";
 
 
@@ -8,7 +9,8 @@ export const DataProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [user, setUser] = useState(null)
     const [dataSettings, setDataSettings] = useState(null)
-    
+    const navigate = useNavigate()
+
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('loginUser');
         const localUser = localStorage.getItem('loginUser');
@@ -17,7 +19,11 @@ export const DataProvider = ({ children }) => {
         if (storedUser) {
             setLogin(true);
             setUser(JSON.parse(storedUser));
+        } else {
+            setLogin(false);
+            navigate('/')
         }
+
     }, []);
 
     useEffect(() => {
@@ -34,6 +40,10 @@ export const DataProvider = ({ children }) => {
 
         getData();
     }, [user]);
+
+    if (login === null) {
+        return null; 
+    }
 
     return (
         <DataContext.Provider value={{
