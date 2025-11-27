@@ -30,11 +30,17 @@
 .list_section>ul{
     display: flex;
     flex-direction: column;
-    gap: 3.5em;
+    gap: 1.5em;
+    list-style:none;
 }
 
 .list_section ul>li{
     letter-spacing: 0.2em;
     cursor: pointer;
-    
+    border: 1px solid rgb(65, 66, 63);
+    padding: 1em;
+    border-radius: 0.5em;
+    text-align: center;
+    box-shadow: inset .4px .4px 3px 0.4px grey;
+    background-color: rgba(222, 184, 135, 0.181);
 }

@@ -57,6 +57,7 @@ const HomeWithLogin = () => {
             Управление
           </li>
           <li onClick={goToexpenses}>Разходи</li>
+          <li onClick={goToexpenses}>Дискусии</li>
         </ul>
       </section>
 

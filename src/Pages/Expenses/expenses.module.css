@@ -17,7 +17,9 @@
     text-align: center;
     letter-spacing: 1px;
 }
-
+.container{
+    text-align: center;
+}
 .current>b {
     font-size: 1.2em;
     color: rgb(247, 211, 247);
@@ -69,10 +71,21 @@
     color: rgb(39, 10, 10);
 }
 
-.singleExpense{
+.singleExpense {
     background-color: rgba(255, 255, 255, 0.616);
     display: flex;
     flex-direction: column;
     padding: 0.2em;
     border-radius: 0.3em;
+}
+
+.monthSelector {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin: 1em auto;
+}
+
+ select{
+    padding: 0.3em;
 }
