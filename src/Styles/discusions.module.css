@@ -1,0 +1,111 @@
+.createTopicForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    margin: 1em auto;
+    width: 99%;
+    max-width: 500px;
+}
+
+.createTopicForm>button {
+    background-color: rgb(2, 65, 2);
+    color: antiquewhite;
+    padding: 0.2em;
+}
+
+.visible {
+    display: none;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 1.5em;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.card {
+    background: #fff;
+    padding: 1em;
+    border-radius: 14px;
+    margin-bottom: .5em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.deleteBtn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #d9534f;
+}
+
+.deleteBtn:hover {
+    color: #b52b27;
+}
+
+.topicTitle {
+    margin: 0.5em 0;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.content {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1em;
+}
+
+.actions {
+    margin-bottom: 1em;
+}
+
+.likeBtn {
+    background: #f0f0f0;
+    border: none;
+    padding: 0.2em;
+    font-size: 0.7em;
+    cursor: pointer;
+}
+
+.likeBtn:hover {
+    background: #e6e6e6;
+}
+
+.comments_title {
+    color: #3a3737;
+    text-align: center;
+}
+
+.singleComment {
+    color: #222;
+    margin: 0.4em;
+}
+
+.comments_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    margin-top: 1em;
+    border: 1px solid gray;
+    padding: 0.3em;
+    border-radius: 0.3em;
+}

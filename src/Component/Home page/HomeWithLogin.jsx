@@ -39,8 +39,12 @@ const HomeWithLogin = () => {
     navigate('/month-tax')
   }
 
-  const goToexpenses = () => {
+  const goToExpenses = () => {
     navigate('/expenses')
+  }
+
+  const goToDiscussions = ()=>{
+    navigate('/discussions')
   }
 
   return (
@@ -56,8 +60,8 @@ const HomeWithLogin = () => {
           <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}>
             Управление
           </li>
-          <li onClick={goToexpenses}>Разходи</li>
-          <li onClick={goToexpenses}>Дискусии</li>
+          <li onClick={goToExpenses}>Разходи</li>
+          <li onClick={goToDiscussions}>Дискусии</li>
         </ul>
       </section>
 

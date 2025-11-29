@@ -14,6 +14,7 @@ const Apartments = lazy(() => import('./Pages/Apartments/Apartments'))
 const MyApartment = lazy(() => import('./Pages/My apartment/MyApartment'))
 const MontTax = lazy(() => import('./Pages/Mont Tax/MontTax'))
 const Expenses = lazy(() => import('./Pages/Expenses/Expenses'))
+const Discussions = lazy(() => import('./Pages/Discussions/DiscussionsPage'))
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/my-apartment' element={<MyApartment />} />
         <Route path='/month-tax' element={<MontTax />} />
         <Route path='/expenses' element={<Expenses />} />
+        <Route path='/discussions' element={<Discussions />} />
 
       </Routes>
       <FloatButton.BackTop visibilityHeight={180}/>
