@@ -1,15 +1,15 @@
 import { useState, useEffect, useContext } from "react";
-import Navbar from "../../Component/Navbar/NavBar";
-import Spinner from "../../Helpers/Spinner";
+import Navbar from "@/Component/Navbar/NavBar";
+import Spinner from "@/Helpers/Spinner";
 import styles from "./monthTax.module.css";
-import { getAllApartments } from "../../Functions/Apartmets";
-import SignaturePad from "../../Canvas/Canvas";
-import DataContext from "../../Context/DataContext";
-import { useCalculateMonthTax } from "../../Hooks/CalculateMothTax";
-import { useSuccessModal } from "../../Hooks/ModalHook";
-import Calendar from "../../Component/Month check/Calendar";
-import CurrentMonth from "../../Component/Month check/CurrentMonth";
-import SelectYear from "../../Component/Month check/SelectYear";
+import { getAllApartments } from "@/Functions/Apartmets";
+import SignaturePad from "@/Canvas/Canvas";
+import DataContext from "@/Context/DataContext";
+import { useCalculateMonthTax } from "@/Hooks/CalculateMothTax";
+import { useSuccessModal } from "@/Hooks/ModalHook";
+import Calendar from "@/Component/Month check/Calendar";
+import CurrentMonth from "@/Component/Month check/CurrentMonth";
+import SelectYear from "@/Component/Month check/SelectYear";
 
 
 const MONTHS_BG = [

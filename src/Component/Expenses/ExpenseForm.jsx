@@ -1,5 +1,5 @@
 import { Input } from 'antd'
-import styles from '../../Pages/Expenses/expenses.module.css'
+import styles from '@/Pages/Expenses/expenses.module.css'
 
 const ExpenseForm = ({
     setCurrentExpense,

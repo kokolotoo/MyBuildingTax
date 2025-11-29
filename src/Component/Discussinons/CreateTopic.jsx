@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { addTopic } from ".././../Functions/DiscusisonsFunctions";
-import { useContext } from "react";
-import DataContext from "../../Context/DataContext";
-import styles from '../../Styles/discusions.module.css'
+import { addTopic } from "@/Functions/DiscusisonsFunctions";
+import styles from '@/Styles/discusions.module.css'
+import Spinner from '@/Helpers/Spinner'
 
 
-const CreateTopic = ({ createTopicVisible, setCreateTopicVisible }) => {
+const CreateTopic = ({ createTopicVisible, setCreateTopicVisible, user }) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const { user } = useContext(DataContext);
+    
 
     const submit = async e => {
         e.preventDefault();
@@ -17,7 +16,7 @@ const CreateTopic = ({ createTopicVisible, setCreateTopicVisible }) => {
         setContent("");
         setCreateTopicVisible(false)
     };
-
+    if (!user) return <Spinner />
     return (
         <form
             onSubmit={submit}

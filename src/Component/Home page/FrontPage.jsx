@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from "../../Styles/frontPage.module.css"
+import styles from "@/Styles/frontPage.module.css"
 import { Link } from 'react-router-dom'
-import AboutModal from '../../Helpers/Modal'
+import AboutModal from '@/Helpers/Modal'
 
 
 const FrontPage = () => {

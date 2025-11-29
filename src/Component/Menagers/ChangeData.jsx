@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react'
-import styles from '../../Styles/menagers.module.css'
+import styles from '@/Styles/menagers.module.css'
 import { Input } from 'antd';
-import { updateData } from '../../Functions/FirebaseFunctions';
+import { updateData } from '@/Functions/FirebaseFunctions';
 import DataTable from './Table/DataTable';
-import { useSuccessModal } from '../../Hooks/ModalHook';
+import { useSuccessModal } from '@/Hooks/ModalHook';
 
 const ChangeData = ({ menager, person, dataSettings }) => {
     const [changeMenager, setChangeMenager] = useState(false)

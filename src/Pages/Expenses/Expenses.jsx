@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from "react";
-import DataContext from "../../Context/DataContext";
-import Navbar from "../../Component/Navbar/NavBar";
+import DataContext from "@/Context/DataContext";
+import Navbar from "@/Component/Navbar/NavBar";
 import styles from './expenses.module.css';
-import Spinner from "../../Helpers/Spinner";
+import Spinner from "@/Helpers/Spinner";
 import { updateData, addNewExpense, getAllExpenses } from "../../Functions/FirebaseFunctions";
-import { useSuccessModal } from "../../Hooks/ModalHook";
-import ExpenseForm from "../../Component/Expenses/ExpenseForm";
-import FilteredExpenses from "../../Component/Expenses/FilteredExpenses";
-import MonthSelector from "../../Component/Expenses/MonthSelector";
+import { useSuccessModal } from "@/Hooks/ModalHook";
+import ExpenseForm from "@/Component/Expenses/ExpenseForm";
+import FilteredExpenses from "@/Component/Expenses/FilteredExpenses";
+import MonthSelector from "@/Component/Expenses/MonthSelector";
 
 // Помощна функция за парсване на дата от твоя формат "26.11.2025 г., 19:24:26 ч."
 const getYearMonth = (dateString) => {

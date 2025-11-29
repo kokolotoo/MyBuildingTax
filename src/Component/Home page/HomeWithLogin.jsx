@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react'
-import styles from '../../Styles/homeWithLogin.module.css'
+import styles from '@/Styles/homeWithLogin.module.css'
 import { Link, useNavigate } from 'react-router-dom';
-import DataContext from '../../Context/DataContext'
+import DataContext from '@/Context/DataContext'
 import Navbar from '../Navbar/NavBar';
-import { useSuccessModal } from '../../Hooks/ModalHook';
+import { useSuccessModal } from '@/Hooks/ModalHook';
 import Message from './Message/Message'
 
 

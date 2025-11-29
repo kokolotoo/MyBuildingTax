@@ -1,25 +1,25 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import {
     subscribeToTopics,
     toggleLike,
     deleteTopic
-} from "../../Functions/DiscusisonsFunctions";
+} from "@/Functions/DiscusisonsFunctions";
 import CommentsSection from "./CommentsSection";
-import Spinner from "../../Helpers/Spinner";
-import DataContext from "../../Context/DataContext";
-import styles from "../../Styles/discusions.module.css";
+import Spinner from "@/Helpers/Spinner";
+import styles from "@/Styles/discusions.module.css";
 
 
-const TopicsList = () => {
-    const { user } = useContext(DataContext);
+const TopicsList = ({user}) => {
+    
     const [topics, setTopics] = useState([]);
-
-    if (!user) return <Spinner />;
 
     useEffect(() => {
         const unsub = subscribeToTopics(setTopics);
         return () => unsub();
     }, []);
+
+
+    if (!user) return <Spinner />;
 
     const canDelete = (topic) =>
         user.cashier || user.housMenager || topic.authorId === user.user;

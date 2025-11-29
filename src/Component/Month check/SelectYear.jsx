@@ -1,4 +1,4 @@
-import styles from '../../Pages/Mont Tax/monthTax.module.css'
+import styles from '@/Pages/Mont Tax/monthTax.module.css'
 
 const SelectYear = ({ setChoisentYear, currentYear }) => {
 

@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './reg.module.css'
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
 import { Input, Space, Modal } from 'antd';
-import { sumbmit } from '../../Functions/FirebaseFunctions';
-import DataContext from '../../Context/DataContext';
-import { useSuccessModal } from '../../Hooks/ModalHook';
+import { sumbmit } from '@/Functions/FirebaseFunctions';
+import DataContext from '@/Context/DataContext';
+import { useSuccessModal } from '@/Hooks/ModalHook';
 
 
 const Registration = () => {

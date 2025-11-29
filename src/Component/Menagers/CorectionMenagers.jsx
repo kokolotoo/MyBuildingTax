@@ -1,6 +1,6 @@
 import CurrentTax from './Table/CurrentTax';
 import ChangeData from './ChangeData';
-import styles from '../../Styles/menagers.module.css'
+import styles from '@/Styles/menagers.module.css'
 
 const CorectionMenagers = ({ menagers, dataSettings }) => {
 

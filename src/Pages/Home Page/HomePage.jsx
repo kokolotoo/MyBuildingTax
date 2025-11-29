@@ -1,8 +1,8 @@
 
 import { useContext } from 'react'
-import DataContext from '../../Context/DataContext'
-import FrontPage from '../../Component/Home page/FrontPage'
-import HomeWithLogin from '../../Component/Home page/HomeWithLogin'
+import DataContext from '@/Context/DataContext'
+import FrontPage from '@/Component/Home page/FrontPage'
+import HomeWithLogin from '@/Component/Home page/HomeWithLogin'
 
 
 const HomePage = () => {

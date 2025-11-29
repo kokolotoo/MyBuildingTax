@@ -3,9 +3,9 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Input, Checkbox } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { signIn, getTaxData } from '../../Functions/FirebaseFunctions';
+import { signIn, getTaxData } from '@/Functions/FirebaseFunctions';
 import DataContext from '../../Context/DataContext';
-import { useSuccessModal } from '../../Hooks/ModalHook';
+import { useSuccessModal } from '@/Hooks/ModalHook';
 
 const loginPage = () => {
     const { setUser, setLogin } = useContext(DataContext)

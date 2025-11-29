@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../Pages/Expenses/expenses.module.css'
+import styles from '@/Pages/Expenses/expenses.module.css'
 import SelectYear from '../Month check/SelectYear'
 
 const MonthSelector = ({

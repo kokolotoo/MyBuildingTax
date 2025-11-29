@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { addComment, subscribeToComments } from ".././../Functions/DiscusisonsFunctions";
-import styles from '../../Styles/discusions.module.css'
+import { addComment, subscribeToComments } from "@/Functions/DiscusisonsFunctions";
+import styles from '@/Styles/discusions.module.css'
 
 const CommentsSection = ({ topicId, user }) => {
     const [comments, setComments] = useState([]);

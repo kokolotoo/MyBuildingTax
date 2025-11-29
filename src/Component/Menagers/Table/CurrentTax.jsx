@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import styles from '../../../Styles/menagers.module.css';
+import styles from '@/Styles/menagers.module.css';
 import { Input } from 'antd';
-import { updateData } from '../../../Functions/FirebaseFunctions';
-import { useSuccessModal } from '../../../Hooks/ModalHook';
+import { updateData } from '@/Functions/FirebaseFunctions';
+import { useSuccessModal } from '@/Hooks/ModalHook';
 
 const CurrentTax = ({ dataSettings }) => {
     const [changeTax, setChangeTax] = useState(false);

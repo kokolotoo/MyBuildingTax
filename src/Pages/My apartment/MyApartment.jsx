@@ -1,11 +1,11 @@
 import styles from './myApartment.module.css'
-import Navbar from '../../Component/Navbar/NavBar'
+import Navbar from '@/Component/Navbar/NavBar'
 import { useState, useContext, useEffect } from 'react'
-import DataContext from '../../Context/DataContext'
-import { getSingleApartment } from '../../Functions/Apartmets'
+import DataContext from '@/Context/DataContext'
+import { getSingleApartment } from '@/Functions/Apartmets'
 import Spinner from '../../Helpers/Spinner'
-import { useCalculateMonthTax } from '../../Hooks/CalculateMothTax'
-import SelectYear from '../../Component/Month check/SelectYear'
+import { useCalculateMonthTax } from '@/Hooks/CalculateMothTax'
+import SelectYear from '@/Component/Month check/SelectYear'
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",

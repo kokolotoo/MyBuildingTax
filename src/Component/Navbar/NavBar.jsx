@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../../Styles/navBar.css';
-import DataContext from '../../Context/DataContext';
-import { exit } from '../../Functions/FirebaseFunctions';
+import '@/Styles/navBar.css';
+import DataContext from '@/Context/DataContext';
+import { exit } from '@/Functions/FirebaseFunctions';
 
 
 export default function Navbar({ }) {
