@@ -32,7 +32,7 @@
 
 .card {
     background: #fff;
-    padding: 1em;
+    padding: .8em;
     border-radius: 14px;
     margin-bottom: .5em;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -46,7 +46,7 @@
 }
 
 .author {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #666;
 }
 
@@ -63,25 +63,22 @@
 }
 
 .topicTitle {
-    margin: 0.5em 0;
+    margin: 0.1em;
     font-size: 1.2rem;
     color: #222;
 }
 
 .content {
-    font-size: 1rem;
     color: #444;
-    margin-bottom: 1em;
 }
 
 .actions {
-    margin-bottom: 1em;
+    margin-bottom: .5em;
 }
 
 .likeBtn {
-    background: #f0f0f0;
+    background: transparent;
     border: none;
-    padding: 0.2em;
     font-size: 0.7em;
     cursor: pointer;
 }
@@ -91,21 +88,32 @@
 }
 
 .comments_title {
-    color: #3a3737;
+    color: #696868;
     text-align: center;
 }
 
 .singleComment {
-    color: #222;
+    color: #242020;
     margin: 0.4em;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 .comments_form {
     display: flex;
     flex-direction: column;
-    gap: 0.3em;
+    gap: 0.5em;
     margin-top: 1em;
     border: 1px solid gray;
     padding: 0.3em;
     border-radius: 0.3em;
+}
+
+.comments_form>button{
+    width: 50%;
+    max-width: 70px;
+}
+
+.comments_form>input{
+    border:1px solid rgb(201, 195, 195);
+   padding: .3em;
 }

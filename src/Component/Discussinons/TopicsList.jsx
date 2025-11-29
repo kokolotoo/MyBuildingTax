@@ -9,6 +9,7 @@ import Spinner from "../../Helpers/Spinner";
 import DataContext from "../../Context/DataContext";
 import styles from "../../Styles/discusions.module.css";
 
+
 const TopicsList = () => {
     const { user } = useContext(DataContext);
     const [topics, setTopics] = useState([]);
@@ -25,9 +26,8 @@ const TopicsList = () => {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Форум</h2>
 
-            {topics.map((topic) => (
+            {topics.length > 0 && topics.map((topic) => (
                 <div key={topic.id} className={styles.card}>
                     <div className={styles.header}>
                         <span className={styles.author}>ап. {topic.authorId}</span>
@@ -56,6 +56,8 @@ const TopicsList = () => {
 
                     <CommentsSection user={user} topicId={topic.id} />
                 </div>
+
+
             ))}
         </div>
     );
