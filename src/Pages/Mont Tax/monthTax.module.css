@@ -1,8 +1,10 @@
-
+.container{
+   padding-top: 4.5em;
+}
 .page {
-
     min-height: 100vh;
     padding-bottom: 2rem;
+   
 }
 
 .title {

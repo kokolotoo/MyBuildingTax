@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import Navbar from "@/Component/Navbar/NavBar";
 import Spinner from "@/Helpers/Spinner";
 import styles from "./monthTax.module.css";
 import { getAllApartments } from "@/Functions/Apartmets";
@@ -58,7 +57,6 @@ const MontTax = () => {
     return (
         <div className={styles.container}>
             {contextHolder}
-            <Navbar />
             
             <SelectYear
                 setChoisentYear={setChoisentYear}

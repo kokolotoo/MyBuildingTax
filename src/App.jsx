@@ -15,6 +15,7 @@ const MyApartment = lazy(() => import('./Pages/My apartment/MyApartment'))
 const MontTax = lazy(() => import('./Pages/Mont Tax/MontTax'))
 const Expenses = lazy(() => import('./Pages/Expenses/Expenses'))
 const Discussions = lazy(() => import('./Pages/Discussions/DiscussionsPage'))
+const Navbar = lazy(() => import('./Component/Navbar/NavBar'))
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   return (
 
     <DataProvider>
-
+      <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/Login' element={<LoginPage />} />
@@ -36,7 +37,7 @@ function App() {
         <Route path='/discussions' element={<Discussions />} />
 
       </Routes>
-      <FloatButton.BackTop visibilityHeight={180}/>
+      <FloatButton.BackTop visibilityHeight={180} />
     </DataProvider>
 
   )

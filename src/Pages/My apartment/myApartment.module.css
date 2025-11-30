@@ -2,14 +2,13 @@
     min-height: 100vh;
     /* 📌 ТУК СЕ СЛАГА КАРТИНКАТА */
     background-image: url("https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1200&q=80");
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    padding-top: 4em;
 }
 
 /* Лека мъгла за по-добро четене на текста */
@@ -18,8 +17,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(2px);
-    z-index: 0;
+    z-index: 1;
 }
 
 .apartment_data>* {
@@ -29,14 +27,14 @@
 
 /* Каре с данни */
 .apartment_data section {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(129, 129, 129, 0.164);
     backdrop-filter: blur(12px);
     padding: 1.2rem;
     border-radius: 1.4rem;
     width: 90%;
     max-width: 480px;
     margin-top: 1rem;
-    color: #fff;
+    color: #ffffff;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     z-index: 0;

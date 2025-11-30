@@ -1,5 +1,4 @@
 import styles from './myApartment.module.css'
-import Navbar from '@/Component/Navbar/NavBar'
 import { useState, useContext, useEffect } from 'react'
 import DataContext from '@/Context/DataContext'
 import { getSingleApartment } from '@/Functions/Apartmets'
@@ -45,7 +44,6 @@ const MyApartment = () => {
 
   return (
     <section className={styles.apartment_data}>
-      <Navbar />
 
       <section className={styles.bg_box}>
         <div>

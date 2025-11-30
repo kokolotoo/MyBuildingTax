@@ -2,6 +2,7 @@
     min-height: 100vh;
     background: linear-gradient(135deg, #9ebbe7, #eaccf0);
     padding-bottom: 2.5rem; /* 40px */
+    padding-top: 4em;
 }
 
 .main_container {

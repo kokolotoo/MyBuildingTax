@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import DataContext from "../../Context/DataContext";
 import styles from "./apartment.module.css";
-import Navbar from "@/Component/Navbar/NavBar";
 import { getAllApartments, editApartment } from "../../Functions/Apartmets";
 import Spinner from "@/Helpers/Spinner";
 import { useSuccessModal } from "@/Hooks/ModalHook";
@@ -71,7 +70,6 @@ const Apartments = () => {
     return (
         <section className={styles.page}>
             {contextHolder}
-            <Navbar />
 
             <main className={styles.main_container}>
 

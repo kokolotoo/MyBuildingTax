@@ -1,6 +1,7 @@
 .container {
     background: linear-gradient(135deg, #24100e, #272e0fc2);
     min-height: 100vh;
+    padding-top: 4em;
 }
 
 .slider {

@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 4em;
 }
 
 table {
@@ -55,7 +56,7 @@ td {
     padding: 0.6em;
     border-radius: 0.5em;
     border: none;
-    margin-left: 2em;
+    margin-left: 1em;
 }
 
 .taxInfo {
@@ -82,6 +83,7 @@ footer h3 {
 
 .buttons {
     margin-top: 1em;
+    
 }
 
 

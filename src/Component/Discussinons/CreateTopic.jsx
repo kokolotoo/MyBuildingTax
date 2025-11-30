@@ -26,14 +26,14 @@ const CreateTopic = ({ createTopicVisible, setCreateTopicVisible, user }) => {
                 value={title}
                 required
                 onChange={e => setTitle(e.target.value)}
-                placeholder="Заглавие"
+                placeholder="Заглавие..."
             />
 
             <textarea
                 value={content}
                 required
                 onChange={e => setContent(e.target.value)}
-                placeholder="Съдържание"
+                placeholder="Съдържание..."
             />
 
             <button type="submit">Публикувай</button>

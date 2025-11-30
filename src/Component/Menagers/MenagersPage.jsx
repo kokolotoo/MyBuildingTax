@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react'
-import Navbar from '../Navbar/NavBar'
 import styles from '@/Styles/menagers.module.css'
 import Spinner from '@/Helpers/Spinner'
 import CorectionMenagers from './CorectionMenagers'
@@ -23,7 +22,7 @@ const MenagersPage = () => {
     if (!dataSettings) return <Spinner />
     return (
         <main className={styles.container}>
-            <Navbar />
+          
 
             {currentMenagers ? (
                 <CorectionMenagers

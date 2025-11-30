@@ -49,7 +49,7 @@ export default function Navbar({ }) {
 
     return (
 
-        <nav className='header__nav'>
+        <nav className={login?'header__nav':'invisible'}>
 
             <ul className={`header__menu ${menuOpen ? 'header__menu-open' : ''}`}>
 

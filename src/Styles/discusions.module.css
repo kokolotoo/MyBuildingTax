@@ -4,13 +4,18 @@
     gap: 0.6em;
     margin: 1em auto;
     width: 99%;
-    max-width: 500px;
+    max-width: 450px;
+    border: 1px solid gray;
+    padding: 1em;
+    border-radius: 0.5em;
 }
 
 .createTopicForm>button {
-    background-color: rgb(2, 65, 2);
-    color: antiquewhite;
-    padding: 0.2em;
+    background-color: rgb(182, 167, 30);
+    color: rgb(7, 7, 7);
+    padding: 0.4em;
+    max-width: 10em;
+    margin: auto;
 }
 
 .visible {
@@ -110,7 +115,10 @@
 
 .comments_form>button{
     width: 50%;
-    max-width: 70px;
+    max-width: 80px;
+    margin: auto;
+    background-color: #d7e4dc;
+    font-size: 0.7em;
 }
 
 .comments_form>input{
