@@ -1,53 +1,53 @@
+// DataContext.jsx
 import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getTaxData } from "../Functions/FirebaseFunctions";
-
+import Spinner from "../Helpers/Spinner"; // или друг fallback
 
 const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
-    const [login, setLogin] = useState(false)
-    const [user, setUser] = useState(null)
-    const [dataSettings, setDataSettings] = useState(null)
-    const navigate = useNavigate()
+    const [login, setLogin] = useState(false);
+    const [user, setUser] = useState(null);
+    const [dataSettings, setDataSettings] = useState(null);
+    const [isReady, setIsReady] = useState(false); // <--- флаг за готовност
 
     useEffect(() => {
-        const sessionUser = sessionStorage.getItem('loginUser');
-        const localUser = localStorage.getItem('loginUser');
+        const load = async () => {
+            try {
+                // 1) прочит от storage (session или local)
+                const sessionUser = sessionStorage.getItem("loginUser");
+                const localUser = localStorage.getItem("loginUser");
+                const storedUser = sessionUser || localUser;
 
-        const storedUser = sessionUser || localUser;
-        if (storedUser) {
-            setLogin(true);
-            setUser(JSON.parse(storedUser));
-        } else {
-            setLogin(false);
-            navigate('/')
-        }
+                if (storedUser) {
+                    const parsed = JSON.parse(storedUser);
+                    setUser(parsed);
+                    setLogin(true);
+                    // 2) след като имаме user (или дори без user), зареждаме settings
+                    const settings = await getTaxData();
+                    if (settings) setDataSettings(settings);
+                } else {
+                    // няма логнат потребител — може пак да заредиш настройки за публични данни
+                    // const settings = await getTaxData(); setDataSettings(settings);
+                }
+            } catch (err) {
+                console.error("Грешка при инициализация на DataProvider:", err);
+            } finally {
+                setIsReady(true); // винаги поставяме ready, за да не блокираме forever
+            }
+        };
 
+        load();
     }, []);
 
-    useEffect(() => {
-        if (!user) return; // излизаме, ако user още не е наличен
-
-        const getData = async () => {
-            try {
-                const data = await getTaxData();
-                if (data) setDataSettings(data);
-            } catch (err) {
-                console.error("Грешка при четене на данни:", err);
-            }
-        }
-
-        getData();
-    }, [user]);
-
-    if (login === null) {
-        return null; 
+    // Ако все още не сме готови — покажи Spinner (или друг fallback)
+    if (!isReady) {
+        return <Spinner />;
     }
 
     return (
         <DataContext.Provider value={{
-            login, setLogin, user, setUser, dataSettings, setDataSettings
+            login, setLogin, user, setUser, dataSettings, setDataSettings, isReady
         }}>
             {children}
         </DataContext.Provider>

@@ -26,9 +26,9 @@ function App() {
 
     <DataProvider>
 
-      <Navbar />
-
       <Suspense fallback={<Spiner />}>
+
+        <Navbar />
 
         <Routes>
 
