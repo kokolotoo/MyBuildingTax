@@ -38,42 +38,17 @@ function App() {
           <Route path='/registration' element={<Registration />} />
           <Route path='/forgot-pass' element={<ForgotPassPage />} />
 
-          <Route path='/menagers' element={
-            <ProtectedRoute>
-              <Menagers />
-            </ProtectedRoute>
-          } />
+          <Route path='/menagers' element={<Menagers />} />
 
-          <Route path='/apartments' element={
-            <ProtectedRoute>
-              <Apartments />
-            </ProtectedRoute>
+          <Route path='/apartments' element={<Apartments />} />
 
-          } />
+          <Route path='/my-apartment' element={<MyApartment />} />
 
-          <Route path='/my-apartment' element={
-            <ProtectedRoute>
-              <MyApartment />
-            </ProtectedRoute>
-          } />
+          <Route path='/month-tax' element={<MontTax />} />
 
-          <Route path='/month-tax' element={
-            <ProtectedRoute>
-              <MontTax />
-            </ProtectedRoute>
-          } />
+          <Route path='/expenses' element={<Expenses />} />
 
-          <Route path='/expenses' element={
-            <ProtectedRoute>
-              <Expenses />
-            </ProtectedRoute>
-          } />
-
-          <Route path='/discussions' element={
-            <ProtectedRoute>
-              <Discussions />
-            </ProtectedRoute>
-          } />
+          <Route path='/discussions' element={<Discussions />} />
 
         </Routes>
 
