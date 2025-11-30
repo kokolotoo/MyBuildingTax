@@ -17,6 +17,7 @@ const Expenses = lazy(() => import('./Pages/Expenses/Expenses'))
 const Discussions = lazy(() => import('./Pages/Discussions/DiscussionsPage'))
 const Navbar = lazy(() => import('./Component/Navbar/NavBar'))
 const Spiner = lazy(() => import('./Helpers/Spinner'))
+const ProtectedRoute = lazy(() => import('./Helpers/ProtectedRoute'))
 
 
 function App() {
@@ -31,16 +32,52 @@ function App() {
 
         <Routes>
 
-          <Route path='/' element={<HomePage />} />
+          <Route path='/' element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          } />
+
           <Route path='/Login' element={<LoginPage />} />
           <Route path='/registration' element={<Registration />} />
           <Route path='/forgot-pass' element={<ForgotPassPage />} />
-          <Route path='/menagers' element={<Menagers />} />
-          <Route path='/apartments' element={<Apartments />} />
-          <Route path='/my-apartment' element={<MyApartment />} />
-          <Route path='/month-tax' element={<MontTax />} />
-          <Route path='/expenses' element={<Expenses />} />
-          <Route path='/discussions' element={<Discussions />} />
+
+          <Route path='/menagers' element={
+            <ProtectedRoute>
+              <Menagers />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/apartments' element={
+            <ProtectedRoute>
+              <Apartments />
+            </ProtectedRoute>
+
+          } />
+
+          <Route path='/my-apartment' element={
+            <ProtectedRoute>
+              <MyApartment />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/month-tax' element={
+            <ProtectedRoute>
+              <MontTax />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/expenses' element={
+            <ProtectedRoute>
+              <Expenses />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/discussions' element={
+            <ProtectedRoute>
+              <Discussions />
+            </ProtectedRoute>
+          } />
 
         </Routes>
 
