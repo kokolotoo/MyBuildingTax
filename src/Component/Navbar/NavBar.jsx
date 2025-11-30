@@ -23,7 +23,7 @@ export default function Navbar({ }) {
         navigate('/')
         setLogin(false)
         setUser(null)
-       
+        setMenuOpen(false);
     }
 
     useEffect(() => {

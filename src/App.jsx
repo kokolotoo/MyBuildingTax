@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
 import { DataProvider } from './Context/DataContext'
@@ -16,6 +16,7 @@ const MontTax = lazy(() => import('./Pages/Mont Tax/MontTax'))
 const Expenses = lazy(() => import('./Pages/Expenses/Expenses'))
 const Discussions = lazy(() => import('./Pages/Discussions/DiscussionsPage'))
 const Navbar = lazy(() => import('./Component/Navbar/NavBar'))
+const Spiner = lazy(() => import('./Helpers/Spinner'))
 
 
 function App() {
@@ -23,20 +24,28 @@ function App() {
   return (
 
     <DataProvider>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/Login' element={<LoginPage />} />
-        <Route path='/registration' element={<Registration />} />
-        <Route path='/forgot-pass' element={<ForgotPassPage />} />
-        <Route path='/menagers' element={<Menagers />} />
-        <Route path='/apartments' element={<Apartments />} />
-        <Route path='/my-apartment' element={<MyApartment />} />
-        <Route path='/month-tax' element={<MontTax />} />
-        <Route path='/expenses' element={<Expenses />} />
-        <Route path='/discussions' element={<Discussions />} />
 
-      </Routes>
+      <Navbar />
+
+      <Suspense fallback={<Spiner />}>
+
+        <Routes>
+
+          <Route path='/' element={<HomePage />} />
+          <Route path='/Login' element={<LoginPage />} />
+          <Route path='/registration' element={<Registration />} />
+          <Route path='/forgot-pass' element={<ForgotPassPage />} />
+          <Route path='/menagers' element={<Menagers />} />
+          <Route path='/apartments' element={<Apartments />} />
+          <Route path='/my-apartment' element={<MyApartment />} />
+          <Route path='/month-tax' element={<MontTax />} />
+          <Route path='/expenses' element={<Expenses />} />
+          <Route path='/discussions' element={<Discussions />} />
+
+        </Routes>
+
+      </Suspense>
+
       <FloatButton.BackTop visibilityHeight={180} />
     </DataProvider>
 
