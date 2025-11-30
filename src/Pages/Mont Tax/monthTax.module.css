@@ -1,162 +1,208 @@
-.container{
-   padding-top: 4.5em;
-}
-.page {
-    min-height: 100vh;
-    padding-bottom: 2rem;
-   
+/*
+ * Глобални стилове и оформление на страницата
+ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    padding-top: 4.5em; /* Компенсация за фиксиран Navbar */
 }
 
 .title {
     text-align: center;
-    margin-bottom: 1em;
+    font-size: 2rem;
+    color: #343a40; /* Тъмен цвят за заглавието */
+    margin-bottom: 1.5rem;
+    font-weight: 700;
 }
 
-.wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: .5rem;
-
-}
-
-.calendar {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+/*
+ * Секция за избор на година
+ */
+.choiceYear {
+    display: flex;
+    justify-content: center;
     gap: 1rem;
+    margin: 1.5rem auto 2.5rem;
+}
+
+.choiceYear > button {
+    background-color: #007bff; /* Основен син цвят */
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px; /* Заоблени ъгли */
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.choiceYear > button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Добавете клас "active" към бутона, който е избран в момента */
+.choiceYear > button.active {
+    background-color: #dc3545; /* Различен цвят за активен бутон */
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+}
+
+/*
+ * Календарна мрежа с месеци
+ */
+.monthGrid {
+    display: grid;
+    /* Увеличава минималната ширина на колоната за по-добра визия */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 1.5rem; /* Повече разстояние между кутиите */
+    margin-bottom: 3rem;
 }
 
 .monthBox {
     background: white;
-    border-radius: 10px;
-    padding: .5rem;
+    border-radius: 12px;
+    padding: 1rem;
     cursor: pointer;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #333;
+    /* По-мека, модерна сянка */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
     transition: 0.2s ease;
-    margin: auto;
-    margin-bottom: 0.5em;
-    width: 95%;
-    color: #3a8dff;
+    border: 1px solid #e9ecef;
 }
 
 .monthBox:hover {
-    transform: scale(1.01);
-    background: #d3cfcf;
-   
+    transform: translateY(-3px); /* Лек повдигащ ефект */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); 
+    background: #f8f9fa; /* Много лек фон */
 }
 
-.monthBox h4 {
-    margin-bottom: .5rem;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.backBtn {
-    margin:0.2em 2em;
-}
-
-
-.selectedMonth {
-    text-align: center;
-    color: rgb(199, 240, 124);
-    font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 1px;
-}
-
-.unpaidList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .3rem;
-    font-weight: bold;
-    font-size: 0.8rem;
-    color: red;
-}
-
-.unpaidList span {
-    background: #ffe4e4;
-    padding: 2px 6px;
-    border-radius: 5px;
+.monthBox h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #007bff; /* Акцентен цвят за месеца */
+    font-weight: 700;
+    text-transform: capitalize;
 }
 
 .allPaid {
-    text-align: center;
-    color: green;
-    font-weight: bold;
+    color: #28a745; /* Зелено за платено */
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 1rem;
 }
 
-.details {
+.unpaidList {
+    margin-top: 0.5rem;
+    color: #dc3545; /* Червено за неплатено */
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/*
+ * Детайли за избрания месец (Table View)
+ */
+.monthDetails {
     margin-top: 2rem;
-    background: white;
-    padding: 1.5rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
 }
 
-.details ul {
-    margin-top: 1rem;
-}
-
-.details li {
-    margin-bottom: .8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.payBtn {
-    padding: .4rem;
-    margin: .1em;
-    background: #3a8dff;
-    color: white;
+.backBtn {
+    margin: 0.2em 2rem;
+    background: transparent;
     border: none;
-    border-radius: 6px;
+    color: #007bff;
+    font-size: 1rem;
     cursor: pointer;
+    font-weight: 600;
 }
 
-.closeBtn {
-    margin-top: 1rem;
-    padding: .5rem 1rem;
-    border: none;
-    background: #ccc;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    margin: 1em auto;
-}
-
-td,
-th {
-    border: 1px solid #8a8a8a;
-    padding: 0.2em;
+.selectedMonth {
     text-align: center;
+    color: #343a40;
+    font-family: Arial, sans-serif;
+    letter-spacing: 1px;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+/*
+ * Таблица (Table)
+ */
+.table {
+    border-collapse: collapse;
+    width: 95%; 
+    margin: 1.5rem auto; 
+    border-radius: 8px;
+    overflow: hidden; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 th {
-    color: rgb(185, 201, 170);
-    padding: 0.5em;
-    font-family: Arial, Helvetica, sans-serif;
-    letter-spacing: 1px;
-    font-size: 1.1rem;
+    background-color: #343a40; /* Тъмен фон за заглавията */
+    color: white; 
+    padding: 0.8rem 0.5em; 
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
 }
 
 td {
-    height: 12vh;
+    border: 1px solid #dee2e6; /* Много светла рамка */
+    padding: 0.75rem 0.5em; /* Четливо отстояние */
+    text-align: center;
+    /* ПРЕМАХНАТА E height: 12vh */
 }
 
-.choiceYear{
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-    margin: 1em;
+
+/* Стилизиране на статуса */
+.paid {
+    color: #28a745; /* Зелено */
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+.unpaid {
+    color: #dc3545; /* Червено */
+    font-weight: 900;
+    font-size: 1.2rem;
 }
 
-.choiceYear >button{
-    background-color: #00409b;
-    color: azure;
-    padding: 0.4em;
+/* Бутон "Плати" */
+.payBtn {
+    padding: 0.4rem 0.8rem;
+    background: #28a745; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.payBtn:hover {
+    background: #218838;
+}
+
+.noPayment {
+    color: #6c757d; /* Сиво за неактивни */
+}
+
+
+.sigContainer {
+    background: white;
+    padding: 0.1rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+
+    text-align: center;
+}
+
+.sigContainer h3 {
+    color: #343a40;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
 }

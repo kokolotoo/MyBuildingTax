@@ -1,73 +1,134 @@
+/*
+ * ГЛАВЕН КОНТЕЙНЕР и ФОН
+ */
 .apartment_data {
-    min-height: 100vh;
-    /* 📌 ТУК СЕ СЛАГА КАРТИНКАТА */
+    /* Фон и закрепване */
     background-image: url("https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1200&q=80");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 4em;
+    padding: 4em 1rem 3rem 1rem;
 }
 
-/* Лека мъгла за по-добро четене на текста */
+/* Overlay (Мъгла/Затъмнение) върху ЦЕЛИЯ екран */
 .apartment_data::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.7);
+    /* По-тъмен фон */
     z-index: 1;
 }
 
+/* Всички елементи вътре (H2, Box, SelectYear, List) */
 .apartment_data>* {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
-/* Каре с данни */
-.apartment_data section {
-    background: rgba(129, 129, 129, 0.164);
-    backdrop-filter: blur(12px);
-    padding: 1.2rem;
-    border-radius: 1.4rem;
+/*
+ * ИНФОРМАЦИОННО КАРЕ (.bg_box)
+ */
+.bg_box {
+    background: rgba(121, 98, 98, 0.096);
+    /* По-светъл прозрачен фон */
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Лека бяла рамка */
+    padding: 1.5rem;
+    border-radius: 1.5rem;
     width: 90%;
-    max-width: 480px;
-    margin-top: 1rem;
+    max-width: 500px;
+    margin-top: 1.5rem;
     color: #ffffff;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    z-index: 0;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    /* По-добра сянка */
 }
 
-.apartment_data h2 {
+.bg_box h2 {
     text-align: center;
-    font-size: 1.6rem;
-    margin-bottom: 1.2rem;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
 }
 
-.apartment_data p {
-    font-size: 1.2rem;
-    margin-bottom: 0.8rem;
+.bg_box p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-.apartment_data span {
-    font-weight: bold;
+.bg_box p span {
+    color: #ffd700;
+    font-style: italic;
 }
 
+/*
+ * ЗАГЛАВИЕ (Плащания за ...)
+ */
+.apartment_data h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+    text-align: center;
+}
+
+/*
+ * СПИСЪК С МЕСЕЦИТЕ
+ */
 .monthList {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
-    margin-top: 1rem;
-    width: 80%;
+    gap: 0.5rem;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 3rem;
 }
 
 .monthRow {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid rgb(228, 195, 195);
-    border-radius: 0.5em;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s;
+}
+
+.monthRow:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.monthName {
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Статус */
+.paid,
+.paid:visited {
+    color: #79f779;
+    /* Ярко зелено */
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.unpaid {
+    color: #ff6b6b;
+    /* Ярко червено */
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
 }

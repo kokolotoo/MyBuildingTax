@@ -57,13 +57,17 @@ const MontTax = () => {
     return (
         <div className={styles.container}>
             {contextHolder}
-            
-            <SelectYear
-                setChoisentYear={setChoisentYear}
-                currentYear={currentYear}
-            />
+            {!signatureFor &&
+                <SelectYear
+                    setChoisentYear={setChoisentYear}
+                    currentYear={currentYear}
+                    choisentYear={choisentYear}
+                />
+            }
 
-            <h2 className={styles.title}>Таксуване – {choisentYear}</h2>
+            {!signatureFor &&
+                <h2 className={styles.title}>Таксуване – {choisentYear}</h2>
+            }
 
             {/* -----------  КАЛЕНДАР 12 МЕСЕЦА -----------*/}
             <Calendar
@@ -107,7 +111,7 @@ const MontTax = () => {
                     </div>
                 </div>
             )}
-            
+
         </div>
     );
 };

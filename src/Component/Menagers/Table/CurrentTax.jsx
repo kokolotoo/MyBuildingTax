@@ -51,7 +51,7 @@ const CurrentTax = ({ dataSettings }) => {
 
             <div>
                 <p>
-                    Такса живущ на 1 или 2 етаж: €
+                     Живущ на 1 и 2 етаж: €
                     {changeTax ? (
                         <Input
                             type="number"
@@ -69,7 +69,7 @@ const CurrentTax = ({ dataSettings }) => {
 
             <div>
                 <p>
-                    Такса живущ от 2 етаж нагоре: € 
+                    Живущ 3 етаж и нагоре: € 
                     {changeTax ? (
                         <Input
                             type="number"
@@ -89,7 +89,7 @@ const CurrentTax = ({ dataSettings }) => {
                         onClick={handleUpdateData}
                         className={changeTax ? styles.save_change_menager_but : styles.change_menager_but}
                     >
-                        {changeTax ? '💾 Запази промените' : '✏️ Промени Таксата'}
+                        {changeTax ? '💾 Запази' : '✏️ Промени Таксата'}
                     </button>
 
                     {changeTax && (

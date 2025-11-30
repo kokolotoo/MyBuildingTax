@@ -1,109 +1,261 @@
+/*
+ * ГЛАВЕН КОНТЕЙНЕР и ОБЩ СТИЛ
+ */
 .container {
-    background: linear-gradient(135deg, #0c240c, #140942c2);
+    background: linear-gradient(135deg, #0a192f, #132a47);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1rem 0.5rem;
+    /* Оптимизирано за мобилен */
     margin-top: 4em;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
 }
 
+/* * СТИЛ ЗА БЛОКОВЕ (Карти) - Glassmorphism ефект
+ */
+.data_card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    width: 98%;
+    max-width: 800px;
+    color: #ffffff;
+}
+
+/*
+ * ТАБЛИЦИ (Ключова мобилна оптимизация)
+ */
 table {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    margin: 1em auto;
-}
-
-td,
-th {
-    border: 1px solid #8a8a8a;
-    padding: 0.2em;
-    text-align: center;
+    margin: 1rem auto;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.9em;
 }
 
 th {
-    color: rgb(185, 201, 170);
-    padding: 0.5em;
-    font-family: Arial, Helvetica, sans-serif;
-    letter-spacing: 1px;
-    font-size: 1.1rem;
+    background-color: #007bff;
+    color: white;
+    padding: 0.6rem 0.3em;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    border: none;
 }
 
 td {
-    height: 12vh;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.6rem 0.3em;
+    text-align: center;
+    height: auto;
+}
+
+.data_card table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.data_card table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.2);
+}
+
+/* Ant Design Input в таблицата */
+.data_card input {
+    text-align: center;
+    height: 30px;
+    font-size: 0.9em;
+    background: #1e3955;
+    color: #ffffff;
+    border: 1px solid #007bff;
+    padding: 0 5px;
 }
 
 
-.change_menager_but {
-    background-color: rgb(49, 88, 216);
-    color: aliceblue;
-    padding: 0.6em;
-    border-radius: 0.5em;
+/*
+ * БУТОНИ
+ */
+
+/* Общ стил за бутоните */
+.change_menager_but,
+.save_change_menager_but,
+.reject_but {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
     border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.change_menager_but {
+    background-color: #007bff;
+}
+
+.change_menager_but:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
 }
 
 .save_change_menager_but {
-    background-color: rgb(2, 126, 2);
-    color: aliceblue;
-    padding: 0.6em;
-    border-radius: 0.5em;
-    border: none;
+    background-color: #28a745;
+}
+
+.save_change_menager_but:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
 }
 
 .reject_but {
-    background-color: rgb(126, 2, 2);
-    color: aliceblue;
-    padding: 0.6em;
-    border-radius: 0.5em;
-    border: none;
-    margin-left: 1em;
+    background-color: #dc3545;
+    margin-left: 0;
 }
 
+.reject_but:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+/*
+ * ГРУПИРАНЕ НА БУТОНИТЕ В `ChangeData` И `CurrentTax`
+ * Използваме flexbox и wrap, за да се пренасят, но не заемаме 100% ширина.
+ */
+.data_card>div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Центриране на бутоните */
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/*
+ * Секция с Такси (CurrentTax)
+ */
 .taxInfo {
-    margin-top: 2em;
-    border: 1px solid lightcoral;
-    padding: 0.3em;
-    border-radius: 0.5em;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background: rgba(0, 123, 255, 0.1);
+    border: 1px solid #007bff;
     display: flex;
     flex-direction: column;
+    gap: 0.8rem;
+    color: #ffffff;
 }
 
-
-footer {
-    text-align: center;
-    margin: 3em;
+.taxInfo p {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
 }
-
-footer h3 {
-    color: rgb(255, 0, 0);
-    font-family: 'Times New Roman', Times, serif;
-    letter-spacing: 2px;
-    font-size: 1.3rem;
-}
-
-.buttons {
-    margin-top: 1em;
-    
-}
-
 
 .price {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    letter-spacing: 1px;
-    font-size: 1.2em;
-    margin-left: 0.3em;
-    color: rgb(255, 249, 196);
+    letter-spacing: 0.5px;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #ffc107;
 }
 
-.info_money{
+.buttons {
+    margin-top: 0.8em;
     text-align: center;
-    margin: 1em;
-    font-size: 1.2em;
-    border: 1px solid green;
-    border-radius: 0.2em;
-    padding: 0.5em;
 }
 
-.info_money b{
-    color: rgb(137, 247, 133);
+
+/*
+ * Информация за Налични Пари
+ */
+.info_money {
+    text-align: center;
+    margin: 1.5rem auto;
+    font-size: 1.1rem;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    padding: 0.8rem;
+    background: rgba(40, 167, 69, 0.15);
+    width: 95%;
+    max-width: 400px;
+    color: #ffffff;
+}
+
+.info_money b {
+    color: #79f779;
+    font-weight: 700;
+    font-size: 1em;
+}
+
+/*
+ * ФУТЪР (Внимание)
+ */
+footer {
+    text-align: center;
+    margin: 2rem auto 1rem auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    width: 95%;
+    max-width: 800px;
+    color: #ffffff;
+}
+
+footer h3 {
+    color: #ff6b6b;
+    font-family: Arial, sans-serif;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+footer p {
+    color: #b0c4de;
+    font-size: 0.9rem;
+}
+
+
+/*
+ * МЕДИЯ ЗАЯВКА за МНОГО ТЕСНИ ЕКРАНИ (318px)
+ * Прилага се само, за да направи таблицата скролируема и да промени подравняването на таксите.
+ * Бутоните вече не заемат 100% ширина!
+ */
+@media (max-width: 400px) {
+
+    .data_card table {
+        /* Принуждаваме таблицата да се скролва хоризонтално */
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
+    }
+
+    /* За да работи скролът, трябва да премахнем ограниченията за ширина на външния контейнер */
+    .data_card {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    /* Нареждане на етикета и цената едно под друго в секцията за такси */
+    .taxInfo p {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .price {
+        margin-top: 0.3rem;
+    }
+
+    /* ************************************************** */
+    /* *** ВАЖНО: Премахнати са стиловете за бутоните *** */
+    /* ************************************************** */
 }

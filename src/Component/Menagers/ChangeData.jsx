@@ -42,12 +42,12 @@ const ChangeData = ({ menager, person, dataSettings }) => {
     };
 
     return (
-        <div>
+        <div className={styles.data_card}>
             {contextHolder}
             <table>
                 <thead>
                     <tr>
-                        <th>{person == 'cashier' ? 'Касиер' : 'Домоуправител'}</th>
+                        <th>{person == 'cashier' ? 'Касиер' : 'Управител'}</th>
                         <th>Телефон</th>
                         <th>Апартамент</th>
                     </tr>
@@ -60,12 +60,12 @@ const ChangeData = ({ menager, person, dataSettings }) => {
                 />
 
             </table>
-            <div>
+            <div className={styles.buttons}>
                 <button
                     type='button'
                     className={changeMenager ? styles.save_change_menager_but : styles.change_menager_but}
                     onClick={saveChange}
-                >{changeMenager ? '💾 Запази промените' : '✏️ Промени Данните'}
+                >{changeMenager ? '💾 Запази' : '✏️ Промени'}
                 </button>
                 {changeMenager && <button
                     type='button'
