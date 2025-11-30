@@ -26,10 +26,7 @@ export const DataProvider = ({ children }) => {
                     // 2) след като имаме user (или дори без user), зареждаме settings
                     const settings = await getTaxData();
                     if (settings) setDataSettings(settings);
-                } else {
-                    // няма логнат потребител — може пак да заредиш настройки за публични данни
-                    // const settings = await getTaxData(); setDataSettings(settings);
-                }
+                } 
             } catch (err) {
                 console.error("Грешка при инициализация на DataProvider:", err);
             } finally {
