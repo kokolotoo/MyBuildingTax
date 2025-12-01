@@ -49,7 +49,7 @@ export const DataProvider = ({ children }) => {
         load();
     }, []);
 
-    // Показваме Spinner докато зареждането не приключи (isReady: true)
+ 
     if (!isReady) {
         return <Spinner />;
     }
