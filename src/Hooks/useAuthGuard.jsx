@@ -5,7 +5,7 @@ import DataContext from '../Context/DataContext';
 
 
 export const useAuthGuard = (redirectTo = '/') => {
-    const { user, isReady, dataSettings } = useContext(DataContext);
+    const { user, isReady, dataSettings, setDataSettings } = useContext(DataContext);
     const navigate = useNavigate();
 
 
@@ -23,5 +23,5 @@ export const useAuthGuard = (redirectTo = '/') => {
     }, [isReady, user, navigate, redirectTo]);
 
 
-    return { user, isReady, dataSettings };
+    return { user, isReady, dataSettings, setDataSettings };
 };

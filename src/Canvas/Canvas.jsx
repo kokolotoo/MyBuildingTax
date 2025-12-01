@@ -12,7 +12,7 @@ const SignaturePad = ({
     apartNumber, monthName, year,
     onClose, apartmentId, money,
     dataSettings, setDataSettings,
-    onSuccess      // ← НОВО: функция за "refresh" след плащане
+    onSuccess     
 }) => {
     
     const sigCanvas = useRef(null);

@@ -24,6 +24,7 @@ const MyApartment = () => {
       const getData = async () => {
 
         const data = await getSingleApartment(user.user);
+
         const totalTax = monthTax(data?.apartment, data?.people);
 
         setDataApartment(data);
@@ -38,10 +39,16 @@ const MyApartment = () => {
 
 
   const renderMonthPayment = (month) => {
+    
+    if (!Array.isArray(dataApartment?.year)) {
+      return <span className={styles.unpaid}>❌ Грешка: Няма данни за плащания</span>
+    }
 
     const paymentUrl = dataApartment.year.find(url =>
+      typeof url === 'string' &&
       url.includes(`${choiceYear}_${month}_${dataApartment.apartment}`)
     )
+
     if (paymentUrl) {
       return <a href={paymentUrl} target="_blank" rel="noreferrer" className={styles.paid}>✔ Платено</a>
     } else {
@@ -80,4 +87,3 @@ const MyApartment = () => {
 }
 
 export default MyApartment
-
