@@ -7,7 +7,7 @@ import { Collapse } from 'antd'; // Само Collapse
 const CommentsSection = ({ topicId, user }) => {
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
-    const { Panel } = Collapse;
+    
     
     useEffect(() => {
         const unsub = subscribeToComments(topicId, setComments);
@@ -23,13 +23,12 @@ const CommentsSection = ({ topicId, user }) => {
 
 
 
-    const commentList = (
+    const commentListContent = (
         <div className={styles.commentsListContainer}>
             {comments.map(c => (
                 <div key={c.id} className={styles.singleComment}>
                     <div className={styles.commentHeader}>
                         <span className={styles.commentAvatar}>Ап. {c.userId}</span>
-                        {/* Можете да добавите дата тук, ако има */}
                     </div>
                     <p className={styles.commentText}>{c.text}</p>
                 </div>
@@ -37,22 +36,25 @@ const CommentsSection = ({ topicId, user }) => {
         </div>
     );
 
+    // 2. Дефинирайте items масива за Collapse
+    const items = [
+        {
+            key: '1',
+            label: <span className={styles.panelHeaderTitle}>Виж всички {comments.length} коментара</span>,
+            children: commentListContent, // Съдържанието, което се разгръща
+            className: styles.commentPanel // Класът, който прилагахме на Panel
+        },
+    ];
+
     return (
         <div>
 
             <div className={styles.commentWrapper}>
                 <Collapse
                     bordered={false}
-                    expandIconPosition='right' // Иконата за разгъване да е отдясно
-                >
-                    <Panel
-                        header={<span className={styles.panelHeaderTitle}>Виж всички {comments.length} коментара</span>}
-                        key="1"
-                        className={styles.commentPanel} // Клас за стилизиране
-                    >
-                        {commentList}
-                    </Panel>
-                </Collapse>
+                    expandIconPosition='end' // ⬅️ КОРИГИРАНО: 'right' е заменено с 'end'
+                    items={items} // ⬅️ КОРИГИРАНО: Използваме items prop
+                />
             </div>
 
             <form onSubmit={submit} className={styles.comments_form}>
