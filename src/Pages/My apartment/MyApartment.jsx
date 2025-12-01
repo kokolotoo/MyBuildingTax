@@ -1,8 +1,6 @@
 import styles from './myApartment.module.css'
 import { useState, useEffect } from 'react'
-// !!! ВАЖНО: Вече не използваме useContext, а нашия hook !!!
-// import DataContext from '@/Context/DataContext' 
-import { useAuthGuard } from '@/Hooks/useAuthGuard'; // ⬅️ Уверете се, че пътят е коректен!
+import { useAuthGuard } from '@/Hooks/useAuthGuard';
 import { MONTHS_BG } from '@/Helpers/GenerateMonths'
 import { getSingleApartment } from '@/Functions/Apartmets'
 import Spinner from '../../Helpers/Spinner'
@@ -12,7 +10,6 @@ import SelectYear from '@/Component/Month check/SelectYear'
 const MyApartment = () => {
 
   const { user, isReady, dataSettings } = useAuthGuard();
-
   const [dataApartment, setDataApartment] = useState(null);
   const [taxPerMonth, setTaxPerMonth] = useState(null);
   const { monthTax } = useCalculateMonthTax();
@@ -27,8 +24,6 @@ const MyApartment = () => {
       const getData = async () => {
 
         const data = await getSingleApartment(user.user);
-
-
         const totalTax = monthTax(data?.apartment, data?.people);
 
         setDataApartment(data);
@@ -38,7 +33,6 @@ const MyApartment = () => {
       getData();
     }
   }, [isReady, user, dataSettings, monthTax]);
-
 
   if (!isReady || !user || !dataApartment) return <Spinner />;
 

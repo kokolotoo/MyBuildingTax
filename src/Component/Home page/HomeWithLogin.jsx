@@ -14,12 +14,6 @@ const HomeWithLogin = () => {
   const { infoModal, contextHolder } = useSuccessModal();
 
 
-  if (!isReady || !user || !dataSettings) {
-
-    return <Spinner />;
-  }
-
-
   const shownMenagers = () => {
     // cash е безопасно за достъп, защото dataSettings е проверен
     const cashier = dataSettings.cashier;
