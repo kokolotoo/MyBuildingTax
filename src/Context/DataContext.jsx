@@ -17,7 +17,7 @@ export const DataProvider = ({ children }) => {
             let settings = null;
 
             try {
-                // 1. Проверка за логнат потребител в storage
+                
                 const sessionUser = sessionStorage.getItem("loginUser");
                 const localUser = localStorage.getItem("loginUser");
                 storedUser = sessionUser || localUser;

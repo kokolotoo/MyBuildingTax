@@ -1,7 +1,7 @@
 
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DataContext from './DataContext';
+import DataContext from '../Context/DataContext';
 
 
 export const useAuthGuard = (redirectTo = '/') => {
