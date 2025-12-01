@@ -1,33 +1,44 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuthGuard } from '@/Hooks/useAuthGuard' // ⬅️ НОВ ИМПОРТ
+
 import styles from '@/Styles/menagers.module.css'
 import Spinner from '@/Helpers/Spinner'
 import CorectionMenagers from './CorectionMenagers'
-import DataContext from '@/Context/DataContext'
+
 
 const MenagersPage = () => {
 
-    const { dataSettings } = useContext(DataContext)
+    const { user, dataSettings, isReady } = useAuthGuard()
     const [currentMenagers, setCurrentMenagers] = useState(null)
 
-    // Когато dataSettings се зареди → попълваме currentMenagers
+    if (!isReady || !user || !dataSettings) return <Spinner />
+
+    if (!user.cashier && !user.housMenager) {
+        
+        return <p className={styles.accessDenied}>Нямате право на достъп до тази страница.</p>
+    }
+
+
+    // 4. Когато dataSettings се зареди → попълваме currentMenagers (Сега е безопасно!)
     useEffect(() => {
-        if (dataSettings) {
+        // Проверяваме дали dataSettings съществува
+        if (dataSettings && !currentMenagers) {
             setCurrentMenagers({
                 houseMenager: dataSettings.houseMenager,
                 cashier: dataSettings.cashier,
             })
         }
-    }, [dataSettings])
+    }, [dataSettings, currentMenagers]) // Добавяме dataSettings като зависимост
 
-    if (!dataSettings) return <Spinner />
+
     return (
         <main className={styles.container}>
-          
 
+            {/* 5. Рендираме CorectionMenagers само ако currentMenagers е наличен */}
             {currentMenagers ? (
                 <CorectionMenagers
                     menagers={currentMenagers}
-                    dataSettings={dataSettings}
+                    dataSettings={dataSettings} // Вече гарантирано наличен
                 />
             ) : (
                 <Spinner />

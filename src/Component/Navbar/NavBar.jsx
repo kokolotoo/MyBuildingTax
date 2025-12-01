@@ -7,7 +7,8 @@ import { exit } from '@/Functions/FirebaseFunctions';
 
 export default function Navbar({ }) {
     const navigate = useNavigate()
-    const { login, setLogin, setUser, user } = useContext(DataContext)
+
+    const { login, setLogin, setUser, user, isReady } = useContext(DataContext)
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -23,6 +24,7 @@ export default function Navbar({ }) {
         navigate('/')
         setLogin(false)
         setUser(null)
+        document.body.classList.remove('scroll-lock');
         setMenuOpen(false);
     }
 
@@ -35,21 +37,36 @@ export default function Navbar({ }) {
     }, [menuOpen]);
 
     const nawText = () => {
+
+        if (!user) {
+            return "Зареждане..."
+        }
+
         if (user.cashier) {
             return "Касиер"
         } else if (user.housMenager) {
             return 'Домоуправител'
         } else {
+
             return `Апартамент: ${user.user}`
         }
     }
 
-   
-    
+
+    if (login && !user) {
+
+        return (
+            <nav className={'header__nav'}>
+
+                <p>Зареждане...</p>
+            </nav>
+        );
+    }
 
     return (
 
-        <nav className={login?'header__nav':'invisible'}>
+
+        <nav className={login ? 'header__nav' : 'invisible'}>
 
             <ul className={`header__menu ${menuOpen ? 'header__menu-open' : ''}`}>
 
@@ -57,16 +74,15 @@ export default function Navbar({ }) {
                     Начало
                 </Link>
 
-
                 <button className='header__item' onClick={logOuth} >Изход</button>
-
 
             </ul>
 
             <button className="header__burger" onClick={toggleMenu}>
                 ☰
             </button>
-            {login &&
+
+            {login && user &&
                 <p>{nawText()}</p>
             }
         </nav>

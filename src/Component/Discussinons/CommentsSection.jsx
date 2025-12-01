@@ -7,8 +7,8 @@ import { Collapse } from 'antd'; // Само Collapse
 const CommentsSection = ({ topicId, user }) => {
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
-    
-    
+
+
     useEffect(() => {
         const unsub = subscribeToComments(topicId, setComments);
         return () => unsub();
@@ -48,14 +48,15 @@ const CommentsSection = ({ topicId, user }) => {
 
     return (
         <div>
-
-            <div className={styles.commentWrapper}>
-                <Collapse
-                    bordered={false}
-                    expandIconPosition='end' // ⬅️ КОРИГИРАНО: 'right' е заменено с 'end'
-                    items={items} // ⬅️ КОРИГИРАНО: Използваме items prop
-                />
-            </div>
+            {comments.length > 0 &&
+                <div className={styles.commentWrapper}>
+                    <Collapse
+                        bordered={false}
+                        expandIconPosition='end' // ⬅️ КОРИГИРАНО: 'right' е заменено с 'end'
+                        items={items} // ⬅️ КОРИГИРАНО: Използваме items prop
+                    />
+                </div>
+            }
 
             <form onSubmit={submit} className={styles.comments_form}>
                 <input

@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import DataContext from "../../Context/DataContext";
+import { useState, useEffect } from "react";
+import { useAuthGuard } from '@/Hooks/useAuthGuard'; // ⬅️ НОВ ИМПОРТ
 import styles from "./apartment.module.css";
 import { getAllApartments, editApartment } from "../../Functions/Apartmets";
 import Spinner from "@/Helpers/Spinner";
@@ -8,6 +8,8 @@ import Input from "antd/es/input/Input";
 
 
 const Apartments = () => {
+    const { user, isReady } = useAuthGuard();
+
     const [dataApartments, setDataApartments] = useState(null);
     const [editing, setEditing] = useState(null);
     const [ownerValue, setOwnerValue] = useState("");
@@ -15,19 +17,26 @@ const Apartments = () => {
     const [peopleValue, setPeopleValue] = useState(0);
 
     const { confirmModal, successMessage, contextHolder } = useSuccessModal();
-    const { user } = useContext(DataContext);
 
     const canEdit = user?.cashier || user?.housMenager;
 
+    if (!isReady || !user) {
+        return <Spinner />;
+    }
+
     useEffect(() => {
-        const load = async () => {
-            const data = await getAllApartments();
-            data && setDataApartments(data);
-        };
-        load();
-    }, []);
+        if (isReady && user) {
+            const load = async () => {
+                const data = await getAllApartments();
+                data && setDataApartments(data);
+            };
+            load();
+        }
+    }, [isReady, user]);
+
 
     const startEdit = (apt) => {
+        // canEdit вече е изчислено безопасно
         if (!canEdit) return;
 
         setEditing(apt.id);
@@ -51,7 +60,7 @@ const Apartments = () => {
         setDataApartments((prev) =>
             prev.map((a) =>
                 a.id === editing
-                    ? { ...a, owner: ownerValue, people: Number(peopleValue) }
+                    ? { ...a, owner: ownerValue, people: Number(peopleValue), phone: ownerPhone }
                     : a
             )
         );
@@ -67,113 +76,109 @@ const Apartments = () => {
         setOwnerPhone('')
     };
 
+    if (!dataApartments) return <Spinner />;
+
+
     return (
         <section className={styles.page}>
             {contextHolder}
 
             <main className={styles.main_container}>
+                <div className={styles.cards_wrapper}>
+                    {dataApartments.map((apt) => (
+                        <div
+                            key={apt.id}
+                            className={`${styles.card} ${apt.people === 0 ? styles.free : ""
+                                }`}
+                        >
+                            {/* Apartment Number */}
+                            <div className={styles.numberBox}>№ {apt.apartment}</div>
 
-                {!dataApartments ? (
-                    <Spinner />
-                ) : (
-                    <div className={styles.cards_wrapper}>
-                        {dataApartments.map((apt) => (
-                            <div
-                                key={apt.id}
-                                className={`${styles.card} ${apt.people === 0 ? styles.free : ""
-                                    }`}
-                            >
-                                {/* Apartment Number */}
-                                <div className={styles.numberBox}>№ {apt.apartment}</div>
+                            {/* Info */}
+                            <div className={styles.info}>
+                                <p>
+                                    <strong>Титуляр:</strong>{" "}
+                                    {editing === apt.id ? (
+                                        <Input
+                                            value={ownerValue}
+                                            onChange={(e) =>
+                                                setOwnerValue(e.target.value)
+                                            }
+                                        />
+                                    ) : (
+                                        apt.owner
+                                    )}
+                                </p>
 
-                                {/* Info */}
-                                <div className={styles.info}>
-                                    <p>
-                                        <strong>Титуляр:</strong>{" "}
-                                        {editing === apt.id ? (
-                                            <Input
-                                                value={ownerValue}
-                                                onChange={(e) =>
-                                                    setOwnerValue(e.target.value)
-                                                }
-                                            />
-                                        ) : (
-                                            apt.owner
-                                        )}
-                                    </p>
+                                <p>
+                                    <strong>Таксувани:</strong>{" "}
+                                    {editing === apt.id ? (
+                                        <Input
+                                            type="number"
+                                            min="0"
+                                            value={peopleValue}
+                                            onChange={(e) =>
+                                                setPeopleValue(e.target.value)
+                                            }
+                                            style={{ width: "70px" }}
+                                        />
+                                    ) : apt.people === 0 ? (
+                                        "Свободен"
+                                    ) : (
+                                        apt.people
+                                    )}
+                                </p>
 
-                                    <p>
-                                        <strong>Таксувани:</strong>{" "}
-                                        {editing === apt.id ? (
-                                            <Input
-                                                type="number"
-                                                min="0"
-                                                value={peopleValue}
-                                                onChange={(e) =>
-                                                    setPeopleValue(e.target.value)
-                                                }
-                                                style={{ width: "70px" }}
-                                            />
-                                        ) : apt.people === 0 ? (
-                                            "Свободен"
-                                        ) : (
-                                            apt.people
-                                        )}
-                                    </p>
-
-                                    <p>
-                                        <strong>Телефон:</strong>{" "}
-                                        {editing === apt.id ? (
-                                            <Input
-                                                value={ownerPhone}
-                                                onChange={(e) =>
-                                                    setOwnerPhone(e.target.value)
-                                                }
-                                            />
-                                        ) : (
-                                            apt.phone ? apt.phone : "няма номер"
-                                        )}
-                                    </p>
-                                </div>
-
-                                {/* Buttons */}
-                                {canEdit && (
-                                    <div className={styles.actions}>
-                                        {editing === apt.id ? (
-                                            <>
-                                                <button
-                                                    className={styles.saveBtn}
-                                                    onClick={saveEdit}
-                                                >
-                                                    💾 Запази
-                                                </button>
-                                                <button
-                                                    className={styles.cancelBtn}
-                                                    onClick={cancelEdit}
-                                                >
-                                                    ❌Откажи
-                                                </button>
-                                            </>
-                                        ) : (
-                                            <button
-                                                className={styles.editBtn}
-                                                onClick={() => startEdit(apt)}
-                                            >
-                                                ✏️ Редактирай
-                                            </button>
-                                        )}
-                                    </div>
-                                )}
+                                <p>
+                                    <strong>Телефон:</strong>{" "}
+                                    {editing === apt.id ? (
+                                        <Input
+                                            value={ownerPhone}
+                                            onChange={(e) =>
+                                                setOwnerPhone(e.target.value)
+                                            }
+                                        />
+                                    ) : (
+                                        apt.phone ? apt.phone : "няма номер"
+                                    )}
+                                </p>
                             </div>
-                        ))}
-                    </div>
-                )}
-            </main>
 
+                            {/* Buttons */}
+                            {canEdit && (
+                                <div className={styles.actions}>
+                                    {editing === apt.id ? (
+                                        <>
+                                            <button
+                                                className={styles.saveBtn}
+                                                onClick={saveEdit}
+                                            >
+                                                💾 Запази
+                                            </button>
+                                            <button
+                                                className={styles.cancelBtn}
+                                                onClick={cancelEdit}
+                                            >
+                                                ❌Откажи
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <button
+                                            className={styles.editBtn}
+                                            onClick={() => startEdit(apt)}
+                                        >
+                                            ✏️ Редактирай
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </main>
         </section>
     );
 };
 
 export default Apartments;
-
 

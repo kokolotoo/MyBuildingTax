@@ -1,15 +1,22 @@
 import { useState, useContext } from "react"
+
+import { useAuthGuard } from '@/Hooks/useAuthGuard'; // ⬅️ НОВ ИМПОРТ
+
 import CreateTopic from "@/Component/Discussinons/CreateTopic"
 import TopicsList from "@/Component/Discussinons/TopicsList"
-import DataContex from '@/Context/DataContext'
-import { useNavigate } from 'react-router-dom';
+import Spinner from "@/Helpers/Spinner"; // ⬅️ Добавяме Spinner
 
 const DiscussionsPage = () => {
-    const [createTopicVisible, setCreateTopicVisible] = useState(false)
-    const { user } = useContext(DataContex)
-    const navigate = useNavigate()
 
-    if (!user) navigate('/')
+    const { user, isReady } = useAuthGuard();
+    const [createTopicVisible, setCreateTopicVisible] = useState(false);
+
+
+    if (!isReady || !user) {
+        return <Spinner />;
+    }
+
+
     return (
         <div style={{ marginTop: '4.5em' }}>
 
@@ -18,6 +25,8 @@ const DiscussionsPage = () => {
             >
                 {createTopicVisible ? 'Затвори' : 'Нова тема'}
             </button>
+
+
             <CreateTopic
                 createTopicVisible={createTopicVisible}
                 setCreateTopicVisible={setCreateTopicVisible}

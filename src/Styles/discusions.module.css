@@ -81,7 +81,8 @@
 }
 
 .actions {
-    margin-bottom: .5em;
+    margin-top: .3em;
+    text-align: end;
 }
 
 .likeBtn {
@@ -107,7 +108,7 @@
     border-radius: 0.3em;
 }
 
-.comments_form>button{
+.comments_form>button {
     width: 50%;
     max-width: 80px;
     margin: auto;
@@ -117,14 +118,13 @@
     padding: 0.4em;
 }
 
-.comments_form>input{
-    border:1px solid rgb(201, 195, 195);
-   padding: .3em;
+.comments_form>input {
+    border: 1px solid rgb(201, 195, 195);
+    padding: .3em;
 }
 
 /* Контейнер около Collapse */
 .commentWrapper {
-    margin-top: 1rem;
     max-width: 650px;
     width: 100%;
 }
@@ -139,7 +139,7 @@
 
 /* Стил за вътрешния контейнер на коментарите */
 .commentsListContainer {
-    padding: 0.5rem 1ем;
+    padding: 0.5rem;
 }
 
 /* Стил за всеки отделен коментар */

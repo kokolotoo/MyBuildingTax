@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useAuthGuard } from '@/Hooks/useAuthGuard'; // ⬅️ НОВ ИМПОРТ
+import { MONTHS_BG } from '@/Helpers/GenerateMonths'
 import Spinner from "@/Helpers/Spinner";
 import styles from "./monthTax.module.css";
 import { getAllApartments } from "@/Functions/Apartmets";
 import SignaturePad from "@/Canvas/Canvas";
-import DataContext from "@/Context/DataContext";
 import { useCalculateMonthTax } from "@/Hooks/CalculateMothTax";
 import { useSuccessModal } from "@/Hooks/ModalHook";
 import Calendar from "@/Component/Month check/Calendar";
@@ -11,17 +12,14 @@ import CurrentMonth from "@/Component/Month check/CurrentMonth";
 import SelectYear from "@/Component/Month check/SelectYear";
 
 
-const MONTHS_BG = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-];
-
 const MontTax = () => {
 
+    const { user, dataSettings, setDataSettings, isReady } = useAuthGuard();
+
     const [apartments, setApartments] = useState(null);
-    const [selectedMonth, setSelectedMonth] = useState(null);  // ← кликнат месец
-    const [signatureFor, setSignatureFor] = useState(null);     // ← апартамент за подпис
-    const { user, dataSettings, setDataSettings } = useContext(DataContext)
+    const [selectedMonth, setSelectedMonth] = useState(null);
+    const [signatureFor, setSignatureFor] = useState(null);
+
     const { monthTax } = useCalculateMonthTax()
     const { successMessage, contextHolder } = useSuccessModal()
     const currentYear = new Date().getFullYear();
@@ -33,16 +31,15 @@ const MontTax = () => {
     }
 
     useEffect(() => {
+        if (!isReady || !user) return;
+
         const load = async () => {
             const data = await getAllApartments();
             setApartments(data);
         };
         load();
+    }, [isReady, user]);
 
-
-    }, []);
-
-    // Проверява дали апартамент има файл за даден месец
     const hasPayment = (apt, monthName) => {
         if (!Array.isArray(apt.year)) return false;
 
@@ -52,11 +49,13 @@ const MontTax = () => {
         );
     };
 
-    if (!apartments || !user || !dataSettings) return <Spinner />;
+    if (!isReady || !user || !dataSettings || !apartments) return <Spinner />;
+
 
     return (
         <div className={styles.container}>
             {contextHolder}
+
             {!signatureFor &&
                 <SelectYear
                     setChoisentYear={setChoisentYear}
@@ -69,17 +68,15 @@ const MontTax = () => {
                 <h2 className={styles.title}>Таксуване – {choisentYear}</h2>
             }
 
-            {/* -----------  КАЛЕНДАР 12 МЕСЕЦА -----------*/}
             <Calendar
                 selectedMonth={selectedMonth}
                 MONTHS_BG={MONTHS_BG}
                 setSelectedMonth={setSelectedMonth}
                 hasPayment={hasPayment}
                 apartments={apartments}
-                user={user}
+                user={user} // ⬅️ Вече гарантирано наличен
             />
 
-            {/* -----------  ДЕТАЙЛИ ЗА ИЗБРАН МЕСЕЦ ----------- */}
             <CurrentMonth
                 selectedMonth={selectedMonth}
                 signatureFor={signatureFor}
@@ -89,7 +86,7 @@ const MontTax = () => {
                 hasPayment={hasPayment}
                 setSignatureFor={setSignatureFor}
             />
-            {/* ----------- SIGNATURE POPUP ----------- */}
+
             {signatureFor && (
                 <div className={styles.overlay}>
                     <div className={styles.sigContainer}>
@@ -97,15 +94,15 @@ const MontTax = () => {
                             Плащане за {signatureFor.month} — Апартамент {signatureFor.apartment}
                         </h3>
                         <SignaturePad
-                            apartNumber={signatureFor.apartment} // номер на апартамента
-                            monthName={signatureFor.month}       // името на месеца
-                            year={choisentYear}                   // текущата година
-                            apartmentId={signatureFor.id}        // ID на апартамента в Supabase
-                            onClose={() => setSignatureFor(null)} // функция за скриване
+                            apartNumber={signatureFor.apartment}
+                            monthName={signatureFor.month}
+                            year={choisentYear}
+                            apartmentId={signatureFor.id}
+                            onClose={() => setSignatureFor(null)}
                             onSuccess={successPay}
                             money={signatureFor.money}
-                            dataSettings={dataSettings}
-                            setDataSettings={setDataSettings}
+                            dataSettings={dataSettings} // ⬅️ Вече гарантирано наличен
+                            setDataSettings={setDataSettings} // ⬅️ Вече гарантирано наличен
                         />
 
                     </div>
