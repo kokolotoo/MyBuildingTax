@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import {
-    subscribeToTopics,
-    toggleLike,
-    deleteTopic
+    subscribeToTopics, toggleLike, deleteTopic
 } from "@/Functions/DiscusisonsFunctions";
 import CommentsSection from "./CommentsSection";
 import Spinner from "@/Helpers/Spinner";
 import styles from "@/Styles/discusions.module.css";
 
 
-const TopicsList = ({user}) => {
-    
+const TopicsList = ({ user }) => {
+
     const [topics, setTopics] = useState([]);
 
     useEffect(() => {

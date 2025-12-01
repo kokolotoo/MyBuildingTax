@@ -4,10 +4,10 @@ import DataContext from "@/Context/DataContext";
 
 // Компонент за защитени маршрути
 const ProtectedRoute = ({ children }) => {
-    const { user, login } = useContext(DataContext);
+    const { user, login, dataSettings } = useContext(DataContext);
 
     // Ако няма логин — връщаме към началната страница
-    if (!login || !user) {
+    if (!login || !user || !dataSettings) {
         return <Navigate to="/" replace />;
     }
 

@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { DataProvider } from './Context/DataContext'
 import { FloatButton } from 'antd';
 
-const FrontPage = lazy(() => import('./Component/Home page/FrontPage'))
+
 const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
 const Registration = lazy(() => import('./Pages/Registracion/Registration'))
 const ForgotPassPage = lazy(() => import('./Pages/Forgot-page/ForgotPage'))
