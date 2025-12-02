@@ -28,12 +28,12 @@ const CommentsSection = ({ topicId, user }) => {
     const commentListContent = (
         <div className={styles.commentsListContainer}>
             {comments.map(c => (
-                <div key={c.id} className={styles.singleComment}>
+                <section key={c.id} className={styles.singleComment}>
                     <div className={styles.commentHeader}>
                         <span className={styles.commentAvatar}>{c.userId}</span>
                     </div>
                     <p className={styles.commentText}>{c.text}</p>
-                </div>
+                </section>
             ))}
         </div>
     );

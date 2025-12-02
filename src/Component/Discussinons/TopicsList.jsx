@@ -5,10 +5,12 @@ import {
 import CommentsSection from "./CommentsSection";
 import Spinner from "@/Helpers/Spinner";
 import styles from "@/Styles/discusions.module.css";
+import { useSuccessModal } from "../../Hooks/ModalHook";
 
 
 const TopicsList = ({ user }) => {
 
+    const { contextHolder, confirmModal, successMessage } = useSuccessModal()
     const [topics, setTopics] = useState([]);
 
     useEffect(() => {
@@ -19,12 +21,21 @@ const TopicsList = ({ user }) => {
 
     if (!user) return <Spinner />;
 
+    const deleteCurrentTopic = async (id) => {
+        const confirm = await confirmModal('Изтриване на темата?')
+        if (confirm){
+            await deleteTopic(id)
+            successMessage("Успешно изтрита тема")
+        }
+       return
+    }
+
     const canDelete = (topic) =>
         user.cashier || user.housMenager || topic.authorId === user.user;
 
     return (
         <div className={styles.container}>
-
+            {contextHolder}
             {topics.length > 0 && topics.map((topic) => (
                 <div key={topic.id} className={styles.card}>
                     <div className={styles.header}>
@@ -33,7 +44,7 @@ const TopicsList = ({ user }) => {
                         {canDelete(topic) && (
                             <button
                                 className={styles.deleteBtn}
-                                onClick={() => deleteTopic(topic.id)}
+                                onClick={() => deleteCurrentTopic(topic.id)}
                             >
                                 ✖
                             </button>
