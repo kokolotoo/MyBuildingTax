@@ -8,7 +8,7 @@ import Spinner from "@/Helpers/Spinner"; // ⬅️ Добавяме Spinner
 
 const DiscussionsPage = () => {
 
-    const { user, isReady } = useAuthGuard();
+    const { user, isReady, dataSettings } = useAuthGuard();
     const [createTopicVisible, setCreateTopicVisible] = useState(false);
 
 
@@ -31,8 +31,9 @@ const DiscussionsPage = () => {
                 createTopicVisible={createTopicVisible}
                 setCreateTopicVisible={setCreateTopicVisible}
                 user={user}
+                dataSettings={dataSettings}
             />
-            <TopicsList user={user} />
+            <TopicsList user={user}  />
         </div>
     );
 }

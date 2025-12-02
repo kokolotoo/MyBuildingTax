@@ -2,22 +2,24 @@ import { useEffect, useState } from "react";
 import { addComment, subscribeToComments } from "@/Functions/DiscusisonsFunctions";
 import styles from '@/Styles/discusions.module.css'
 import { Collapse } from 'antd'; // Само Collapse
-
+import { useAuthGuard } from "@/Hooks/useAuthGuard";
+import { commentCreator } from "@/Helpers/SetCreatorName";
 
 const CommentsSection = ({ topicId, user }) => {
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
-
-
+    const { dataSettings } = useAuthGuard()
     useEffect(() => {
         const unsub = subscribeToComments(topicId, setComments);
         return () => unsub();
     }, [topicId]);
 
+
     const submit = async (e) => {
         e.preventDefault();
         if (!text.trim()) return;
-        await addComment(topicId, text, user.user);
+
+        await addComment(topicId, text, commentCreator(dataSettings, user));
         setText("");
     };
 
@@ -28,7 +30,7 @@ const CommentsSection = ({ topicId, user }) => {
             {comments.map(c => (
                 <div key={c.id} className={styles.singleComment}>
                     <div className={styles.commentHeader}>
-                        <span className={styles.commentAvatar}>Ап. {c.userId}</span>
+                        <span className={styles.commentAvatar}>{c.userId}</span>
                     </div>
                     <p className={styles.commentText}>{c.text}</p>
                 </div>
@@ -52,8 +54,8 @@ const CommentsSection = ({ topicId, user }) => {
                 <div className={styles.commentWrapper}>
                     <Collapse
                         bordered={false}
-                        expandIconPosition='end' // ⬅️ КОРИГИРАНО: 'right' е заменено с 'end'
-                        items={items} // ⬅️ КОРИГИРАНО: Използваме items prop
+                        expandIconPosition='end' 
+                        items={items} 
                     />
                 </div>
             }

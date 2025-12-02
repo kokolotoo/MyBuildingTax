@@ -4,14 +4,16 @@ import styles from '@/Styles/discusions.module.css'
 import Spinner from '@/Helpers/Spinner'
 
 
-const CreateTopic = ({ createTopicVisible, setCreateTopicVisible, user }) => {
+const CreateTopic = ({
+    createTopicVisible, setCreateTopicVisible, user, dataSettings
+}) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    
+
 
     const submit = async e => {
         e.preventDefault();
-        await addTopic(title, content, user);
+        await addTopic(title, content, user, dataSettings);
         setTitle("");
         setContent("");
         setCreateTopicVisible(false)

@@ -28,7 +28,7 @@ const TopicsList = ({ user }) => {
             {topics.length > 0 && topics.map((topic) => (
                 <div key={topic.id} className={styles.card}>
                     <div className={styles.header}>
-                        <span className={styles.author}>ап. {topic.authorId}</span>
+                        <span className={styles.author}>{topic.authorId}</span>
 
                         {canDelete(topic) && (
                             <button

@@ -1,11 +1,19 @@
-
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../Context/DataContext';
 
 
 export const useAuthGuard = (redirectTo = '/') => {
-    const { user, isReady, dataSettings, setDataSettings } = useContext(DataContext);
+   
+    const {
+        user,
+        isReady,
+        dataSettings,
+        setDataSettings,
+        setUser,    
+        setLogin     
+    } = useContext(DataContext);
+
     const navigate = useNavigate();
 
 
@@ -14,7 +22,7 @@ export const useAuthGuard = (redirectTo = '/') => {
         if (isReady) {
 
             if (!user) {
-
+               
                 navigate(redirectTo);
                 return;
             }
@@ -23,5 +31,13 @@ export const useAuthGuard = (redirectTo = '/') => {
     }, [isReady, user, navigate, redirectTo]);
 
 
-    return { user, isReady, dataSettings, setDataSettings };
+  
+    return {
+        user,
+        isReady,
+        dataSettings,
+        setDataSettings,
+        setUser,
+        setLogin
+    };
 };
