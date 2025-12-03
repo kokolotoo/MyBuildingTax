@@ -43,15 +43,17 @@ const HomeWithLogin = () => {
 
       <section className={styles.list_section}>
         <ul>
-          <li onClick={goToApartments}>Списък апартаменти</li>
-          <li onClick={goToMonthTax}>Месечно отчитане</li>
-          <li onClick={myApartment}>Моят апартамент</li>
+          <li onClick={goToApartments} className={styles.slideLeft}>Списък апартаменти</li>
+          <li onClick={goToMonthTax} className={styles.slideRight} >Месечно отчитане</li>
+          <li onClick={myApartment} className={styles.slideLeft}>Моят апартамент</li>
           {/* user е проверен и е обект, достъпът до cashier/housMenager е безопасен */}
-          <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}>
+          <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}
+            className={styles.slideRight}
+          >
             Управление
           </li>
-          <li onClick={goToExpenses}>Разходи</li>
-          <li onClick={goToDiscussions}>Дискусии</li>
+          <li onClick={goToExpenses} className={styles.slideLeft} >Разходи</li>
+          <li onClick={goToDiscussions} className={styles.slideRight} >Дискусии</li>
         </ul>
       </section>
     </main>
