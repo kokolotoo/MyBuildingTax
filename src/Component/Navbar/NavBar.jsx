@@ -52,6 +52,10 @@ export default function Navbar({ }) {
         }
     }
 
+    const goTo = (destination) => {
+        navigate(destination);
+        setMenuOpen(false)
+    }
 
     if (login && !user) {
 
@@ -73,9 +77,11 @@ export default function Navbar({ }) {
                 <Link to='/' onClick={closeMenu}>
                     Начало
                 </Link>
-
+                <button className='header__item' onClick={ ()=>goTo('/apartments')} >Апартаменти</button>
+                <button className='header__item' onClick={ ()=>goTo('/month-tax')} >Отчитане</button>
+                <button className='header__item' onClick={ ()=>goTo('/my-apartment')} >Моят ап.</button>
+                <button className='header__item' onClick={ ()=>goTo('/expenses')} >Разходи</button>
                 <button className='header__item' onClick={logOuth} >Изход</button>
-
             </ul>
 
             <button className="header__burger" onClick={toggleMenu}>
