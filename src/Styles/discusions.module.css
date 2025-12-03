@@ -79,50 +79,63 @@
 .content {
     color: #000a44;
     text-align: center;
+    font-size: 1.1em;
 }
 
 .actions {
     margin-top: .3em;
-    text-align: end;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+    margin-top: 1em;
+    gap: 4em;
 }
 
 .likeBtn {
     background: transparent;
     border: none;
-    font-size: 0.7em;
+    font-size: 0.9em;
     cursor: pointer;
+}
+
+.commentButton{
+    border: none;
+    background-color: transparent;
+    font-size: 1.1;
 }
 
 .likeBtn:hover {
     background: #e6e6e6;
 }
 
+.invisible{
+    display: none;
+}
 
-
-.comments_form {
+.comments_formVisible {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 1em;
     margin-top: 1em;
-    border: 1px solid gray;
     padding: 0.3em;
     border-radius: 0.3em;
 }
 
-.comments_form>button {
+.comments_formVisible>input{
+    padding: .5em;
+}
+
+.comments_formVisible>button {
     width: 50%;
     max-width: 80px;
     margin: auto;
     background-color: #c2cac5;
     font-size: 0.7em;
     border: none;
-    padding: 0.4em;
+    padding: 0.5em;
+    
 }
 
-.comments_form>input {
-    border: 1px solid rgb(201, 195, 195);
-    padding: .3em;
-}
 
 /* Контейнер около Collapse */
 .commentWrapper {

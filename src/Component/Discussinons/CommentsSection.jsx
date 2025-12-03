@@ -5,7 +5,7 @@ import { Collapse } from 'antd'; // Само Collapse
 import { useAuthGuard } from "@/Hooks/useAuthGuard";
 import { commentCreator } from "@/Helpers/SetCreatorName";
 
-const CommentsSection = ({ topicId, user }) => {
+const CommentsSection = ({ topicId, user, commentsVisible, setCommentsVisible }) => {
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
     const { dataSettings } = useAuthGuard()
@@ -21,6 +21,7 @@ const CommentsSection = ({ topicId, user }) => {
 
         await addComment(topicId, text, commentCreator(dataSettings, user));
         setText("");
+        setCommentsVisible(false)
     };
 
 
@@ -50,17 +51,9 @@ const CommentsSection = ({ topicId, user }) => {
 
     return (
         <div>
-            {comments.length > 0 &&
-                <div className={styles.commentWrapper}>
-                    <Collapse
-                        bordered={false}
-                        expandIconPosition='end' 
-                        items={items} 
-                    />
-                </div>
-            }
-
-            <form onSubmit={submit} className={styles.comments_form}>
+            <form onSubmit={submit}
+                className={commentsVisible ? styles.comments_formVisible : styles.invisible}
+            >
                 <input
                     value={text}
                     onChange={e => setText(e.target.value)}
@@ -69,6 +62,18 @@ const CommentsSection = ({ topicId, user }) => {
                 />
                 <button>Изпрати</button>
             </form>
+
+            {comments.length > 0 &&
+                <div className={styles.commentWrapper}>
+                    <Collapse
+                        bordered={false}
+                        expandIconPosition='end'
+                        items={items}
+                    />
+                </div>
+            }
+
+           
         </div>
     );
 };
