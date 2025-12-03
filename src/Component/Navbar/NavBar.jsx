@@ -81,6 +81,7 @@ export default function Navbar({ }) {
                 <button className='header__item' onClick={ ()=>goTo('/month-tax')} >Отчитане</button>
                 <button className='header__item' onClick={ ()=>goTo('/my-apartment')} >Моят ап.</button>
                 <button className='header__item' onClick={ ()=>goTo('/expenses')} >Разходи</button>
+                <button className='header__item' onClick={() => goTo('/discussions')} >Дискусии</button>
                 <button className='header__item' onClick={logOuth} >Изход</button>
             </ul>
 
