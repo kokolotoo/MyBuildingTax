@@ -71,3 +71,13 @@
     padding: 0.4em;
     border-radius: 0.3em;
 }
+
+.deleteSelfButton{
+    background-color: rgb(107, 0, 18);
+    margin-top: 3em;
+    color: bisque;
+    padding: 0.6em;
+    border: none;
+    border-radius: 0.4em;
+    letter-spacing: 1px;
+}

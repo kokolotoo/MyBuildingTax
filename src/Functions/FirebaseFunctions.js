@@ -1,7 +1,52 @@
-import { ref, get, set } from "firebase/database";
+import { ref, get, set, remove } from "firebase/database";
 import { doc, getDoc, setDoc, addDoc, collection, getDocs } from "firebase/firestore";
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
+import { getAuth, deleteUser } from "firebase/auth";
+
+
+/**
+ * Изтрива акаунта на текущо влезлия потребител от Authentication и 
+ * свързания запис в Realtime DB.
+ * * @param {string} apartmentNumber - Номерът на апартамента, свързан с потребителя (user.user).
+ * @returns {Promise<void>}
+ */
+
+
+
+//Изтрива акаунд
+export const deleteSelfAccount = async (apartmentNumber) => {
+    const user = auth.currentUser;
+    if (!user) {
+        throw new Error("Няма влязъл потребител.");
+    }
+
+    try {
+        // 1. ИЗТРИВАНЕ НА REALTIME DB ПЪРВО (Изисква активен токен!)
+        const dbRef = ref(realtimeDB, `numbers/${apartmentNumber}`);
+        await remove(dbRef);
+        console.log(`✅ Успешно изтрита регистрация за ап. ${apartmentNumber} от Realtime DB.`);
+
+        // 2. ИЗТРИВАНЕ НА АУТЕНТИКАЦИЯТА (Анулира токена, изпълнява се последно)
+        await deleteUser(user);
+        console.log(`✅ Успешно изтрит акаунт с UID: ${user.uid}`);
+
+    } catch (error) {
+        // 🚨 Ако Auth се провали (requires-recent-login), трябва да го обработим
+        if (error.code === 'auth/requires-recent-login') {
+            // Realtime DB вече е изтрита, но Auth акаунтът е останал.
+            // Това е по-голям проблем, но сега потребителят трябва само да влезе отново.
+            throw new Error("auth/requires-recent-login");
+        }
+
+        // Ако Realtime DB се е провалила (PERMISSION_DENIED), преди да стигне до Auth delete.
+        if (error.message.includes('Permission denied')) {
+            throw new Error("PERMISSION_DENIED: Проверете правилата на Realtime DB.");
+        }
+
+        throw error;
+    }
+};
 
 
 //логване
@@ -23,7 +68,8 @@ export const signIn = async (email, password, checkBox) => {
         const newUser = {
             user: numberOfApartment,
             cashier: compareIsCashier(numberOfApartment, cashier),
-            housMenager: compareIsCashier(numberOfApartment, houseMenager)
+            housMenager: compareIsCashier(numberOfApartment, houseMenager),
+            uid: userCredential.user.uid
         };
 
         if (checkBox) {
@@ -134,7 +180,8 @@ export const sumbmit = async (formdata) => {
         return {
             user: formdata.apartment,
             cashier: isCashier,
-            housMenager: isHouseMenager
+            housMenager: isHouseMenager,
+            uid: resultId
         };
 
     } catch (error) {
