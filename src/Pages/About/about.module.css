@@ -20,8 +20,8 @@
 
 .section {
     max-width: 800px;
-    margin-top: 4em;
-    padding: 30px;
+    margin-top: 1em;
+    padding: 1em;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -31,6 +31,8 @@
     font-size: 1.1em;
     line-height: 1.6;
     text-align: justify;
+    white-space: pre-line;
+    letter-spacing: 1px;
 }
 
 .corection {

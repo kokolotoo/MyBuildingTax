@@ -18,7 +18,7 @@ const About = () => {
         if (!correction) {
             //код за промяна
             const newData = { ...dataSettings, about: text }
-            // await updateData(newData)
+             await updateData(newData)
 
             setCorrection(true)
         } else {
@@ -26,6 +26,9 @@ const About = () => {
         }
 
     }
+    useEffect(() => {
+        dataSettings.about && setText(dataSettings.about)
+    }, [])
 
     const cancel = () => {
         setCorrection(false)
@@ -43,11 +46,8 @@ const About = () => {
 
             {!correction ? (
                 <section className={styles.section}>
-                    <p className={styles.content}>Lorem ipsum dolor
-                        sit amet consectetur adipisicing elit. Illo dolores dolorem asperiores,
-                        cum, officiis rerum possimus repudiandae qua
-                        m mollitia similique et provident nihil ad.
-                        Perferendis libero natus tempora distinctio labore.
+                    <p className={styles.content}>
+                        {dataSettings?.about ? dataSettings.about : "Няма данни"}
                     </p>
                 </section>
             ) :
