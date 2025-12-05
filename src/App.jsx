@@ -4,7 +4,12 @@ import { Route, Routes } from 'react-router-dom';
 import { DataProvider } from './Context/DataContext'
 import { FloatButton } from 'antd';
 
+// 🛑 СИНХРОННИ ИМПОРТИ (Задължителни за стабилност)
+// Navbar и Spinner трябва да се заредят веднага, без Suspense.
+import Navbar from './Component/Navbar/NavBar'
+import Spiner from './Helpers/Spinner'
 
+// ⚡ LAZY ИМПОРТИ (За големите страници)
 const LoginPage = lazy(() => import('./Pages/Login/LoginPage'))
 const Registration = lazy(() => import('./Pages/Registracion/Registration'))
 const ForgotPassPage = lazy(() => import('./Pages/Forgot-page/ForgotPage'))
@@ -15,9 +20,7 @@ const MyApartment = lazy(() => import('./Pages/My apartment/MyApartment'))
 const MontTax = lazy(() => import('./Pages/Mont Tax/MontTax'))
 const Expenses = lazy(() => import('./Pages/Expenses/Expenses'))
 const Discussions = lazy(() => import('./Pages/Discussions/DiscussionsPage'))
-const Navbar = lazy(() => import('./Component/Navbar/NavBar'))
-const Spiner = lazy(() => import('./Helpers/Spinner'))
-const ProtectedRoute = lazy(() => import('./Helpers/ProtectedRoute'))
+const About = lazy(() => import('./Pages/About/About'))
 
 
 function App() {
@@ -26,9 +29,9 @@ function App() {
 
     <DataProvider>
 
-      <Suspense fallback={<Spiner />}>
+      <Navbar />
 
-        <Navbar />
+      <Suspense fallback={<Spiner />}>
 
         <Routes>
 
@@ -49,6 +52,8 @@ function App() {
           <Route path='/expenses' element={<Expenses />} />
 
           <Route path='/discussions' element={<Discussions />} />
+
+          <Route path='/about' element={<About />} />
 
         </Routes>
 

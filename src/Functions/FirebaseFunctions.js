@@ -1,5 +1,5 @@
 import { ref, get, set } from "firebase/database";
-import { doc, getDoc, setDoc, addDoc ,collection, getDocs} from "firebase/firestore";
+import { doc, getDoc, setDoc, addDoc, collection, getDocs } from "firebase/firestore";
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app, auth, googleProvider, db, realtimeDB } from "../Config/Firebase_Config";
 
@@ -242,6 +242,15 @@ const checkApartment = async (number) => {
     return snapshot.exists();
 };
 
+
+export const checkForRegister = async (number) => {
+    const snapshot = await get(ref(realtimeDB, `numbers/${number}`));
+    if (snapshot.exists()) {
+        return true
+    } else {
+        return false
+    }
+};
 
 
 

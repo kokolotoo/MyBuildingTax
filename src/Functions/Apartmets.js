@@ -70,16 +70,7 @@ export const editApartment = async (apartmentId, updatedFields) => {
         console.error("❌ Грешка при обновяване:", err);
     }
 };
-/*
-     Пример за промяна:
 
-    editApartment("apart3", {
-        owner: "Миро Цонев",
-        people: 1,
-        free: false
-    });
-
- */
 
 
 

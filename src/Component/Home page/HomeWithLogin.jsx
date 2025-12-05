@@ -28,14 +28,8 @@ const HomeWithLogin = () => {
     infoModal(message);
   };
 
-  const goToApartments = () => { navigate('/apartments') }
-  const goToMenagers = () => { navigate('/menagers') }
-  const myApartment = () => { navigate('/my-apartment') }
-  const goToMonthTax = () => { navigate('/month-tax') }
-  const goToExpenses = () => { navigate('/expenses') }
-  const goToDiscussions = () => { navigate('/discussions') }
+  const goTo = (navigation) => { navigate(navigation) }
 
-  // --- РЕНДЪРИНГ (Вече safe за изпълнение) ---
 
   return (
     <main className={styles.container}>
@@ -43,17 +37,18 @@ const HomeWithLogin = () => {
 
       <section className={styles.list_section}>
         <ul>
-          <li onClick={goToApartments} className={styles.slideLeft}>Списък апартаменти</li>
-          <li onClick={goToMonthTax} className={styles.slideRight} >Месечно отчитане</li>
-          <li onClick={myApartment} className={styles.slideLeft}>Моят апартамент</li>
+          <li onClick={() => goTo('/apartments')} className={styles.slideLeft}>Списък апартаменти</li>
+          <li onClick={() => goTo('/month-tax')} className={styles.slideRight} >Месечно отчитане</li>
+          <li onClick={() => goTo('/my-apartment')} className={styles.slideLeft}>Моят апартамент</li>
           {/* user е проверен и е обект, достъпът до cashier/housMenager е безопасен */}
-          <li onClick={user.cashier || user.housMenager ? goToMenagers : shownMenagers}
+          <li onClick={user.cashier || user.housMenager ? () => goTo('/menagers') : shownMenagers}
             className={styles.slideRight}
           >
             Управление
           </li>
-          <li onClick={goToExpenses} className={styles.slideLeft} >Разходи</li>
-          <li onClick={goToDiscussions} className={styles.slideRight} >Дискусии</li>
+          <li onClick={() => goTo('/expenses')} className={styles.slideLeft} >Разходи</li>
+          <li onClick={() => goTo('/discussions')} className={styles.slideRight} >Дискусии</li>
+          <li onClick={() => goTo('/about')} className={styles.slideLeft} >Относно</li>
         </ul>
       </section>
     </main>

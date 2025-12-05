@@ -101,6 +101,12 @@
     color:blanchedalmond;
 }
 
+.positive{
+    font-size: 1.3em;
+    color: rgb(0, 177, 0);
+    margin-left: .5em;
+}
+
 @media (max-width: 31.25rem) { /* 500px */
     .card {
         padding: 0.75rem;

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '@/Styles/navBar.css';
 import DataContext from '@/Context/DataContext';
 import { exit } from '@/Functions/FirebaseFunctions';
+import { IoHomeOutline } from "react-icons/io5";
 
 
 export default function Navbar({ }) {
@@ -72,10 +73,10 @@ export default function Navbar({ }) {
 
         <nav className={login ? 'header__nav' : 'invisible'}>
 
-            <ul className={`header__menu ${menuOpen ? 'header__menu-open' : ''}`}>
+            <main className={`header__menu ${menuOpen ? 'header__menu-open' : ''}`}>
 
-                <Link to='/' onClick={closeMenu}>
-                    Начало
+                <Link to='/' onClick={closeMenu} className='homeIcon' >
+                    <IoHomeOutline />
                 </Link>
                 <button className='header__item' onClick={ ()=>goTo('/apartments')} >Апартаменти</button>
                 <button className='header__item' onClick={ ()=>goTo('/month-tax')} >Отчитане</button>
@@ -83,7 +84,7 @@ export default function Navbar({ }) {
                 <button className='header__item' onClick={ ()=>goTo('/expenses')} >Разходи</button>
                 <button className='header__item' onClick={() => goTo('/discussions')} >Дискусии</button>
                 <button className='header__item' onClick={logOuth} >Изход</button>
-            </ul>
+            </main>
 
             <button className="header__burger" onClick={toggleMenu}>
                 ☰

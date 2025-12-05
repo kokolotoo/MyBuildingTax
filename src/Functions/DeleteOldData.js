@@ -1,15 +1,11 @@
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://audkzljgdgjfamrzmfuw.supabase.co'
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
-export const supabase = createClient(supabaseUrl, supabaseKey)
+import { supabase } from "../Config/SupaBase_Config";
 
-
-import { doc, setDoc, getDocs, getDoc, collection, updateDoc } from "firebase/firestore"
+import { doc, getDocs, collection, updateDoc, deleteDoc } from "firebase/firestore"
 import { db } from "../Config/Firebase_Config"
 
 
-
-// Изтриване на файлове от преди 2 години
+// 1. Изтриване на файлове от преди 2 години (Supabase Storage)
+// ⚠️ Препоръка: Променете лимита от 1000 на по-голям, ако имате много файлове.
 export const deleteOldFiles = async () => {
     const currentYear = new Date().getFullYear();
     const oldYear = currentYear - 2;
@@ -18,7 +14,7 @@ export const deleteOldFiles = async () => {
         const { data: files, error } = await supabase
             .storage
             .from('signatures')
-            .list('', { limit: 1000 }); // root директория
+            .list('', { limit: 10000 }); // Увеличен лимит за по-голяма сигурност
 
         if (error) {
             console.error('Грешка при извличане на файлове:', error.message);
@@ -44,79 +40,102 @@ export const deleteOldFiles = async () => {
             return;
         }
 
-        console.log('Изтрити файлове от', oldYear);
+        console.log(`✅ Изтрити ${oldFiles.length} файла от Supabase Storage за ${oldYear} г.`);
     } catch (err) {
-        console.error('Неочаквана грешка при deleteOldFiles:', err);
+        console.error('❌ Неочаквана грешка при deleteOldFiles:', err);
     }
 };
 
 
+// 2. Изтриване на стари URL-и от Firestore (Collection: Apartments)
 export const deleteOldUrlsFromFirestore = async () => {
     try {
-        const oldYear = new Date().getFullYear() - 2; // преди 2 години
+        const oldYear = new Date().getFullYear() - 2; // годината, която трием
         const apartmentsRef = collection(db, "Apartments");
         const snapshot = await getDocs(apartmentsRef);
 
-        snapshot.forEach(async (aptDoc) => {
+        const updatePromises = [];
+        let totalRemoved = 0;
+
+        snapshot.forEach((aptDoc) => {
             const data = aptDoc.data();
+
             if (!data.year || !Array.isArray(data.year)) return;
 
-            // Филтрираме само URL-ите, които не са стари
+            const originalLength = data.year.length;
+
+           
             const updatedYear = data.year.filter(
-                url => !url.includes(`/${oldYear}_`)
+                url => (typeof url === 'string') && !url.includes(`/${oldYear}_`)
             );
 
-            // Ако има промяна, обновяваме документа
-            if (updatedYear.length !== data.year.length) {
-                await updateDoc(doc(db, "Apartments", aptDoc.id), { year: updatedYear });
-                console.log(`Обновен апартамент ${aptDoc.id}: изтрити стари URL-и`);
+            // Ако има промяна, изпълняваме updateDoc
+            if (updatedYear.length !== originalLength) {
+                totalRemoved += (originalLength - updatedYear.length);
+
+                const updatePromise = updateDoc(doc(db, "Apartments", aptDoc.id), { year: updatedYear })
+                    .catch((error) => {
+                        console.error(`Грешка при обновяване на ${aptDoc.id}:`, error);
+                    });
+
+                updatePromises.push(updatePromise);
             }
         });
 
-        console.log("✔ Финализирано премахването на URL-ите от преди 3 години.");
+        // 🛑 Изчакваме всички актуализации да приключат
+        await Promise.all(updatePromises);
+
+        console.log(`✅ Финализирано премахването на ${totalRemoved} URL-а от Firestore за ${oldYear} г.`);
     } catch (err) {
         console.error("❌ Грешка при изтриване на стари URL-и:", err);
     }
 };
 
 
-
-
+// 3. Изтриване на стари разходи от Firestore (Collection: Expenses)
 export const deleteOldExpenses = async () => {
     try {
         const expensesRef = collection(db, "Expenses");
         const snapshot = await getDocs(expensesRef);
 
         if (snapshot.empty) {
-            console.log("Няма записи.");
+            console.log("Няма записи за разходи.");
             return;
         }
 
         const currentYear = new Date().getFullYear();
-        const targetYear = currentYear - 2; // трием 2 години назад (ако е 2025 → трием 2023)
+        const targetYear = currentYear - 2;
 
+        const deletePromises = [];
         let deletedCount = 0;
 
         for (const docSnap of snapshot.docs) {
             const data = docSnap.data();
-            const idDate = data.id;  // "26.11.2025 г., 19:22:01 ч."
+            const idDate = data.id;
 
             if (!idDate) continue;
 
-            // 🎯 Извличане на годината от стринга
             const yearMatch = idDate.match(/(\d{4})/);
             if (!yearMatch) continue;
 
             const year = parseInt(yearMatch[1]);
 
+            // Проверка за изтриване на разходи от targetYear (2023) И по-стари
             if (year <= targetYear) {
-                await deleteDoc(doc(db, "Expenses", docSnap.id));
                 deletedCount++;
+                const deletePromise = deleteDoc(doc(db, "Expenses", docSnap.id))
+                    .catch((error) => {
+                        console.error(`Грешка при изтриване на разход ${docSnap.id}:`, error);
+                    });
+                deletePromises.push(deletePromise);
             }
         }
 
-        console.log(`Изтрити стари разходи: ${deletedCount}`);
+        // 🛑 Изчакваме всички операции по изтриване да приключат
+        await Promise.all(deletePromises);
+
+        console.log(`✅ Изтрити стари разходи: ${deletedCount} за ${targetYear} г. и по-рано.`);
     } catch (err) {
-        console.error("Грешка при триене:", err);
+        console.error("❌ Грешка при триене на разходи:", err);
     }
 };

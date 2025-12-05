@@ -20,6 +20,10 @@
     border: none;
 }
 
+.createTopicForm>input {
+    font-size: 1.3em;
+}
+
 .visible {
     display: none;
 }
@@ -85,7 +89,7 @@
 .actions {
     margin-top: .3em;
     display: flex;
-    justify-content:end;
+    justify-content: end;
     align-items: center;
     margin-top: 1em;
     gap: 4em;
@@ -98,7 +102,7 @@
     cursor: pointer;
 }
 
-.commentButton{
+.commentButton {
     border: none;
     background-color: transparent;
     font-size: 1.1;
@@ -108,7 +112,7 @@
     background: #e6e6e6;
 }
 
-.invisible{
+.invisible {
     display: none;
 }
 
@@ -121,7 +125,7 @@
     border-radius: 0.3em;
 }
 
-.comments_formVisible>input{
+.comments_formVisible>input {
     padding: .5em;
 }
 
@@ -133,7 +137,7 @@
     font-size: 0.7em;
     border: none;
     padding: 0.5em;
-    
+
 }
 
 
@@ -179,7 +183,7 @@
     font-size: 0.7rem;
     padding-left: 0.2em;
     letter-spacing: 0.5px;
-    
+
 }
 
 .commentText {
