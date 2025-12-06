@@ -9,7 +9,6 @@ const DataTable = ({currPerson, setCurrPerson, changeMenager}) => {
                         <Input
                             type="text"
                             name="name"
-                            placeholder="Email"
                             value={currPerson.name}
                             onChange={(e) => setCurrPerson({ ...currPerson, name: e.target.value })}
                         /> :
@@ -20,7 +19,6 @@ const DataTable = ({currPerson, setCurrPerson, changeMenager}) => {
                         <Input
                             type="text"
                             name="phone"
-                            placeholder="Email"
                             value={currPerson.phone}
                             onChange={(e) => setCurrPerson({ ...currPerson, phone: e.target.value })}
                         /> :
@@ -31,7 +29,6 @@ const DataTable = ({currPerson, setCurrPerson, changeMenager}) => {
                         <Input
                             type="text"
                             name="apartment"
-                            placeholder="Email"
                             value={currPerson.apartment}
                             onChange={(e) => setCurrPerson({ ...currPerson, apartment: e.target.value })}
                         /> :

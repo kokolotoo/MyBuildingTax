@@ -1,41 +1,66 @@
 import { useState, useEffect } from 'react'
 import styles from './about.module.css'
 import { useAuthGuard } from "@/Hooks/useAuthGuard";
-import { updateData, deleteSelfAccount } from '@/Functions/FirebaseFunctions'; // ⬅️ Добавяме deleteSelfAccount
+import { updateData, deleteSelfAccount, getTaxData } from '@/Functions/FirebaseFunctions';
 import { deleteOldFiles, deleteOldUrlsFromFirestore, deleteOldExpenses } from '@/Functions/DeleteOldData';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../Helpers/Spinner';
 
 
 const About = () => {
 
-    const [correction, setCorrection] = useState(false)
-    const navigate = useNavigate()
-    const { dataSettings, user, setUser, setLogin } = useAuthGuard()
-    const [text, setText] = useState('')
-    // ВАЖНО: user.user съдържа номера на апартамента като стринг ("16")
-    const apartmentNumber = user?.user;
+    const [isEditing, setIsEditing] = useState(false); // Преименувах correction на isEditing
+    const [isLoading, setIsLoading] = useState(false); // Нов state за индикация на зареждане (при изтриване)
+    const navigate = useNavigate();
+    const { dataSettings, user, setUser, setLogin } = useAuthGuard();
+    const [text, setText] = useState(null);
+    const apartmentNumber = user?.user; // Номерът на апартамента като стринг ("16")
 
+    // 🎯 ОБЕДИНЕНА ЛОГИКА ЗА ЗАРЕЖДАНЕ НА ДАННИ
     useEffect(() => {
-        if (dataSettings && dataSettings.about) {
-            setText(dataSettings.about)
-        }
-    }, [dataSettings])
+        const loadAboutData = async () => {
+            // 1. Опит за зареждане от getTaxData (вероятно по-актуално/основно)
+            try {
+                const result = await getTaxData();
+                if (result && result.about) {
+                    setText(result.about);
+                    return; // Ако има данни, приключваме
+                }
+            } catch (error) {
+                console.error("Грешка при зареждане на TaxData:", error);
+                // Продължаваме към dataSettings, ако getTaxData не успее
+            }
+
+            // 2. Fallback: Зареждане от dataSettings (ако е налично от useAuthGuard)
+            if (dataSettings && dataSettings.about) {
+                setText(dataSettings.about);
+            }
+        };
+
+        loadAboutData();
+    }, [dataSettings]); // Зависи от dataSettings, за да се опита зареждане, ако току-що са станали налични
 
     const addCorrection = async () => {
-        if (correction) {
+        if (isEditing) {
             // Запазване на промените
-            const newData = { ...dataSettings, about: text }
-            await updateData(newData)
-            setCorrection(false)
+            try {
+                const newData = { ...dataSettings, about: text };
+                await updateData(newData);
+                alert('Промените бяха запазени успешно!');
+                setIsEditing(false);
+            } catch (error) {
+                alert(`Грешка при запазване: ${error.message}`);
+            }
         } else {
             // Влизане в режим на редактиране
-            setCorrection(true)
+            setIsEditing(true);
         }
     }
 
     const cancel = () => {
+        // Връщане към оригиналния текст, ако е наличен
         dataSettings.about && setText(dataSettings.about);
-        setCorrection(false)
+        setIsEditing(false);
     }
 
     const deleteOld = async () => {
@@ -43,13 +68,19 @@ const About = () => {
             return;
         }
 
-        await deleteOldFiles();
-        await deleteOldUrlsFromFirestore();
-        await deleteOldExpenses();
-        alert('Изтриването на стари данни приключи успешно!');
+        setIsLoading(true); // ⬅️ Започва зареждане
+        try {
+            await deleteOldFiles();
+            await deleteOldUrlsFromFirestore();
+            await deleteOldExpenses();
+            alert('Изтриването на стари данни приключи успешно!');
+        } catch (error) {
+            alert(`Възникна грешка при изтриването: ${error.message}`);
+        } finally {
+            setIsLoading(false); // ⬅️ Приключва зареждане
+        }
     }
 
-    // 🎯 НОВА ФУНКЦИЯ ЗА САМОСТОЯТЕЛНО ИЗТРИВАНЕ
     const handleDeleteSelfAccount = async () => {
         if (!apartmentNumber) {
             alert("Не е намерен номер на апартамент за изтриване.");
@@ -60,15 +91,19 @@ const About = () => {
             return;
         }
 
+        setIsLoading(true); // Започва зареждане
         try {
             await deleteSelfAccount(apartmentNumber);
-            setUser(null)
-            alert("Вашият акаунт беше успешно изтрит. Излизате от системата.");
 
-            setLogin(false)
-            navigate('/')
+            // Ако изтриването е успешно, навигираме
+            setUser(null);
+            alert("Вашият акаунт беше успешно изтрит. Излизате от системата.");
+            setLogin(false);
+            navigate('/');
         } catch (error) {
-            // 3. Обработка на грешката за повторно влизане
+            setIsLoading(false); // Спира зареждането, ако има грешка
+
+            // Обработка на грешката за повторно влизане
             if (error.message.includes('requires-recent-login')) {
                 alert("⚠️ ЗАДЪЛЖИТЕЛНО: За да завършите изтриването, моля, **влезте отново** (logout/login) и опитайте отново веднага след това. Това е мярка за сигурност.");
             } else {
@@ -82,59 +117,65 @@ const About = () => {
 
             <h2 className={styles.titles}>Относно това място!</h2>
 
-            {!correction ? (
+            {!isEditing ? (
                 <section className={styles.section}>
-                    <p className={styles.content}>
-                        {dataSettings?.about || "Няма данни"}
-                    </p>
+                    {text === null ? ( // ⬅️ Проверяваме дали text е null (все още се зарежда)
+                        <Spinner />
+                    ) : (
+                        <p className={styles.content}>
+                            {text || 'Няма въведена информация.'} {/* Показваме placeholder, ако текстът е празен */}
+                        </p>
+                    )}
                 </section>
             ) :
                 (<textarea
                     name="about"
-                    value={text}
+                    value={text || ''} // Уверете се, че value е низ
                     onChange={e => setText(e.target.value)}
                     className={styles.areaTitle}
+                    rows={10}
                 ></textarea>)
             }
 
+            {/* Бутони за редакция, само ако потребителят е Cashier/Администратор */}
             {user?.cashier && (
                 <main className={styles.mainSection}>
                     <button
                         className={styles.corection}
                         onClick={addCorrection}
+                        disabled={isLoading} // ⬅️ Деактивираме, ако се изтриват стари данни
                     >
-                        {correction ? '💾 Запази промените' : '✏️ Корекция'}
+                        {isEditing ? '💾 Запази промените' : '✏️ Корекция'}
                     </button>
-                    {correction &&
+                    {isEditing &&
                         <button
                             className={styles.rejectButton}
                             onClick={cancel}
+                            disabled={isLoading}
                         >❌ Откажи</button>
                     }
-
                 </main>
             )}
 
-            {/* Бутон за административно изтриване на стари данни */}
-            {user?.cashier && !correction && (
-
+            {/* Бутон за изтриване на стари данни */}
+            {user?.cashier && !isEditing && (
                 <button
                     className={styles.deleteOldButton}
                     onClick={deleteOld}
+                    disabled={isLoading} // ⬅️ Деактивираме по време на зареждане
                 >
-                    🗑️ Изтрии данни от {new Date().getFullYear() - 2} г.
+                    {isLoading ? <Spinner /> : `🗑️ Изтрии данни от ${new Date().getFullYear() - 2} г.`}
                 </button>
-
             )}
 
-            {/* 🎯 НОВ БУТОН ЗА ИЗТРИВАНЕ НА СОБСТВЕН АКАУНТ */}
-            {user?.uid && !correction && (
+            {/* Бутон за изтриване на собствен акаунт */}
+            {user?.uid && !isEditing && (
                 <button
-                    className={styles.deleteSelfButton} 
+                    className={styles.deleteSelfButton}
                     onClick={handleDeleteSelfAccount}
-                    disabled={!apartmentNumber}
+                    disabled={!apartmentNumber || isLoading} // ⬅️ Деактивираме по време на зареждане
                 >
-                    Изтрий моя акаунт (Ап. {apartmentNumber || 'Н/А'})
+                    {isLoading ? <Spinner /> : `Изтрий моя акаунт (Ап. ${apartmentNumber || 'Н/А'})`}
                 </button>
             )}
 
