@@ -139,7 +139,10 @@
     padding: 0.5em;
 
 }
-
+.openNewByn{
+    padding: 0.4em;
+    border: none;
+}
 
 /* Контейнер около Collapse */
 .commentWrapper {

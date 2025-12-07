@@ -4,6 +4,8 @@ const Spinner = () => {
 
     const contentStyle = {
         padding: 40,
+        background: 'rgba(0, 0, 0, 0.05)',
+        borderRadius: 4,
     };
 
 
@@ -19,7 +21,7 @@ const Spinner = () => {
         >
             <Flex gap="middle">
 
-                <Spin tip="Loading" size="large">
+                <Spin tip="Loading" size="large" fullscreen >
                     <div style={contentStyle}></div>
                 </Spin>
             </Flex>

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-
+import styles from '../../Styles/discusions.module.css'
 import { useAuthGuard } from '@/Hooks/useAuthGuard'; // ⬅️ НОВ ИМПОРТ
 
 import CreateTopic from "@/Component/Discussinons/CreateTopic"
@@ -22,6 +22,7 @@ const DiscussionsPage = () => {
 
             <button
                 onClick={() => setCreateTopicVisible(prev => !prev)}
+                className={styles.openNewByn}
             >
                 {createTopicVisible ? 'Затвори' : 'Нова тема'}
             </button>
@@ -33,6 +34,7 @@ const DiscussionsPage = () => {
                 user={user}
                 dataSettings={dataSettings}
             />
+
             <TopicsList user={user}  />
         </div>
     );
