@@ -37,8 +37,17 @@ const CreateTopic = ({
                 onChange={e => setContent(e.target.value)}
                 placeholder="Съдържание..."
             />
+            <main className={styles.buttons_container}>
+                <button type="submit" className={styles.submitButton}>Публикувай</button>
+                <button
+                    type="button"
+                    className={styles.rejectButton}
+                    onClick={() => setCreateTopicVisible(false)}
+                >
+                    Откажи
+                </button>
+            </main>
 
-            <button type="submit">Публикувай</button>
         </form>
     );
 };

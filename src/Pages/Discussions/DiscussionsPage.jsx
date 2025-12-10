@@ -22,9 +22,9 @@ const DiscussionsPage = () => {
 
             <button
                 onClick={() => setCreateTopicVisible(prev => !prev)}
-                className={styles.openNewByn}
+                className={createTopicVisible ? styles.invisibleButton : styles.openNewByn}
             >
-                {createTopicVisible ? 'Затвори' : 'Нова тема'}
+                Нова тема
             </button>
 
 
@@ -35,7 +35,7 @@ const DiscussionsPage = () => {
                 dataSettings={dataSettings}
             />
 
-            <TopicsList user={user}  />
+            <TopicsList user={user} />
         </div>
     );
 }

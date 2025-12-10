@@ -10,14 +10,32 @@
     border-radius: 0.5em;
 }
 
-.createTopicForm>button {
-    background-color: rgb(182, 167, 30);
-    color: rgb(7, 7, 7);
+.submitButton {
+    background-color: rgb(27, 124, 8);
+    color: rgb(243, 226, 226);
     padding: 0.4em;
     max-width: 10em;
-    margin: auto;
     border-radius: 0.3em;
     border: none;
+}
+
+.rejectButton {
+    background-color: rgb(124, 25, 8);
+    color: rgb(243, 226, 226);
+    padding: 0.4em;
+    max-width: 10em;
+    border-radius: 0.3em;
+    border: none;
+}
+
+.invisibleButton{
+    display: none;
+}
+
+.buttons_container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.5em;
 }
 
 .createTopicForm>input {
@@ -139,7 +157,8 @@
     padding: 0.5em;
 
 }
-.openNewByn{
+
+.openNewByn {
     padding: 0.4em;
     border: none;
 }
