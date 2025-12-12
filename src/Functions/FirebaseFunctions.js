@@ -27,19 +27,18 @@ export const deleteSelfAccount = async (apartmentNumber) => {
         await remove(dbRef);
         console.log(`✅ Успешно изтрита регистрация за ап. ${apartmentNumber} от Realtime DB.`);
 
-        // 2. ИЗТРИВАНЕ НА АУТЕНТИКАЦИЯТА (Анулира токена, изпълнява се последно)
         await deleteUser(user);
         console.log(`✅ Успешно изтрит акаунт с UID: ${user.uid}`);
+        sessionStorage.removeItem('loginUser')
+        localStorage.removeItem('loginUser')
 
     } catch (error) {
-        // 🚨 Ако Auth се провали (requires-recent-login), трябва да го обработим
+       
         if (error.code === 'auth/requires-recent-login') {
-            // Realtime DB вече е изтрита, но Auth акаунтът е останал.
-            // Това е по-голям проблем, но сега потребителят трябва само да влезе отново.
+        
             throw new Error("auth/requires-recent-login");
         }
 
-        // Ако Realtime DB се е провалила (PERMISSION_DENIED), преди да стигне до Auth delete.
         if (error.message.includes('Permission denied')) {
             throw new Error("PERMISSION_DENIED: Проверете правилата на Realtime DB.");
         }

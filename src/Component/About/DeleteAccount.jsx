@@ -32,6 +32,7 @@ const DeleteAccount = (props) => {
             alert("Вашият акаунт беше успешно изтрит. Излизате от системата.");
             setLogin(false);
             navigate('/');
+            
         } catch (error) {
             setIsLoading(false);
 

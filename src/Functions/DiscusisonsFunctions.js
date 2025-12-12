@@ -3,9 +3,9 @@ import { db } from "../Config/Firebase_Config";
 import { commentCreator } from "../Helpers/SetCreatorName";
 
 import {
-    collection, addDoc,
+    collection, addDoc, writeBatch,
     serverTimestamp, onSnapshot,
-    query, orderBy,
+    query, orderBy, getDocs,
     updateDoc, doc,
     arrayUnion, arrayRemove,
     deleteDoc, runTransaction,
@@ -76,9 +76,24 @@ export async function toggleLike(topicId, userId) {
 
 // ➤ Изтриване на тема
 export async function deleteTopic(topicId) {
-    return await deleteDoc(doc(db, "Topics", topicId));
-}
+    const batch = writeBatch(db);
 
+    // 1. Път към коментарите на тази тема
+    const commentsRef = collection(db, "Topics", topicId, "Comments");
+    const commentsSnap = await getDocs(commentsRef);
+
+    // 2. Добавяме всеки коментар към опашката за изтриване в batch-а
+    commentsSnap.forEach((commentDoc) => {
+        batch.delete(commentDoc.ref);
+    });
+
+    // 3. Добавяме самата тема към опашката за изтриване
+    const topicRef = doc(db, "Topics", topicId);
+    batch.delete(topicRef);
+
+    // 4. Изпълняваме всичко наведнъж
+    return await batch.commit();
+}
 
 export async function addComment(topicId, text, userId) {
     return await addDoc(

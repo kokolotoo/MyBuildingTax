@@ -32,7 +32,7 @@ const TopicsList = ({ user }) => {
     }
 
     const canDelete = (topic) =>
-        user.cashier || user.housMenager || topic.authorId === user.user;
+        user.cashier || user.housMenager || topic.authorId === `Ап. ${user.user}`;
 
     return (
         <div className={styles.container}>

@@ -36,6 +36,7 @@ const CreateTopic = ({
                 required
                 onChange={e => setContent(e.target.value)}
                 placeholder="Съдържание..."
+                rows={4}
             />
             <main className={styles.buttons_container}>
                 <button type="submit" className={styles.submitButton}>Публикувай</button>
