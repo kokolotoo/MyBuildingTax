@@ -13,6 +13,8 @@ import {
 
 
 
+
+// Добавя нова тема
 export async function addTopic(title, content, user, data) {
     const creator = commentCreator(data, user)
 
@@ -30,6 +32,7 @@ export async function addTopic(title, content, user, data) {
 }
 
 
+
 // ➤ Реално време — всички теми
 export function subscribeToTopics(callback) {
     const q = query(collection(db, "Topics"), orderBy("createdAt", "desc"));
@@ -37,6 +40,8 @@ export function subscribeToTopics(callback) {
         callback(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
 }
+
+
 
 
 // ➤ Лайкване
@@ -74,6 +79,8 @@ export async function toggleLike(topicId, userId) {
     }
 }
 
+
+
 // ➤ Изтриване на тема
 export async function deleteTopic(topicId) {
     const batch = writeBatch(db);
@@ -105,6 +112,8 @@ export async function addComment(topicId, text, userId) {
         }
     );
 }
+
+
 
 
 // ➤ Слушане в реално време
