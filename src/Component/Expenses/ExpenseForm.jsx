@@ -15,10 +15,13 @@ const ExpenseForm = ({
 
 
     const onchangeMoney = (e) => {
-        setCurrentExpense(prev => ({
-            ...prev,
-            money: Number(e.target.value)
-        }));
+        const sanitizedValue = e.target.value.replace(',', '.');
+        if (/^\d*\.?\d*$/.test(sanitizedValue)) {
+            setCurrentExpense(prev => ({
+                ...prev,
+                money: sanitizedValue
+            }));
+        }
     };
 
     return (
@@ -36,7 +39,8 @@ const ExpenseForm = ({
             />
 
             <Input
-                type="number"
+                type="text"
+                inputMode="decimal"
                 placeholder="Сума"
                 value={currentExpense.money}
                 style={{ width: '10em' }}
