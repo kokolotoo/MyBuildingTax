@@ -119,7 +119,7 @@ const Expenses = () => {
             <main className={styles.container}>
                 <h2>Разходи</h2>
                 <p className={styles.current}>
-                    Наличност : € <b>{dataSettings.money}</b>
+                    Наличност : € <b>{dataSettings.money.toFixed(2)}</b>
                 </p>
 
                 {user.cashier && ( 
