@@ -87,6 +87,10 @@
     border-radius: 0.3em;
 }
 
+.singleExpense :last-child{
+    letter-spacing: 1.5px;
+}
+
 .monthSelector {
     display: flex;
     justify-content: center;
