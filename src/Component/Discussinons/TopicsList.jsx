@@ -37,7 +37,8 @@ const TopicsList = ({ user }) => {
     return (
         <div className={styles.container}>
             {contextHolder}
-            {topics.length > 0 && topics.map((topic) => (
+
+            {topics.length > 0 ? topics.map((topic) => (
                 <div key={topic.id} className={styles.card}>
                     <div className={styles.header}>
                         <span className={styles.author}>{topic.authorId}</span>
@@ -73,7 +74,7 @@ const TopicsList = ({ user }) => {
                         </button>
 
                     </div>
-                    
+
                     <CommentsSection
                         user={user}
                         topicId={topic.id}
@@ -84,7 +85,9 @@ const TopicsList = ({ user }) => {
                 </div>
 
 
-            ))}
+            )) :
+                <p className={styles.infoText}>Няма създадени теми !</p>
+            }
         </div>
     );
 };

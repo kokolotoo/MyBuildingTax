@@ -215,3 +215,11 @@
     color: #1d1919;
     line-height: 1.4;
 }
+
+.infoText{
+    font-size: 1.2rem;
+    color: #a19b9a;
+    text-align: center;
+    letter-spacing: 0.3em;
+    margin-top: 5em;
+}
