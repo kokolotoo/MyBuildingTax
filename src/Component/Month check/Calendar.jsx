@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from '@/Pages/Mont Tax/monthTax.module.css'
 
 

@@ -17,23 +17,18 @@ const SignaturePad = ({
 
     const sigCanvas = useRef(null);
     const [isSigned, setIsSigned] = useState(false);
-    // 🛑 ДОБАВЕН СТЕЙТ ЗА ЗАРЕЖДАНЕ
     const [isLoading, setIsLoading] = useState(false);
 
-
-    // когато потребителят рисува
     const handleEnd = () => {
         setIsSigned(true);
     };
 
-    // изчистване
     const clear = () => {
         sigCanvas.current.clear();
         setIsSigned(false);
     };
 
-    // запазване
-    const save = async () => {
+    const save = async (isFree) => {
         if (!isSigned) {
             alert("Моля, направете подпис преди да запазите.");
             return;
@@ -52,8 +47,11 @@ const SignaturePad = ({
 
             await addApartmentPicUrl(apartmentId, uploadedUrl);
 
+            const curMoney = isFree ? Number(dataSettings.money) : Number(dataSettings.money) + Number(money);
+
+
             const newData = {
-                ...dataSettings, money: Number(dataSettings.money) + Number(money)
+                ...dataSettings, money: curMoney
             }
 
             if (typeof setDataSettings === 'function') {
@@ -76,10 +74,11 @@ const SignaturePad = ({
     };
 
 
+
     return (
         <div className={style.signature_container}>
 
-          
+
             <div className={style.canvas_wrapper}>
                 <SignatureCanvas
                     ref={sigCanvas}
@@ -89,7 +88,7 @@ const SignaturePad = ({
                         className: `${style.signature_canvas}`,
                     }}
                 />
-               
+
                 {isLoading && (
                     <div className={style.spinner_overlay}>
                         <Spinner />
@@ -100,7 +99,8 @@ const SignaturePad = ({
             <div className={style.buttons}>
                 <button onClick={clear} className={style.clearBtn} disabled={isLoading}>Изчисти</button>
                 <button className={style.rejectBtn} onClick={onClose} disabled={isLoading}>Отказ</button>
-                <button onClick={save} className={style.payBtn} disabled={isLoading || !isSigned}>Плати</button>
+                <button onClick={() => save(false)} className={style.payBtn} disabled={isLoading || !isSigned}>Плати</button>
+                <button onClick={() => save(true)} className={style.freeBtn} disabled={isLoading || !isSigned}>Free</button>
             </div>
         </div>
     );

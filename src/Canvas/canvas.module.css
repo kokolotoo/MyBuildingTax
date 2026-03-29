@@ -45,7 +45,7 @@
     justify-content: space-around;
     margin: 0.5em;
     flex-wrap: wrap;
-    gap: 1em;
+    gap: 0.8em;
 }
 
 .clearBtn {
@@ -61,6 +61,11 @@
 .rejectBtn {
     background-color: rgb(112, 0, 0);
     color: rgb(255, 255, 255);
+}
+
+.freeBtn {
+    background-color: rgb(187, 170, 22);
+    color: black;
 }
 
 button {
