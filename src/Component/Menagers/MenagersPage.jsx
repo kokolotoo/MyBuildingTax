@@ -19,26 +19,25 @@ const MenagersPage = () => {
     }
 
 
-    // 4. Когато dataSettings се зареди → попълваме currentMenagers (Сега е безопасно!)
+   
     useEffect(() => {
-        // Проверяваме дали dataSettings съществува
+        
         if (dataSettings && !currentMenagers) {
             setCurrentMenagers({
                 houseMenager: dataSettings.houseMenager,
                 cashier: dataSettings.cashier,
             })
         }
-    }, [dataSettings, currentMenagers]) // Добавяме dataSettings като зависимост
+    }, [dataSettings, currentMenagers]) 
 
 
     return (
         <main className={styles.container}>
 
-            {/* 5. Рендираме CorectionMenagers само ако currentMenagers е наличен */}
             {currentMenagers ? (
                 <CorectionMenagers
                     menagers={currentMenagers}
-                    dataSettings={dataSettings} // Вече гарантирано наличен
+                    dataSettings={dataSettings} 
                 />
             ) : (
                 <Spinner />
