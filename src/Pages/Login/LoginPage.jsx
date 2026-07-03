@@ -33,8 +33,6 @@ const loginPage = () => {
     };
 
 
-
-
     return (
 
         <section className='login-container'>
@@ -75,7 +73,7 @@ const loginPage = () => {
                 <button type="submit">Вход</button>
 
                 <footer className='footer'>
-                    <Link to='/registration' >Нямам регистрация</Link>
+                    <Link to='/registration' >Нямам регистрация </Link>
                     <Link to='/forgot-pass' >Забравена парола </Link>
                     <Link to='/' >Начална страница </Link>
                 </footer>
