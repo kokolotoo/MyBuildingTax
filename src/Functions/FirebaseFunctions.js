@@ -325,3 +325,4 @@ const getApartmentByUserId = async (userId) => {
         return null;
     }
 };
+
