@@ -48,10 +48,17 @@ const CurrentTax = ({ dataSettings }) => {
     return (
         <main className={styles.taxInfo}>
             {contextHolder}
+            <div>
+                <p>
+                    Домашен любимец: € 
+                   <b className={styles.price} >5.00</b>
+                </p>
+            </div>
+
 
             <div>
                 <p>
-                     Живущ на 1 и 2 етаж: €
+                    Живущ на 1 и 2 етаж: €
                     {changeTax ? (
                         <Input
                             type="number"
@@ -62,14 +69,15 @@ const CurrentTax = ({ dataSettings }) => {
                             style={{ width: 70, margin: 5 }}
                         />
                     ) : (
-                            <span className={styles.price}>{formatNumber(newData.lowTax)}</span> 
+                        <span className={styles.price}>{formatNumber(newData.lowTax)}</span>
                     )}
                 </p>
             </div>
 
+
             <div>
                 <p>
-                    Живущ 3 етаж и нагоре: € 
+                    Живущ 3 етаж и нагоре: €
                     {changeTax ? (
                         <Input
                             type="number"
@@ -77,12 +85,14 @@ const CurrentTax = ({ dataSettings }) => {
                             onChange={(e) =>
                                 setNewData({ ...newData, hightTax: e.target.value })
                             }
-                            style={{width: 70, margin:5}}
+                            style={{ width: 70, margin: 5 }}
                         />
                     ) : (
-                            <span className={styles.price}>{formatNumber(newData.hightTax)}</span> 
+                        <span className={styles.price}>{formatNumber(newData.hightTax)}</span>
                     )}
                 </p>
+
+
 
                 <div className={styles.buttons}>
                     <button

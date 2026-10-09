@@ -29,9 +29,12 @@ const MyApartment = () => {
 
         setDataApartment(data);
         setTaxPerMonth(totalTax);
+       
       }
 
       getData();
+      
+      
     }
   }, [isReady, user, dataSettings, monthTax]);
 
@@ -39,7 +42,7 @@ const MyApartment = () => {
 
 
   const renderMonthPayment = (month) => {
-    
+
     if (!Array.isArray(dataApartment?.year)) {
       return <span className={styles.unpaid}>❌ Грешка: Няма данни за плащания</span>
     }
@@ -67,6 +70,8 @@ const MyApartment = () => {
           <p>Телефон : <span>{dataApartment.phone ? dataApartment.phone : 'Няма  номер'}</span></p>
           <p>Таксувани жители: <span>{dataApartment.people}</span></p>
           <p>Месечна такса: <span> € {taxPerMonth}</span></p>
+          <p>Такса домашен любимец : <b>{dataApartment.pets ? "✔" : "❌"}</b> </p>
+         
         </div>
       </section>
 
@@ -82,6 +87,8 @@ const MyApartment = () => {
           </div>
         ))}
       </div>
+
+     
     </section>
   );
 }

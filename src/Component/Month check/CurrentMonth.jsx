@@ -35,7 +35,7 @@ const CurrentMonth = ({
                         <tbody>
                             {apartments.map(apt => {
                                 const paid = hasPayment(apt, selectedMonth);
-                                const tax = monthTax(apt.apartment, apt.people)
+                                const tax = monthTax(apt.apartment, apt.people, apt.pets)
                                 return (
                                     <tr key={apt.id}>
                                         <td>{apt.apartment}</td>

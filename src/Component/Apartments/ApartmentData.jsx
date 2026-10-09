@@ -1,10 +1,11 @@
-import styles from '@/Pages/Apartments/apartment.module.css'
+import styles from '@/Pages/Apartments/apartment.module.css';
 import Input from "antd/es/input/Input";
+import Checkbox from "antd/es/checkbox/Checkbox"; // Импортираме Checkbox компонента
 
 const ApartmentData = ({
     editing, apt, ownerValue, setOwnerValue,
     peopleValue, setPeopleValue, ownerPhone,
-    setOwnerPhone, isRegistered
+    setOwnerPhone, isRegistered, pets, setPets
 }) => {
     return (
         <div className={styles.info}>
@@ -13,9 +14,7 @@ const ApartmentData = ({
                 {editing === apt.id ? (
                     <Input
                         value={ownerValue}
-                        onChange={(e) =>
-                            setOwnerValue(e.target.value)
-                        }
+                        onChange={(e) => setOwnerValue(e.target.value)}
                     />
                 ) : (
                     apt.owner
@@ -29,9 +28,7 @@ const ApartmentData = ({
                         type="number"
                         min="0"
                         value={peopleValue}
-                        onChange={(e) =>
-                            setPeopleValue(e.target.value)
-                        }
+                        onChange={(e) => setPeopleValue(e.target.value)}
                         style={{ width: "70px" }}
                     />
                 ) : apt.people === 0 ? (
@@ -46,9 +43,7 @@ const ApartmentData = ({
                 {editing === apt.id ? (
                     <Input
                         value={ownerPhone}
-                        onChange={(e) =>
-                            setOwnerPhone(e.target.value)
-                        }
+                        onChange={(e) => setOwnerPhone(e.target.value)}
                     />
                 ) : (
                     apt.phone ? apt.phone : "няма номер"
@@ -56,8 +51,20 @@ const ApartmentData = ({
             </p>
 
             <b>Регистрация: {isRegistered ? <span className={styles.positive}>✔</span> : '❌'}</b>
-        </div>
-    )
-}
 
-export default ApartmentData
+            <p>
+                <strong>Любимец:</strong>{" "}
+                {editing === apt.id ? (
+                    <Checkbox
+                        checked={pets}
+                        onChange={(e) => setPets(e.target.checked)}
+                    />
+                ) : (
+                    apt.pets ? <span className={styles.positive}>✔</span> : "❌"
+                )}
+            </p>
+        </div>
+    );
+};
+
+export default ApartmentData;

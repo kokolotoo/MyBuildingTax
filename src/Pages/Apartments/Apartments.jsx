@@ -16,6 +16,7 @@ const Apartments = () => {
     const [ownerValue, setOwnerValue] = useState("");
     const [ownerPhone, setOwnerPhone] = useState("");
     const [peopleValue, setPeopleValue] = useState(0);
+    const [pets, setPets] = useState(false)
     const { confirmModal, successMessage, contextHolder } = useSuccessModal();
 
     const canEdit = user?.cashier || user?.housMenager;
@@ -59,7 +60,8 @@ const Apartments = () => {
         setEditing(apt.id);
         setOwnerValue(apt.owner);
         setPeopleValue(apt.people);
-        setOwnerPhone(apt.phone ? apt.phone : ownerPhone)
+        setOwnerPhone(apt.phone ? apt.phone : ownerPhone),
+            setPets(apt.pets)
     };
 
     const saveEdit = async () => {
@@ -71,7 +73,8 @@ const Apartments = () => {
         await editApartment(editing, {
             owner: ownerValue,
             people: Number(peopleValue),
-            phone: ownerPhone
+            phone: ownerPhone,
+            pets: pets
         });
 
 
@@ -126,6 +129,8 @@ const Apartments = () => {
                                     ownerPhone={ownerPhone}
                                     setOwnerPhone={setOwnerPhone}
                                     isRegistered={isRegistered}
+                                    pets={pets}
+                                    setPets={setPets}
                                 />
 
                                 {/* Buttons */}
