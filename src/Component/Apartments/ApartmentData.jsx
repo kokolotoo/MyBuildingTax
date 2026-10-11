@@ -53,7 +53,7 @@ const ApartmentData = ({
             <b>Регистрация: {isRegistered ? <span className={styles.positive}>✔</span> : '❌'}</b>
 
             <p>
-                <strong>Любимец:</strong>{" "}
+                <strong>Дом. любимец:</strong>{" "}
                 {editing === apt.id ? (
                     <Checkbox
                         checked={pets}
